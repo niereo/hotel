@@ -19,6 +19,10 @@ class PublicController extends Zend_Controller_Action
 	{
 		
 	}
+        public function whereAction()
+	{
+		
+	}
 	
 	public function chisiamoAction()
 	{
