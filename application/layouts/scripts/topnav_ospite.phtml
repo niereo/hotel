@@ -1,0 +1,53 @@
+<html>
+<head> </head>
+<body>
+<ul>
+        	<li>
+        		<a href="<?= $this->url(array(
+                        'controller' => 'public',
+                        'action'     => 'index',
+						), 
+                        'default',true
+                    ); 
+                 ?>" id="home" class="button_top" >Home</a></li>
+                 
+            <li>
+            	<a href="<?= $this->url(array(
+                        'controller' => 'public',
+                        'action'     => 'chisiamo',
+						), 
+                        'default',true
+                    ); 
+                 ?>" id="chi" class="button_top" >Chi siamo</a>
+            </li>
+            
+            <li>
+            	<a href="<?= $this->url(array(
+                        'controller' => 'public',
+                        'action'     => 'contatti',
+						), 
+                        'default',true
+                    ); 
+                 ?>" id="contatti" class="button_top" >Contatti</a>
+            </li>
+            
+            <li>
+            	<a href="<?= $this->url(array(
+                        'controller' => 'public',
+                        'action'     => 'faq',
+						), 
+                        'default',true
+                    ); 
+                 ?>" id="faq" class="button_top"  >FAQ</a></li>
+                 
+            <li><a href="<?= $this->url(array(
+                        'controller' => 'public',
+                        'action'     => 'login',
+                        ),
+                        'default',true
+                    ); 
+                 ?>" id="login" class="button_top" >Login</a></li>
+</ul>
+
+</body>
+</html>

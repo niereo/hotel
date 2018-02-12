@@ -1,0 +1,48 @@
+<?php echo $this->doctype() ?>
+<html>
+<head>
+	<?= $this->headMeta(); ?>
+    <?= $this->headLink(); ?>  
+</head>
+<body>
+<div id="container">
+    <header>
+    	<h1><a href="<?= $this->url( array( 'controller' => 'public',
+											'action' => 'index')) ?>">Albergo       <span>A. </span>Hitler</a></h1>
+        I sapori dell'olocausto
+    </header>
+    <nav>
+    	<?= $this->render('topnav_ospite.phtml') ?>
+    </nav>
+
+	
+
+    <div id="body">
+
+		<section id="content">
+			
+	    <article>
+							
+  		<?php echo $this->layout()->content ?>  
+  		
+		</article>
+		
+        </section>
+        
+        <aside class="sidebar">
+	
+    	
+            
+        </aside>
+        
+    	<div class="clear"></div>
+    </div>
+    
+    <footer>
+
+    	<?= $this->render('footer.phtml') ?>
+       
+    </footer>
+</div>
+</body>
+</html>
