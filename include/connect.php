@@ -1,6 +1,6 @@
 <?php 
 $USER="lpweb";
-$DB="zendproject_db";
+$DB="hotel";
 $HOST="localhost";
 $PASSWORD="lpweb";
 ?>

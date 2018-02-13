@@ -1,10 +1,10 @@
 <?php
 
-class UserController extends Zend_Controller_Action
+class UtenteController extends Zend_Controller_Action
 {	
     public function init()
     {
-		$this->_helper->layout->setLayout('layout_user');
+		$this->_helper->layout->setLayout('layout_utente');
 		$this->_authService = new Application_Service_Auth();
     }
 
