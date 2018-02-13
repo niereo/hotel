@@ -1,0 +1,62 @@
+<html>
+<head> </head>
+<body>
+<ul>
+        	<li>
+        		<a href="<?= $this->url(array(
+                        'controller' => 'user',
+                        'action'     => 'index',
+						), 
+                        'default',true
+                    ); 
+                 ?>" id="home" class="button_top" >Home</a></li>
+                 
+            <li>
+            	<a href="<?= $this->url(array(
+                        'controller' => 'user',
+                        'action'     => 'chisiamo',
+						), 
+                        'default',true
+                    ); 
+                 ?>" id="chi" class="button_top" >Chi siamo</a>
+            </li>
+            
+            <li>
+        		<a href="<?= $this->url(array(
+                        'controller' => 'user',
+                        'action'     => 'where',
+						), 
+                        'default',true
+                    ); 
+                 ?>" id="home" class="button_top" >Dove Siamo</a></li>
+                 
+            <li>
+            	<a href="<?= $this->url(array(
+                        'controller' => 'user',
+                        'action'     => 'contatti',
+						), 
+                        'default',true
+                    ); 
+                 ?>" id="contatti" class="button_top" >Contatti</a>
+            </li>
+            
+            <li>
+            	<a href="<?= $this->url(array(
+                        'controller' => 'user',
+                        'action'     => 'faq',
+						), 
+                        'default',true
+                    ); 
+                 ?>" id="faq" class="button_top"  >FAQ</a></li>
+                 
+            <li><a href="<?= $this->url(array(
+                        'controller' => 'user',
+                        'action'     => 'logout',
+                        ),
+                        'default',true
+                    ); 
+                 ?>" id="login" class="button_top" >Log Out</a></li>
+</ul>
+
+</body>
+</html>

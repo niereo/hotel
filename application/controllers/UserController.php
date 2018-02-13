@@ -4,7 +4,7 @@ class UserController extends Zend_Controller_Action
 {	
     public function init()
     {
-		$this->_helper->layout->setLayout('user_layaout');
+		$this->_helper->layout->setLayout('layout_user');
 		$this->_authService = new Application_Service_Auth();
     }
 
@@ -12,6 +12,21 @@ class UserController extends Zend_Controller_Action
     {
         
     }  
+    
+    public function contattiAction()
+    {
+		
+    }
+        
+    public function whereAction()
+    {
+		
+    }
+	
+    public function chisiamoAction()
+    {
+		
+    }
 
     public function logoutAction()
 	{
