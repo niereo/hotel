@@ -19,7 +19,7 @@ class Application_Service_Auth
         if (!$result->isValid()) {
             return false;
         }
-        $user = $this->_adminModel->getUserByName($credentials['Username']);
+        $user = $this->_adminModel->getUserByName($credentials['username']);
         $auth->getStorage()->write($user);
         return true;
     }
@@ -50,31 +50,12 @@ class Application_Service_Auth
     {
 		$authAdapter = new Zend_Auth_Adapter_DbTable(
 			Zend_Db_Table_Abstract::getDefaultAdapter(),
-			'utente',
-			'Username',
-			'Password'
+			'user',
+			'username',
+			'passwd'
 		);
-		$authAdapter->setIdentity($values['Username']);
-		$authAdapter->setCredential($values['Password']);
+		$authAdapter->setIdentity($values['username']);
+		$authAdapter->setCredential($values['passwd']);
         return $authAdapter;
-    }
-	
-	public function authInfo ($info = null)
-    {
-        if (null === $this->_authService) {
-            $this->_authService = new Application_Service_Auth();
-        }
-        if (null === $info) {
-            return $this;
-        }
-        if (false === $this->isLoggedIn()) {
-            return null;
-        }
-        return $this->_authService->getIdentity()->$info;
-    }
-
-	public function isLoggedIn()
-    {
-        return $this->_authService->getAuth()->hasIdentity();
     }
 }
