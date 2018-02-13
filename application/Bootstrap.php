@@ -45,11 +45,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
              ->addResourceType('modelResource','models/resources','Resource');  
     }
 
-    protected function _initFrontControllerPlugin()
-    {
-    	$front = Zend_Controller_Front::getInstance();
-    	$front->registerPlugin(new App_Controller_Plugin_Acl());
-    }
+    
     
 	protected function _initDbParms()
     {
@@ -62,4 +58,9 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 				));  
 		Zend_Db_Table_Abstract::setDefaultAdapter($db);
 	}
+        protected function _initFrontControllerPlugin()
+    {
+    	$front = Zend_Controller_Front::getInstance();
+    	$front->registerPlugin(new App_Controller_Plugin_Acl());
+    }
 }

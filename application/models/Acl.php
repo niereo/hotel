@@ -12,13 +12,13 @@ class Application_Model_Acl extends Zend_Acl
 			 ->allow('unregistered', array('public','error','index'));
 			 
 		// ACL for user
-		$this->addRole(new Zend_Acl_Role('Utente'), 'unregistered')
+		$this->addRole(new Zend_Acl_Role('utente'), 'unregistered')
 			 ->add(new Zend_Acl_Resource('utente'))
-			 ->allow('Utente','utente');
+			 ->allow('utente','utente');
 				   
 		// ACL for administrator
-		$this->addRole(new Zend_Acl_Role('Admin'), 'Utente')
+		$this->addRole(new Zend_Acl_Role('admin'), 'utente')
 			 ->add(new Zend_Acl_Resource('admin'))
-			 ->allow('Admin','admin');
+			 ->allow('admin','admin');
 	}
 }
