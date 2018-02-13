@@ -34,7 +34,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $this->_view->headMeta()->appendHttpEquiv('Content-Type', 'text/html; charset=UTF-8');
         $this->_view->headMeta()->appendHttpEquiv('Content-Language', 'it-IT');
         $this->_view->headLink()->appendStylesheet($this->_view->baseUrl('css/style.css'));
-        $this->_view->headTitle('Corso di Tecnologie Web - Zend Project - Versione 6');
+        $this->_view->headTitle('hotel');
     }
     
     protected function _initDefaultModuleAutoloader()

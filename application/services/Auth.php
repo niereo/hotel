@@ -19,7 +19,7 @@ class Application_Service_Auth
         if (!$result->isValid()) {
             return false;
         }
-        $user = $this->_tecnicoModel->getUserByName($credentials['Username']);
+        $user = $this->_adminModel->getUserByName($credentials['Username']);
         $auth->getStorage()->write($user);
         return true;
     }
