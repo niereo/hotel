@@ -4,11 +4,12 @@
 <body>
     <h3>CAMERE</h3>
     <?php foreach ($this->catalogo as $CAT) :?>
-<li><h3> <?php echo' <class="title">' . $CAT->tipo . '' ?> </h3></li>
+<h3> <?php echo' <class="title">' . $CAT->tipo . '' ?> </h3>
 	<img src="<?php echo $this->baseUrl() . '/images/'.$CAT->foto.'' ?> "  class="cat-img" >
-        <li>
-        <?php echo' <class="title">' . $CAT->descrizione . '' ?>
-            </li>
+        
+        <h4>DESCRIZIONE:</h4>
+         <?php echo' <class="title">' . $CAT->descrizione . '' ?>
+        
 	<br><br>
 	<?php endforeach ?>
 </body>

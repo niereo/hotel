@@ -4,11 +4,10 @@
 <body>
      <h3>SERVIZI</h3>
     <?php foreach ($this->servizi as $SER) :?>
-<li><h3> <?php echo' <class="title">' . $SER->tipo . '' ?> </h3></li>
+<h3> <?php echo' <class="title">' . $SER->tipo . '' ?> </h3>
 	<img src="<?php echo $this->baseUrl() . '/images/'.$SER->foto.'' ?> "  class="cat-img" >
-        <li>
+        <h4>DESCRIZIONE:</h4>
         <?php echo' <class="title">' . $SER->descrizione . '' ?>
-            </li>
-	<br><br>
+            	<br><br>
 	<?php endforeach ?>
 </body>
