@@ -32,6 +32,13 @@ class PublicController extends Zend_Controller_Action
     {
 		
     }
+     public function faqAction()
+    {
+         $this->view->headTitle( 'Elenco delle F.A.Q.' );
+        $faq = new Application_Resource_Faq();
+        $fa = $faq->fetchAll();
+        $this->view->faq = $fa;
+    }
  	
     public function viewstaticAction () {
     	$page = $this->_getParam('staticPage');

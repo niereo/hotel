@@ -2,10 +2,12 @@
    <?= $this->headScript(); ?>
 </head>   
 <div>
-	<ul>
+    <h3> LISTA DELLE F.A.Q.</h3>   
+    <ul>
+            
 	<?php foreach ($this->faq as $FAQ) :?>
-	<li> <?php echo' <class="title">' . $FAQ->Domanda . '' ?> </li>
-	<?php echo' <class="title">' . $FAQ->Risposta . '' ?> 
+	<li> <?php echo' <class="title">' . $FAQ->domanda . '' ?> </li>
+	<?php echo' <class="title">' . $FAQ->risposta . '' ?> 
 	<br><br>
 	<?php endforeach ?>
 	</ul>
