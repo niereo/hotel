@@ -1,0 +1,13 @@
+<head>
+   <?= $this->headScript(); ?>
+</head>   
+<div>
+	<ul>
+	<?php foreach ($this->faq as $FAQ) :?>
+	<li> <?php echo' <class="title">' . $FAQ->Domanda . '' ?> </li>
+	<?php echo' <class="title">' . $FAQ->Risposta . '' ?> 
+	<br><br>
+	<?php endforeach ?>
+	</ul>
+	
+</div>
