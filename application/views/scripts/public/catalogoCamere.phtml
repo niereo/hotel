@@ -2,5 +2,13 @@
    <?= $this->headScript(); ?>
 </head>   
 <body>
-    <h3>camere</h3>
+    <h3>CAMERE</h3>
+    <?php foreach ($this->catalogo as $CAT) :?>
+<li><h3> <?php echo' <class="title">' . $CAT->tipo . '' ?> </h3></li>
+	<img src="<?php echo $this->baseUrl() . '/images/'.$CAT->foto.'' ?> "  class="cat-img" >
+        <li>
+        <?php echo' <class="title">' . $CAT->descrizione . '' ?>
+            </li>
+	<br><br>
+	<?php endforeach ?>
 </body>

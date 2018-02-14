@@ -2,5 +2,13 @@
    <?= $this->headScript(); ?>
 </head>   
 <body>
-    <h3>servizi</h3>
+     <h3>SERVIZI</h3>
+    <?php foreach ($this->servizi as $SER) :?>
+<li><h3> <?php echo' <class="title">' . $SER->tipo . '' ?> </h3></li>
+	<img src="<?php echo $this->baseUrl() . '/images/'.$SER->foto.'' ?> "  class="cat-img" >
+        <li>
+        <?php echo' <class="title">' . $SER->descrizione . '' ?>
+            </li>
+	<br><br>
+	<?php endforeach ?>
 </body>

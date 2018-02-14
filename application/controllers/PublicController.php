@@ -34,7 +34,7 @@ class PublicController extends Zend_Controller_Action
     }
      public function faqAction()
     {
-         $this->view->headTitle( 'Elenco delle F.A.Q.' );
+         
         $faq = new Application_Resource_Faq();
         $fa = $faq->fetchAll();
         $this->view->faq = $fa;
@@ -42,12 +42,16 @@ class PublicController extends Zend_Controller_Action
     
     public function catalogocamereAction()
     {
-		
+	$catalogo = new Application_Resource_Tipocamere();
+        $cat = $catalogo->fetchAll();
+        $this->view->catalogo = $cat;	
     }
     
     public function catalogoserviziAction()
     {
-	
+	$servizi = new Application_Resource_Tiposervizi();
+        $ser = $servizi->fetchAll();
+        $this->view->servizi = $ser;
     }
  	
     public function viewstaticAction () {

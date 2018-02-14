@@ -142,6 +142,11 @@ img.foot-img{
 	height: 150px;
 }
 
+img.cat-img{
+    border-radius: 5% 5% 5% 5%;
+    width: 80%;
+    height: 80;
+}
 img.add-img{
 	border-radius: 5% 5% 5% 5%;
 	width: 150px;
