@@ -4,7 +4,7 @@ class StaffController extends Zend_Controller_Action
 {	
     public function init()
     {
-		$this->_helper->layout->setLayout('layout_utente');
+		$this->_helper->layout->setLayout('layout_staff');
 		$this->_authService = new Application_Service_Auth();
     }
 
