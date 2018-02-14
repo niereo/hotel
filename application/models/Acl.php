@@ -17,7 +17,7 @@ class Application_Model_Acl extends Zend_Acl
 			 ->allow('utente','utente');
 			
                 // ACL for user
-		$this->addRole(new Zend_Acl_Role('sfaff'), 'utente')
+		$this->addRole(new Zend_Acl_Role('staff'), 'utente')
 			 ->add(new Zend_Acl_Resource('staff'))
 			 ->allow('staff','staff');
                 
