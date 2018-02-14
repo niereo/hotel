@@ -39,6 +39,16 @@ class PublicController extends Zend_Controller_Action
         $fa = $faq->fetchAll();
         $this->view->faq = $fa;
     }
+    
+    public function catalogocamereAction()
+    {
+		
+    }
+    
+    public function catalogoserviziAction()
+    {
+	
+    }
  	
     public function viewstaticAction () {
     	$page = $this->_getParam('staticPage');

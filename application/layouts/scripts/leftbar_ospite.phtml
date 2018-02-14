@@ -3,8 +3,20 @@
                <li>
                     <h4><b>BENVENUTO</b></h4>
                     <ul>
-                        <li>CATALOGO CAMERE</li> 
-                        <li>CATALOGO SERVIZI</li>
+                        <li><a href="<?= $this->url(array(
+                        'controller' => 'public',
+                        'action'     => 'catalogocamere',
+						), 
+                        'default',true
+                    ); 
+                 ?>" >CATALOGO CAMERE</a></li> 
+                        <li><a href="<?= $this->url(array(
+                        'controller' => 'public',
+                        'action'     => 'catalogoservizi',
+						), 
+                        'default',true
+                    ); 
+                 ?>" >CATALOGO SERVIZI</a></li>
           
                     </ul>
                 </li>
