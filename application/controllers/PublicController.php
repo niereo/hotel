@@ -11,6 +11,7 @@ class PublicController extends Zend_Controller_Action
 	$this->_helper->layout->setLayout('layout_ospite');
         $this->_authService = new Application_Service_Auth();
         $this->view->loginForm = $this->getLoginForm();
+        $this->view->registrazioneForm = $this->getRegistrazioneForm();
     }
 
     public function indexAction()
@@ -53,6 +54,23 @@ class PublicController extends Zend_Controller_Action
         $ser = $servizi->fetchAll();
         $this->view->servizi = $ser;
     }
+    
+    public function registrazioneAction()
+    {
+        
+    }
+    
+    	private function getRegistrazioneForm()
+    {
+    	$urlHelper = $this->_helper->getHelper('url');
+		$this->_form = new Application_Form_Public_Registrazione_Registrazione();
+    	$this->_form->setAction($urlHelper->url(array(
+			'controller' => 'public',
+			'action' => 'index'),
+			'default'
+		));
+		return $this->_form;
+    }   	
  	
     public function viewstaticAction () {
     	$page = $this->_getParam('staticPage');
