@@ -103,26 +103,22 @@ class PublicController extends Zend_Controller_Action
       $ind = $this->getRequest()->getParam('indirizzo');
       $email = $this->getRequest()->getParam('email');
    
-  $info=array('username' => $username,
-      'password' => $password,
-      'ruolo' => 'utente');
-    /* 'cognome' => $cognome,
+  $cli=array('username' => $username,
+     'cognome' => $cognome,
      'nome' => $nome,
      'data_nascita' => $data,
      'numero_telefono' => $cell,
      'genere' => $gen,
      'citta' => $cit,
      'indirizzo' => $ind,
-     'email' => $email);*/
+     'email' => $email);
+  $info=array('username' => $username,
+      'password' => $password,
+      'ruolo' => 'utente');
      
   $this->_publicModel->insertUtente($info);
+  $this->_publicModel->insertCliente($cli);
    
- /* $password= $this->getRequest()->getParam('Password'); 
-  $data=array('Username' => $info["Username"],
-     'Cod_Paz' => $info["Codice_Paziente"],
-     'Password' => $password,
-     'role' => 'Paziente');
-$this->_dottoreModel->insertAccPaziente($data);*/
         return $this->_helper->redirector('index');
 	}
  	

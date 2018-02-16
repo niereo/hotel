@@ -58,7 +58,7 @@ $this->addElement('text', 'username', array(
             'decorators' => $this->elementDecorators,
         ));
 					
-		$date = new Zend_Validate_Date(array('format' => 'dd MM yyyy'));$date->setMessage("Il campo Data di Nascita deve contenere caratteri numerici che rispettano il formato 'dd MM yyyy' ");
+		$date = new Zend_Validate_Date(array('format' => 'yyyy MM dd'));$date->setMessage("Il campo Data di Nascita deve contenere caratteri numerici che rispettano il formato 'yyyy MM dd' ");
 		
 		$this->addElement('text', 'data_nascita', array(
             'label' => 'Data di Nascita',

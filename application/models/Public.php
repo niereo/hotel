@@ -28,5 +28,10 @@ class Application_Model_Public extends App_Model_Abstract
     {
     	return $this->getResource('Utente')->insertUtente($info);
     }
+    
+         public function insertCliente($info)
+    {
+    	return $this->getResource('Cliente')->insertCliente($info);
+    }
 
 }
