@@ -7,16 +7,7 @@ class Application_Model_Admin extends App_Model_Abstract
     {
     }
 
-    public function getSubCats()
-    {
-        return $this->getResource('Category')->getSubCats();
-    }
-    
-    public function saveProduct($info)
-    {
-    	return $this->getResource('Product')->insertProduct($info);
-    }
-    
+
     public function getUtenteByName($info)
     {
     	return $this->getResource('Utente')->getUtenteByName($info);

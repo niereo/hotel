@@ -58,7 +58,7 @@ $this->addElement('text', 'username', array(
             'decorators' => $this->elementDecorators,
         ));
 					
-		$date = new Zend_Validate_Date(array('format' => 'yyyy MM dd'));
+		$date = new Zend_Validate_Date(array('format' => 'dd MM yyyy'));$date->setMessage("Il campo Data di Nascita deve contenere caratteri numerici che rispettano il formato 'dd MM yyyy' ");
 		
 		$this->addElement('text', 'data_nascita', array(
             'label' => 'Data di Nascita',
@@ -81,14 +81,15 @@ $this->addElement('text', 'username', array(
                   $this->addElement('text', 'indirizzo', array(
             'label' => 'Indirizzo',
             'required' =>true,
-            'filters' => array('StringTrim'),
+            
             'validators' => array(array('StringLength',true, array(1,25))),
             'decorators' => $this->elementDecorators,
         ));
-	$tel = new Zend_Validate_Digits();	
+	$tel = new Zend_Validate_Digits();$tel->setMessage("Il campo Numero di Telefono deve contenere solo numeri");	
         $this->addElement('text', 'numero_telefono', array(
             'label' => 'Numero di Telefono',
-            'filters' => array('Digits'),
+            'required' =>true,
+            
             'validators' => array($tel,array('StringLength',true, array(1,10))),
             'decorators' => $this->elementDecorators,
         ));

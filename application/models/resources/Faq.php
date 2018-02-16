@@ -10,7 +10,7 @@ class Application_Resource_Faq extends Zend_Db_Table_Abstract
     {
     }
        
-    public function getFaq($faq)
+    public function getFaq()
     {
         return $this->fetchAll();
     }	

@@ -6,6 +6,7 @@ class PublicController extends Zend_Controller_Action
 	protected $_authService;
 	protected $_formLogin;
         protected $_formRegistrazione;
+        protected $_publicModel;
 	
     public function init()
     {
@@ -13,6 +14,7 @@ class PublicController extends Zend_Controller_Action
         $this->_authService = new Application_Service_Auth();
         $this->view->loginForm = $this->getLoginForm();
         $this->view->registrazioneForm = $this->getRegistrazioneForm();
+        $this->_publicModel = new Application_Model_Public();
     }
 
     public function indexAction()
@@ -37,23 +39,20 @@ class PublicController extends Zend_Controller_Action
      public function faqAction()
     {
          
-        $faq = new Application_Resource_Faq();
-        $fa = $faq->fetchAll();
-        $this->view->faq = $fa;
+        $faq = $this->_publicModel->getFaq();
+        $this->view->faq = $faq;
     }
     
     public function catalogocamereAction()
     {
-	$catalogo = new Application_Resource_Tipocamere();
-        $cat = $catalogo->fetchAll();
-        $this->view->catalogo = $cat;	
+	$catalogo = $this->_publicModel->getCamere();
+        $this->view->catalogo = $catalogo;	
     }
     
     public function catalogoserviziAction()
     {
-	$servizi = new Application_Resource_Tiposervizi();
-        $ser = $servizi->fetchAll();
-        $this->view->servizi = $ser;
+	$servizi = $this->_publicModel->getServizi();
+        $this->view->servizi = $servizi;
     }
     
     public function registrazioneAction()
@@ -67,11 +66,65 @@ class PublicController extends Zend_Controller_Action
 		$this->_formRegistrazione = new Application_Form_Public_Registrazione_Registrazione();
     	$this->_formRegistrazione->setAction($urlHelper->url(array(
 			'controller' => 'public',
-			'action' => 'index'),
+			'action' => 'registra'),
 			'default'
 		));
 		return $this->_formRegistrazione;
-    }   	
+    }   
+    
+    public function registraAction()
+	{        
+        $request = $this->getRequest();
+        if (!$request->isPost()) {
+            return $this->_helper->redirector('registrazione');
+        }
+        $form = $this->_formRegistrazione;
+        if (!$form->isValid($request->getPost())) {
+            $form->setDescription('Attenzione: alcuni dati inseriti sono errati.');
+        	return $this->render('registrazione');
+        }
+        if (!$this->getRequest()->isPost()) {
+            $this->_helper->redirector('registrazione');
+        }
+  $form=$this->_formRegistrazione;
+        if (!$form->isValid($_POST)) { 
+            $form->setDescription('Attenzione: alcuni dati inseriti sono errati.');
+            return $this->render('registrazione');
+        } 
+
+    $username = $this->getRequest()->getParam('username');
+    $password = $this->getRequest()->getParam('password');
+    $cognome = $this->getRequest()->getParam('cognome'); 
+     $nome = $this->getRequest()->getParam('nome'); 
+     $data = $this->getRequest()->getParam('data_nascita'); 
+     $cell = $this->getRequest()->getParam('numero_telefono');
+      $gen = $this->getRequest()->getParam('genere');
+      $cit = $this->getRequest()->getParam('citta');
+      $ind = $this->getRequest()->getParam('indirizzo');
+      $email = $this->getRequest()->getParam('email');
+   
+  $info=array('username' => $username,
+      'password' => $password,
+      'ruolo' => 'utente');
+    /* 'cognome' => $cognome,
+     'nome' => $nome,
+     'data_nascita' => $data,
+     'numero_telefono' => $cell,
+     'genere' => $gen,
+     'citta' => $cit,
+     'indirizzo' => $ind,
+     'email' => $email);*/
+     
+  $this->_publicModel->insertUtente($info);
+   
+ /* $password= $this->getRequest()->getParam('Password'); 
+  $data=array('Username' => $info["Username"],
+     'Cod_Paz' => $info["Codice_Paziente"],
+     'Password' => $password,
+     'role' => 'Paziente');
+$this->_dottoreModel->insertAccPaziente($data);*/
+        return $this->_helper->redirector('index');
+	}
  	
     public function viewstaticAction () {
     	$page = $this->_getParam('staticPage');
