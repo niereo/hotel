@@ -16,5 +16,11 @@ class Application_Resource_Cliente extends Zend_Db_Table_Abstract
     {
         $this->insert($info);
     }
+    
+   public function getClienteByUser($usrName)
+    {
+        return $this->fetchRow($this->select()->where('username = ?', $usrName));
+    }
+    
 }
 

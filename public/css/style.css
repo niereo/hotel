@@ -173,6 +173,7 @@ bottom:10px;
 table {
 	width: 100%;
 	text-align: left;
+        border-collapse: collapse;
 }
 
 th.title{
@@ -183,6 +184,7 @@ th.title{
 
 th, td {
 	padding: 10px 20px;
+        
 }
 
 th.add{
@@ -194,11 +196,12 @@ th {
 	color: #fff;
 	background: #799AC0 none repeat-x scroll left top;
 }
-/*
-td{
-	border-bottom: 1px solid #ccc;
+th.profilo {
+	color: #fff;
+	background: #C0C0C0 none repeat-x scroll left top;
+        
 }
-*/
+
 
 
 p {

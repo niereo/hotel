@@ -58,4 +58,22 @@ class Application_Service_Auth
 		$authAdapter->setCredential($values['password']);
         return $authAdapter;
     }
+    	public function authInfo ($info = null)
+    {
+        if (null === $this->_auth) {
+            $this->_auth = new Application_Service_Auth();
+        }
+        if (null === $info) {
+            return $this;
+        }
+        if (false === $this->isLoggedIn()) {
+            return null;
+        }
+        return $this->_auth->getIdentity()->$info;
+    }
+
+	public function isLoggedIn()
+    {
+        return $this->_auth->getAuth()->hasIdentity();
+    }
 }
