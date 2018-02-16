@@ -4,7 +4,8 @@ class PublicController extends Zend_Controller_Action
 {
 	
 	protected $_authService;
-	protected $_form;
+	protected $_formLogin;
+        protected $_formRegistrazione;
 	
     public function init()
     {
@@ -63,13 +64,13 @@ class PublicController extends Zend_Controller_Action
     	private function getRegistrazioneForm()
     {
     	$urlHelper = $this->_helper->getHelper('url');
-		$this->_form = new Application_Form_Public_Registrazione_Registrazione();
-    	$this->_form->setAction($urlHelper->url(array(
+		$this->_formRegistrazione = new Application_Form_Public_Registrazione_Registrazione();
+    	$this->_formRegistrazione->setAction($urlHelper->url(array(
 			'controller' => 'public',
 			'action' => 'index'),
 			'default'
 		));
-		return $this->_form;
+		return $this->_formRegistrazione;
     }   	
  	
     public function viewstaticAction () {
@@ -86,7 +87,7 @@ class PublicController extends Zend_Controller_Action
         if (!$request->isPost()) {
             return $this->_helper->redirector('login');
         }
-        $form = $this->_form;
+        $form = $this->_formLogin;
         if (!$form->isValid($request->getPost())) {
             $form->setDescription('Attenzione: alcuni dati inseriti sono errati.');
         	return $this->render('login');
@@ -114,13 +115,13 @@ class PublicController extends Zend_Controller_Action
 	private function getLoginForm()
     {
     	$urlHelper = $this->_helper->getHelper('url');
-		$this->_form = new Application_Form_Public_Auth_Login();
-    	$this->_form->setAction($urlHelper->url(array(
+		$this->_formLogin = new Application_Form_Public_Auth_Login();
+    	$this->_formLogin->setAction($urlHelper->url(array(
 			'controller' => 'public',
 			'action' => 'authenticate'),
 			'default'
 		));
-		return $this->_form;
+		return $this->_formLogin;
     }   	
 }
 
