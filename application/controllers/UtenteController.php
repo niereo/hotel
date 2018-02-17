@@ -5,12 +5,14 @@ class UtenteController extends Zend_Controller_Action
     protected $_publicModel;
     protected $_utenteModel;
     protected $_authService;
+    protected $_formModificapassword;
     public function init()
     {
 		$this->_helper->layout->setLayout('layout_utente');
 		$this->_authService = new Application_Service_Auth();
                 $this->_publicModel = new Application_Model_Public();
                 $this->_utenteModel = new Application_Model_Utente();
+                $this->view->modificapassForm = $this->getModificapasswordForm();
     }
 
     public function indexAction()
@@ -32,7 +34,51 @@ class UtenteController extends Zend_Controller_Action
     {
 		
     }
+    public function modificaprofiloAction()
+    {
+        
+    }
     
+    public function modificapasswordAction()
+    {
+        
+    }
+     	private function getModificapasswordForm()
+    {
+    	$urlHelper = $this->_helper->getHelper('url');
+		$this->_formModificapassword = new Application_Form_Utente_Modificadati_Modificapassword();
+    	$this->_formModificapassword->setAction($urlHelper->url(array(
+			'controller' => 'utente',
+			'action' => 'modificapass'),
+			'default'
+		));
+		return $this->_formModificapassword;
+    }   
+     public function modificapassAction()
+	{        
+        $request = $this->getRequest();
+        if (!$request->isPost()) {
+            return $this->_helper->redirector('modificapassword');
+        }
+        $form = $this->_formModificapassword;
+        if (!$form->isValid($request->getPost())) {
+            $form->setDescription('Attenzione: alcuni dati inseriti sono errati.');
+        	return $this->render('modificapassword');
+        }
+        if (!$this->getRequest()->isPost()) {
+            $this->_helper->redirector('modificapassword');
+        }
+  $form=$this->_formModificapassword;
+        if (!$form->isValid($_POST)) { 
+            $form->setDescription('Attenzione: alcuni dati inseriti sono errati.');
+            return $this->render('modificapassword');
+        } 
+
+    
+    $password = $this->getRequest()->getParam('newpassword');
+   
+        return $this->_helper->redirector('profilo');
+	}
     public function profiloAction()
     {
         $user=$this->_authService->authInfo('username');

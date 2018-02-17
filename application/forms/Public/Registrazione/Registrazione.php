@@ -41,11 +41,21 @@ $this->addElement('text', 'username', array(
         ));
 
 //questa va dentro account
+        $lung=new Zend_Validate_StringLength(8,20); $lung->setMessage('La password deve essere almeno di 8 caratteri e non più grande di 20');
  $this->addElement('password', 'password', array(
             'label' => 'Password',
             'required' =>true,
             'filters' => array('StringTrim'),
-            'validators' => array(array('StringLength',true, array(1,20))),
+            'validators' => array($lung),
+            'decorators' => $this->elementDecorators,
+        ));
+ $pass=new Zend_Validate_Identical('password');$pass->setMessage("Le due password devono coincidere");
+ 
+  $this->addElement('password', 'confpass', array(
+            'label' => 'Conferma Password',
+            'required' =>true,
+            'filters' => array('StringTrim'),
+            'validators' => array($pass),
             'decorators' => $this->elementDecorators,
         ));
  
