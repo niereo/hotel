@@ -19,5 +19,10 @@ class Application_Resource_Utente extends Zend_Db_Table_Abstract
     {
         $this->insert($info);
     }
+    
+    public function updatePassByUser($info)
+    {
+	$this->update($info, 'username ='.$info['username']);
+    }	
 }
 

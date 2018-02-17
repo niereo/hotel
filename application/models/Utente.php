@@ -13,7 +13,10 @@ class Application_Model_Utente extends App_Model_Abstract
     	return $this->getResource('Cliente')->getClienteByUser($info);
     }
    
-    
+    public function updatePassByUser($info)
+    {
+	return $this->getResource('Utente')->updatePassByUser($info);
+    }
     
 
 }

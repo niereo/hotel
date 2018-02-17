@@ -68,17 +68,23 @@ class UtenteController extends Zend_Controller_Action
         if (!$this->getRequest()->isPost()) {
             $this->_helper->redirector('modificapassword');
         }
-  $form=$this->_formModificapassword;
+        $form=$this->_formModificapassword;
         if (!$form->isValid($_POST)) { 
             $form->setDescription('Attenzione: alcuni dati inseriti sono errati.');
             return $this->render('modificapassword');
-        } 
-
-    
-    $password = $this->getRequest()->getParam('newpassword');
-   
+        }     
+        $pass = $this->getRequest()->getParam('newpassword');
+        
+        $user=$this->_authService->authInfo('username');
+        $info=array('username'=>$user,'password'=>$pass,'ruolo'=>'utente');
+	$this->_utenteModel->updatePassByUser($info); 
+        
         return $this->_helper->redirector('profilo');
+               
+            
 	}
+        
+    
     public function profiloAction()
     {
         $user=$this->_authService->authInfo('username');
@@ -105,10 +111,10 @@ class UtenteController extends Zend_Controller_Action
     }
 
     public function logoutAction()
-	{
+    {
 		$this->_authService->clear();
 		return $this->_helper->redirector('index','public');	
-	}
+    }
     
 }
 
