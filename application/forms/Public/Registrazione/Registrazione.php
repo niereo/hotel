@@ -14,7 +14,7 @@ class Application_Form_Public_Registrazione_Registrazione extends App_Form_Abstr
 		
 		$cod_noexists = new Zend_Validate_Db_NoRecordExists(array('table'=>'utente', 'field'=>'username'));
 		
-		$cod_noexists->setMessage('%value% esiste già, usare un altro codice',Zend_Validate_Db_Abstract::ERROR_RECORD_FOUND);
+		$cod_noexists->setMessage('%value% esiste già, usare un altro username',Zend_Validate_Db_Abstract::ERROR_RECORD_FOUND);
 		
 $this->addElement('text', 'username', array(
             'label' => 'Username',
@@ -40,7 +40,7 @@ $this->addElement('text', 'username', array(
             'decorators' => $this->elementDecorators,
         ));
 
-//questa va dentro account
+
         $lung=new Zend_Validate_StringLength(8,20); $lung->setMessage('La password deve essere almeno di 8 caratteri e non più grande di 20');
  $this->addElement('password', 'password', array(
             'label' => 'Password',

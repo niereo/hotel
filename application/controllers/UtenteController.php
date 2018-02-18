@@ -6,6 +6,7 @@ class UtenteController extends Zend_Controller_Action
     protected $_utenteModel;
     protected $_authService;
     protected $_formModificapassword;
+    protected $_formModificaprofilo;
     public function init()
     {
 		$this->_helper->layout->setLayout('layout_utente');
@@ -13,6 +14,7 @@ class UtenteController extends Zend_Controller_Action
                 $this->_publicModel = new Application_Model_Public();
                 $this->_utenteModel = new Application_Model_Utente();
                 $this->view->modificapassForm = $this->getModificapasswordForm();
+                $this->view->modificaprofiloForm = $this->getModificaprofiloForm();
     }
 
     public function indexAction()
@@ -34,16 +36,13 @@ class UtenteController extends Zend_Controller_Action
     {
 		
     }
-    public function modificaprofiloAction()
-    {
-        
-    }
     
+    //funzioni per modificare la password
     public function modificapasswordAction()
     {
         
     }
-     	private function getModificapasswordForm()
+    private function getModificapasswordForm()
     {
     	$urlHelper = $this->_helper->getHelper('url');
 		$this->_formModificapassword = new Application_Form_Utente_Modificadati_Modificapassword();
@@ -82,7 +81,53 @@ class UtenteController extends Zend_Controller_Action
         return $this->_helper->redirector('profilo');
                
             
+    }
+    
+    //funzioni per modificare il profilo
+    public function modificaprofiloAction()
+    {
+        
+    }
+    
+    private function getModificaprofiloForm()
+    {
+    	$urlHelper = $this->_helper->getHelper('url');
+		$this->_formModificaprofilo = new Application_Form_Utente_Modificadati_Modificaprofilo();
+    	$this->_formModificaprofilo->setAction($urlHelper->url(array(
+			'controller' => 'utente',
+			'action' => 'modificaprof'),
+			'default'
+		));
+		return $this->_formModificaprofilo;
+    }   
+     public function modificaprofAction()
+	{        
+        $request = $this->getRequest();
+        if (!$request->isPost()) {
+            return $this->_helper->redirector('modificaprofilo');
+        }
+        $form = $this->_formModificaprofilo;
+        if (!$form->isValid($request->getPost())) {
+            $form->setDescription('Attenzione: alcuni dati inseriti sono errati.');
+        	return $this->render('modificaprofilo');
+        }
+        if (!$this->getRequest()->isPost()) {
+            $this->_helper->redirector('modificaprofilo');
+        }
+        $form=$this->_formModificaprofilo;
+        if (!$form->isValid($_POST)) { 
+            $form->setDescription('Attenzione: alcuni dati inseriti sono errati.');
+            return $this->render('modificaprofilo');
+        }     
+        $pass = $this->getRequest()->getParam('newpassword');
+        
+        //qui va la query 
+        
+        return $this->_helper->redirector('profilo');
+               
+            
 	}
+        
         
     
     public function profiloAction()
