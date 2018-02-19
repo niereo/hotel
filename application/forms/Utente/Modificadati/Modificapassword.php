@@ -3,7 +3,6 @@
 class Application_Form_Utente_Modificadati_Modificapassword extends App_Form_Abstract
 {
     protected $_authService;
-    protected $_notId;
 	public function init()
     {               
         $this->_authService = new Application_Service_Auth();   

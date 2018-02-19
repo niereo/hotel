@@ -11,6 +11,21 @@
                         'default',true
                     ); 
                  ?>" >PROFILO UTENTE</a></li>
+                   <li><a href="<?= $this->url(array(
+                        'controller' => 'utente',
+                        'action'     => 'dataprenotazione',
+						), 
+                        'default',true
+                    ); 
+                 ?>" >EFFETTUA PRENOTAZIONE</a></li>
+                   <li><a href="<?= $this->url(array(
+                        'controller' => 'utente',
+                        'action'     => 'listaprenotazioni',
+						), 
+                        'default',true
+                    ); 
+                 ?>" >PRENOTAZIONI EFFETTUATE</a></li>
+                   
                         <li><a href="<?= $this->url(array(
                         'controller' => 'utente',
                         'action'     => 'catalogocamere',

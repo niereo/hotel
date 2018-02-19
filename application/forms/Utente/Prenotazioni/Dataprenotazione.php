@@ -1,8 +1,9 @@
 <?php
 
-class Application_Form_Utente_Modificadati_Modificaprofilo extends App_Form_Abstract
+class Application_Form_Utente_Prenotazioni extends App_Form_Abstract
 {
     protected $_authService;
+    protected $_notId;
     protected $_utenteModel;
 	public function init()
     {               

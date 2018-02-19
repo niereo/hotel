@@ -37,6 +37,19 @@ class UtenteController extends Zend_Controller_Action
 		
     }
     
+    //funzioni per effettuare una prenotazione
+    public function dataprenotazioneAction()
+    {
+		
+    }
+    
+    
+    //funzioni per visulizzare la lista delle prenotazioni
+    public function listaprenotazioniAction()
+    {
+		
+    }
+    
     //funzioni per modificare la password
     public function modificapasswordAction()
     {
