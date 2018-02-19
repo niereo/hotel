@@ -41,7 +41,7 @@ $this->addElement('text', 'username', array(
         ));
 
 
-        $lung=new Zend_Validate_StringLength(8,20); $lung->setMessage('La password deve essere almeno di 8 caratteri e non più grande di 20');
+        $lung=new Zend_Validate_StringLength(4,20); $lung->setMessage('La password deve essere almeno di 8 caratteri e non più grande di 20');
  $this->addElement('password', 'password', array(
             'label' => 'Password',
             'required' =>true,
@@ -68,7 +68,7 @@ $this->addElement('text', 'username', array(
             'decorators' => $this->elementDecorators,
         ));
 					
-		$date = new Zend_Validate_Date(array('format' => 'yyyy MM dd'));$date->setMessage("Il campo Data di Nascita deve contenere caratteri numerici che rispettano il formato 'yyyy MM dd' ");
+		$date = new Zend_Validate_Date(array('format' => 'yyyy-MM-dd'));$date->setMessage("Il campo Data di Nascita deve contenere caratteri numerici che rispettano il formato 'yyyy-MM-dd' ");
 		
 		$this->addElement('text', 'data_nascita', array(
             'label' => 'Data di Nascita',

@@ -118,10 +118,27 @@ class UtenteController extends Zend_Controller_Action
         if (!$form->isValid($_POST)) { 
             $form->setDescription('Attenzione: alcuni dati inseriti sono errati.');
             return $this->render('modificaprofilo');
-        }     
-        $pass = $this->getRequest()->getParam('newpassword');
-        
-        //qui va la query 
+        }  
+        $user=$this->_authService->authInfo('username');
+        $nome = $this->getRequest()->getParam('nome');
+        $cognome = $this->getRequest()->getParam('cognome');
+        $genere = $this->getRequest()->getParam('genere');
+        $data = $this->getRequest()->getParam('data_nascita');
+        $citta = $this->getRequest()->getParam('citta');
+        $indirizzo = $this->getRequest()->getParam('indirizzo');
+        $tel = $this->getRequest()->getParam('numero_telefono');
+        $email = $this->getRequest()->getParam('email');
+         
+        $info=array('username'=> $user,
+            'nome'=> $nome,
+            'cognome'=> $cognome,
+            'genere'=> $genere,
+            'data_nascita'=> $data,
+            'citta'=> $citta,
+            'indirizzo'=> $indirizzo,
+            'numero_telefono'=> $tel,
+            'email'=> $email);
+	$this->_utenteModel->updateProfiloByUser($info); 
         
         return $this->_helper->redirector('profilo');
                

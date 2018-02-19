@@ -21,6 +21,12 @@ class Application_Resource_Cliente extends Zend_Db_Table_Abstract
     {
         return $this->fetchRow($this->select()->where('username = ?', $usrName));
     }
+    public function updateProfiloByUser($info)
+    {
+        $where= array('username = ?' => $info['username']);
+	$this->update($info,$where);
+        
+    }	
     
 }
 

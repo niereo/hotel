@@ -17,6 +17,10 @@ class Application_Model_Utente extends App_Model_Abstract
     {
 	return $this->getResource('Utente')->updatePassByUser($info);
     }
+     public function updateProfiloByUser($info)
+    {
+	return $this->getResource('Cliente')->updateProfiloByUser($info);
+    }
     
 
 }

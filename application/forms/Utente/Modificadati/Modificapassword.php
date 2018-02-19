@@ -23,7 +23,7 @@ class Application_Form_Utente_Modificadati_Modificapassword extends App_Form_Abs
         
         $this->addElement('password', 'newpassword', array(
             'validators' => array(
-                array('StringLength', true, array(3, 20))
+                array('StringLength', true, array(4, 20))
             ),
             'required'   => true,
             'label'      => 'Nuova Password',
@@ -36,14 +36,13 @@ class Application_Form_Utente_Modificadati_Modificapassword extends App_Form_Abs
          
         $this->addElement('password', 'confnewpassword', array(
             'validators' => array($confnewpass,
-                array('StringLength', true, array(3, 20))
             ),
             'required'   => true,
             'label'      => 'Conferma Nuova Password',
             'decorators' => $this->elementDecorators,
             ));
 
-        $this->addElement('submit', 'cinferma', array(
+        $this->addElement('submit', 'conferma', array(
             'label'    => 'Conferma',
             'decorators' => $this->buttonDecorators,
         ));

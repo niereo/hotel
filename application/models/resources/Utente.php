@@ -22,7 +22,8 @@ class Application_Resource_Utente extends Zend_Db_Table_Abstract
     
     public function updatePassByUser($info)
     {
-	$this->update($info, 'username ='.$info['username']);
+	$where= array('username = ?' => $info['username']);
+	$this->update($info,$where);
     }	
 }
 
