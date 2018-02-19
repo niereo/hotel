@@ -18,14 +18,13 @@
     </table>
     <?php $now=new Zend_Date() ?>
     <?php $dpren=new Zend_Date($pren->data_inizio_pren) ?>
-     
-   
+      
        <?php if($dpren->compare($now)> 0)
    { echo'<a href="'. $this->url(array(
                         'controller' => 'utente',
                         'action'     => 'deleteprenotazione',
-			'value' => $pren->cod_prenotazione,			), 
-                        'default',true
+                        'codice' => $codice=$pren->cod_prenotazione), 
+                        'default' ,true
                     ) 
                  .'" ><button>CANCELLA PRENOTAZIONE</button></a>';}
        ?>  
