@@ -21,6 +21,13 @@ class Application_Model_Utente extends App_Model_Abstract
     {
 	return $this->getResource('Cliente')->updateProfiloByUser($info);
     }
-    
+     public function getPrenotazioniByUser($info)
+    {
+    	return $this->getResource('Prenotazionehotel')->getPrenotazioniByUser($info);
+    }
+     public function deletePrenotazioneByCod($info)
+    {
+    	return $this->getResource('Prenotazionehotel')->deletePrenotazioneByCod($info);
+    }
 
 }

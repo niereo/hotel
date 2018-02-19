@@ -7,6 +7,7 @@ class UtenteController extends Zend_Controller_Action
     protected $_authService;
     protected $_formModificapassword;
     protected $_formModificaprofilo;
+    protected $_formDataprenotazione;
     public function init()
     {
 		$this->_helper->layout->setLayout('layout_utente');
@@ -15,6 +16,7 @@ class UtenteController extends Zend_Controller_Action
                 $this->_utenteModel = new Application_Model_Utente();
                 $this->view->modificapassForm = $this->getModificapasswordForm();
                 $this->view->modificaprofiloForm = $this->getModificaprofiloForm();
+                $this->view->dataprenotazioneForm = $this->getDataprenotazioneForm();
     }
 
     public function indexAction()
@@ -43,11 +45,34 @@ class UtenteController extends Zend_Controller_Action
 		
     }
     
+     private function getDataprenotazioneForm()
+    {
+    	$urlHelper = $this->_helper->getHelper('url');
+		$this->_formDataprenotazione = new Application_Form_Utente_Prenotazioni_Dataprenotazione();
+    	$this->_formDataprenotazione->setAction($urlHelper->url(array(
+			'controller' => 'utente',
+			'action' => 'index'),
+			'default'
+		));
+		return $this->_formDataprenotazione;
+    }   
+    
     
     //funzioni per visulizzare la lista delle prenotazioni
     public function listaprenotazioniAction()
     {
-		
+        $info=$this->_authService->authInfo('username');
+	$preno = $this->_utenteModel->getPrenotazioniByUser($info);     
+        $this->view->prenotazioni = $preno;
+        
+    }
+    
+     public function deleteprenotazioneAction($codice)
+    {
+        
+	$this->_utenteModel->deletePrenotazioneByCod($codice);     
+        return $this->_helper->redirector('listaprenotazioni');
+        
     }
     
     //funzioni per modificare la password

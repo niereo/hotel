@@ -25,5 +25,6 @@ class Application_Resource_Utente extends Zend_Db_Table_Abstract
 	$where= array('username = ?' => $info['username']);
 	$this->update($info,$where);
     }	
+    
 }
 

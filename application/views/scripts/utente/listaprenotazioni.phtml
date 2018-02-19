@@ -1,4 +1,36 @@
-<head>
-   <?= $this->headScript(); ?>
-</head>   
-<h3>LISTA PRENOTAZIONI</h3>
+<div>
+    <h3> LISTA PRENOTAZIONI</h3>   
+    
+            
+	<?php foreach ($this->prenotazioni as $pren) :?>
+    <table>
+        <tr><td><h4>CAMERA NUMERO: </h4></td><td><?php echo' <class="title">' . $pren->codice_camera . '' ?></td></tr>
+        <tr><td><h4>DATA PRENOTAZIONE: </h4></td><td><?php echo' <class="title">' . $pren->data_prenotazione . '' ?></td></tr>
+        <tr><td><h4>DATA ARRIVO: </h4></td><td><?php echo' <class="title">' . $pren->data_inizio_pren . '' ?></td></tr>
+        <tr><td><h4>DATA PARTENZA: </h4></td><td><?php echo' <class="title">' . $pren->data_fine_pren . '' ?></td></tr>
+        <tr><td><h4>CODICE: </h4></td><td><?php echo' <class="title">' . $pren->cod_prenotazione . '' ?></td></tr>
+        <tr><td><h4>SERVIZI AGGIUNTIVI: </h4></td><td><?php  if($pren->richiesta_servizi== true){
+        echo'Hai richiesto servizi aggiuntivi';}
+            else{
+            echo'Non hai richiesto servizi aggiuntivi';}
+         ?></td></tr>
+        
+    </table>
+    <?php $now=new Zend_Date() ?>
+    <?php $dpren=new Zend_Date($pren->data_inizio_pren) ?>
+     
+   
+       <?php if($dpren->compare($now)> 0)
+   { echo'<a href="'. $this->url(array(
+                        'controller' => 'utente',
+                        'action'     => 'deleteprenotazione',
+			'value' => $pren->cod_prenotazione,			), 
+                        'default',true
+                    ) 
+                 .'" ><button>CANCELLA PRENOTAZIONE</button></a>';}
+       ?>  
+    <br><br>
+	<?php endforeach ?>
+	
+	
+</div>
