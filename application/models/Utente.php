@@ -29,5 +29,8 @@ class Application_Model_Utente extends App_Model_Abstract
     {
     	return $this->getResource('Prenotazionehotel')->deletePrenotazioneByCod($info);
     }
-
+      public function getTipoByCod($info)
+    {
+    	return $this->getResource('Camere')->getTipoByCod($info);
+    }
 }

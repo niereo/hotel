@@ -14,5 +14,6 @@ class Application_Resource_Tipocamere extends Zend_Db_Table_Abstract
     {
         return $this->fetchAll();
     }	
+    
 }
 

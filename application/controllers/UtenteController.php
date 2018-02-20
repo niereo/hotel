@@ -8,6 +8,7 @@ class UtenteController extends Zend_Controller_Action
     protected $_formModificapassword;
     protected $_formModificaprofilo;
     protected $_formDataprenotazione;
+    
     public function init()
     {
 		$this->_helper->layout->setLayout('layout_utente');
@@ -17,6 +18,7 @@ class UtenteController extends Zend_Controller_Action
                 $this->view->modificapassForm = $this->getModificapasswordForm();
                 $this->view->modificaprofiloForm = $this->getModificaprofiloForm();
                 $this->view->dataprenotazioneForm = $this->getDataprenotazioneForm();
+                
     }
 
     public function indexAction()
@@ -62,14 +64,25 @@ class UtenteController extends Zend_Controller_Action
     public function listaprenotazioniAction()
     {
         $info=$this->_authService->authInfo('username');
-	$preno = $this->_utenteModel->getPrenotazioniByUser($info);     
-        $this->view->prenotazioni = $preno;
+	$preno = $this->_utenteModel->getPrenotazioniByUser($info);
+       
+        $lista= new ArrayObject();
+        $counter=0;
+        foreach($preno as $pre)
+        {$tipo=$this->_utenteModel->getTipoByCod($pre->codice_camera);
+        
+        $lista[$counter]= array('prenotazione'=> $pre,
+            'tipo'=> $tipo);
+        $counter=$counter +1;}        
+        
+        $this->view->lista = $lista;
+        
         
     }
     
-     public function deleteprenotazioneAction($codice)
+     public function deleteprenotazioneAction()
     {
-        
+        $codice=$this->_getParam('codice');
 	$this->_utenteModel->deletePrenotazioneByCod($codice);     
         return $this->_helper->redirector('listaprenotazioni');
         

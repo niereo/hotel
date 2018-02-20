@@ -1,15 +1,15 @@
 <div>
     <h3> LISTA PRENOTAZIONI</h3>   
     
-            
-	<?php foreach ($this->prenotazioni as $pren) :?>
+        <?php $counter=0 ?>    
+	<?php foreach ($this->lista as $lis) :?>
     <table>
-        <tr><td><h4>CAMERA NUMERO: </h4></td><td><?php echo' <class="title">' . $pren->codice_camera . '' ?></td></tr>
-        <tr><td><h4>DATA PRENOTAZIONE: </h4></td><td><?php echo' <class="title">' . $pren->data_prenotazione . '' ?></td></tr>
-        <tr><td><h4>DATA ARRIVO: </h4></td><td><?php echo' <class="title">' . $pren->data_inizio_pren . '' ?></td></tr>
-        <tr><td><h4>DATA PARTENZA: </h4></td><td><?php echo' <class="title">' . $pren->data_fine_pren . '' ?></td></tr>
-        <tr><td><h4>CODICE: </h4></td><td><?php echo' <class="title">' . $pren->cod_prenotazione . '' ?></td></tr>
-        <tr><td><h4>SERVIZI AGGIUNTIVI: </h4></td><td><?php  if($pren->richiesta_servizi== true){
+        <tr><td><h4>DATA PRENOTAZIONE: </h4></td><td><?php echo' <class="title">' . $lis['prenotazione']->data_prenotazione . '' ?></td></tr>
+        <tr><td><h4>CAMERA NUMERO: </h4></td><td><?php echo' <class="title">' . $lis['prenotazione']->codice_camera . '' ?></td></tr>
+        <tr><td><h4>TIPO CAMERA: </h4></td><td><?php echo' <class="title">' . $lis['tipo']->tipo . '' ?></td></tr>
+        <tr><td><h4>DATA ARRIVO: </h4></td><td><?php echo' <class="title">' . $lis['prenotazione']->data_inizio_pren . '' ?></td></tr>
+        <tr><td><h4>DATA PARTENZA: </h4></td><td><?php echo' <class="title">' . $lis['prenotazione']->data_fine_pren . '' ?></td></tr>
+        <tr><td><h4>SERVIZI AGGIUNTIVI: </h4></td><td><?php  if($lis['prenotazione']->richiesta_servizi== true){
         echo'Hai richiesto servizi aggiuntivi';}
             else{
             echo'Non hai richiesto servizi aggiuntivi';}
@@ -17,18 +17,19 @@
         
     </table>
     <?php $now=new Zend_Date() ?>
-    <?php $dpren=new Zend_Date($pren->data_inizio_pren) ?>
-      
+    <?php $dpren=new Zend_Date($lis['prenotazione']->data_inizio_pren) ?>
+    
        <?php if($dpren->compare($now)> 0)
    { echo'<a href="'. $this->url(array(
                         'controller' => 'utente',
                         'action'     => 'deleteprenotazione',
-                        'codice' => $codice=$pren->cod_prenotazione), 
+                        'codice' => $lis['prenotazione']->cod_prenotazione), 
                         'default' ,true
                     ) 
                  .'" ><button>CANCELLA PRENOTAZIONE</button></a>';}
        ?>  
     <br><br>
+    <?php $counter=$counter+1 ?>
 	<?php endforeach ?>
 	
 	
