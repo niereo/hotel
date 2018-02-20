@@ -10,9 +10,18 @@ class Application_Resource_Prenotazionehotel extends Zend_Db_Table_Abstract
     {
     }
        
-    public function getPrenotazioniByUser($usrName)
+    public function getPrenotazioniByUser($usrName,$paged=null)
     {
-        return $this->fetchAll($this->select()->where('username = ?', $usrName));
+        $select=$this->select()->where('username = ?', $usrName);
+        
+		if (null !== $paged) {
+			$adapter = new Zend_Paginator_Adapter_DbTableSelect($select);
+			$paginator = new Zend_Paginator($adapter);
+			$paginator->setItemCountPerPage(1)
+		          	  ->setCurrentPageNumber((int) $paged);
+			return $paginator;
+		}
+        return $this->fetchAll($select);
     }	
     public function deletePrenotazioneByCod($codice)
     {

@@ -32,5 +32,10 @@
     <?php $counter=$counter+1 ?>
 	<?php endforeach ?>
 	
-	
+	 <!-- Paginazione -->	
+	  <?php if($this->lista instanceof Zend_Paginator) {
+	  		echo $this->paginationControl($this->lista,'Sliding','utente/_paginatorlistaprenotazioni.phtml');
+	  } 
+          ?>
+       
 </div>

@@ -686,3 +686,30 @@ footer .footer-bottom p {
 footer .footer-bottom p, footer .footer-bottom p a {
 	color: #eee;
 }
+
+
+#page {
+	width: 968px;
+	margin: 0 auto;
+	background: url(images/img05.jpg) repeat-y left top;
+}
+
+#page-bgtop {
+	background: url(images/img04.jpg) no-repeat left top;
+}
+
+#page-bgbtm {
+	background: url(images/img06.jpg) no-repeat left bottom;
+}
+
+/* Static */
+
+.static {
+	padding: 60px 20px 20px 20px;
+}
+#pagination {
+	text-align :center;
+}
+#pagination a {
+	border-bottom:none
+}

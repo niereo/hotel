@@ -64,7 +64,8 @@ class UtenteController extends Zend_Controller_Action
     public function listaprenotazioniAction()
     {
         $info=$this->_authService->authInfo('username');
-	$preno = $this->_utenteModel->getPrenotazioniByUser($info);
+        $paged = $this->_getParam('page', 1);
+	$preno = $this->_utenteModel->getPrenotazioniByUser($info,$paged);
        
         $lista= new ArrayObject();
         $counter=0;
@@ -78,6 +79,10 @@ class UtenteController extends Zend_Controller_Action
         $this->view->lista = $lista;
         
         
+    }
+    public function viewstaticAction () {
+    	$page = $this->_getParam('staticPage');
+    	$this->render($page);
     }
     
      public function deleteprenotazioneAction()
