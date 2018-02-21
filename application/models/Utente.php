@@ -42,4 +42,24 @@ class Application_Model_Utente extends App_Model_Abstract
     {
     	return $this->getResource('Prenotazioneservizi')->deletePrenotazioneServByCod($info);
     }
+       public function getPrenotazioniByCamera($info)
+    {
+    	return $this->getResource('Prenotazionehotel')->getPrenotazioniByCamera($info);
+    }
+       public function getCamere()
+    {
+    	return $this->getResource('Camere')->getCamere();
+    } 
+        public function getCamereByTipo($info)
+    {
+    	return $this->getResource('Camere')->getCamereByTipo($info);
+    } 
+        public function insertPrenotazione($info)
+    {
+    	return $this->getResource('Prenotazionehotel')->insertPrenotazione($info);
+    }
+       public function getDisponibilitacamera($info,$dataar,$datapa)
+    {
+    	return $this->getResource('Prenotazionehotel')->getDisponibilitacamera($info,$dataar,$datapa);
+    }
 }

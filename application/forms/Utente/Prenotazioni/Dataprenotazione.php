@@ -32,6 +32,19 @@ class Application_Form_Utente_Prenotazioni_Dataprenotazione extends App_Form_Abs
             'validators' => array($date),
             'decorators' => $this->elementDecorators,
         ));
+                
+            $this->addElement('select', 'tipo', array(
+            'label' => 'Filtra per Tipo',
+            'filters' => array('StringTrim'),
+            'multiOptions' => array(
+			'Qualsiasi' => 'Qualsiasi',
+			'Singola' => 'Singola',
+                        'Doppia' => 'Doppia',
+                        'Matrimoniale' => 'Matrimoniale',
+                        'Suite' => 'Suite'),
+            
+            'decorators' => $this->elementDecorators,
+        ));
 			
         $this->addElement('submit', 'insert', array(
             'label' => 'Conferma',

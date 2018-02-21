@@ -44,7 +44,7 @@ class UtenteController extends Zend_Controller_Action
     //funzioni per effettuare una prenotazione
     public function dataprenotazioneAction()
     {
-		
+        
     }
     
      private function getDataprenotazioneForm()
@@ -53,13 +53,59 @@ class UtenteController extends Zend_Controller_Action
 		$this->_formDataprenotazione = new Application_Form_Utente_Prenotazioni_Dataprenotazione();
     	$this->_formDataprenotazione->setAction($urlHelper->url(array(
 			'controller' => 'utente',
-			'action' => 'index'),
+			'action' => 'listacamerelibere'),
 			'default'
 		));
 		return $this->_formDataprenotazione;
     }   
     
-    
+    public function listacamerelibereAction()
+    {
+        $request = $this->getRequest();
+        if (!$request->isPost()) {
+            return $this->_helper->redirector('dataprenotazione');
+        }
+        $form = $this->_formDataprenotazione;
+        if (!$form->isValid($request->getPost())) {
+            $form->setDescription('Attenzione: alcuni dati inseriti sono errati.');
+        	return $this->render('dataprenotazione');
+        }
+        if (!$this->getRequest()->isPost()) {
+            $this->_helper->redirector('dataprenotazione');
+        }
+        $form=$this->_formDataprenotazione;
+        if (!$form->isValid($_POST)) { 
+            $form->setDescription('Attenzione: alcuni dati inseriti sono errati.');
+            return $this->render('dataprenotazione');
+        }
+       $dataarr = $this->getRequest()->getParam('data_inizio');
+       $datapar = $this->getRequest()->getParam('data_fine');
+       $daar=new Zend_Date($dataarr);
+       $dapa=new DateTime($datapar);
+       $secondi=$dapa->getTimestamp()-$daar->getTimestamp();
+       $giorni=(($secondi/3600)/24)+1;
+       $tipo = $this->getRequest()->getParam('tipo');
+       if($tipo == 'Qualsiasi')
+       {$camere = $this->_utenteModel->getCamere();}
+       else
+       {$camere= $this->_utenteModel->getCamereByTipo($tipo);}
+       $camerelibere= new ArrayObject();
+       $counter=0;
+       foreach ($camere as $cam)
+       {
+            
+           
+           $count=$this->_utenteModel->getDisponibilitacamera($cam->cod_camera, $dataarr, $datapar);
+           if($count == 0)
+           {
+               $prezzo=$giorni*$cam->prezzo_camera;
+               $camerelibere[$counter]=$cam;
+           $camerelibere[$counter]->prezzo_camera= $prezzo;
+           $counter ++;
+           }
+       }
+       $this->view->camerelibere = $camerelibere;
+    }
     //funzioni per visulizzare la lista delle prenotazioni
     public function listaprenotazioniAction()
     {
@@ -83,10 +129,6 @@ class UtenteController extends Zend_Controller_Action
         $this->view->prenotazioni = $preno;
         
         
-    }
-    public function viewstaticAction () {
-    	$page = $this->_getParam('staticPage');
-    	$this->render($page);
     }
     
      public function deleteprenotazioneAction()

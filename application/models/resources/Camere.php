@@ -15,5 +15,15 @@ class Application_Resource_Camere extends Zend_Db_Table_Abstract
         return $this->fetchRow($this->select()->where('cod_camera = ?', $codice));
     }	
     
+     public function getCamere()
+    {
+        return $this->fetchAll();
+    }
+    
+     public function getCamereByTipo($tipo)
+    {
+        return $this->fetchAll($this->select()->where('tipo = ?', $tipo));
+    }
+    
 }
 

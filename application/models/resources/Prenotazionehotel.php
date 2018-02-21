@@ -29,5 +29,25 @@ class Application_Resource_Prenotazionehotel extends Zend_Db_Table_Abstract
         $where= $this->getAdapter()->quoteInto('cod_prenotazione = ?', $codice);
 	$this->delete($where);
     }
+    
+     public function getPrenotazioniByCamera($codice)
+    {
+        $select=$this->select()->where('codice_camera = ?', $codice);
+        return $this->fetchAll($select);
+    }	
+     public function getDisponibilitacamera($codice,$dataarr,$datapart)
+    {
+        $select=$this->select()->where('codice_camera = ?', $codice)
+                ->where('data_inizio_pren <= ?',$datapart)
+                ->where('data_fine_pren >= ?',$dataarr);
+        $righe=$this->fetchAll($select);
+         return $righe->count();
+         
+    }
+    
+     public function insertPrenotazione($info)
+    {
+        $this->insert($info);
+    }
 }
 
