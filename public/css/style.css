@@ -175,6 +175,16 @@ table {
 	text-align: left;
         border-collapse: collapse;
 }
+table.camere {
+	width: 100%;
+        border-collapse: collapse;
+}
+
+td.camere {
+	width: 100%;
+        text-align: right;
+        border-collapse: collapse;
+}
 
 th.title{
 	padding: 10px 50px;	
@@ -183,7 +193,7 @@ th.title{
 }
 
 th, td {
-	padding: 10px 20px;
+	padding: 5px 20px;
         
 }
 

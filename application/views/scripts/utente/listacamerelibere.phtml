@@ -4,9 +4,8 @@
            
 	<?php foreach ($this->camerelibere as $cam) :?>
     <table>
-        <tr><td><h4>CAMERA NUMERO: </h4></td><td><?php echo' <class="title">' . $cam->cod_camera . '' ?></td></tr>
-        <tr><td><h4>TIPO CAMERA:   </h4></td><td><?php echo' <class="title">' . $cam->tipo . '' ?></td></tr>
-        <tr><td><h4>TV:            </h4></td><td> 
+        <tr><td rowspan="5"><img src="http://www.rollingstone.it/wp-content/uploads/2017/04/hitler.jpg" class="foot-img"></td><td><h4>TIPO CAMERA:   </h4></td><td class="camere"><?php echo' <class="title">' . $cam->tipo . '' ?></td></tr>
+        <tr><td><h4>TV:            </h4></td><td class="camere"> 
             <?php if($cam->tv)  
         {   
            echo 'La camera è dotata di tv'.'<br>';}
@@ -14,7 +13,7 @@
         {echo 'La camera non è dotata di tv';}
         
          ?></td></tr>
-        <tr><td><h4>INTERNET:            </h4></td><td> 
+        <tr><td><h4>INTERNET:            </h4></td><td class="camere"> 
             <?php if($cam->internet)  
         {   
            echo 'La camera è dotata di rete wifi'.'<br>';}
@@ -22,7 +21,8 @@
         {echo 'La camera non è dotata di rete wifi';}
         
          ?></td></tr>
-        <tr><td><h4>COSTO TOTALE:  </h4></td><td><?php echo' <class="title"><h3>' . $cam->prezzo_camera . ' '.'€</h3>' ?></td></tr>
+        <tr><td><h4>COSTO TOTALE:  </h4></td><td class="camere"><?php echo' <class="title"><h3>' . $cam->prezzo_camera . ' '.'€</h3>' ?></td></tr>
     </table>
+    <br>
 	<?php endforeach ?>
 </div>
