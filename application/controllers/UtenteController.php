@@ -72,11 +72,15 @@ class UtenteController extends Zend_Controller_Action
         foreach($preno as $pre)
         {$tipo=$this->_utenteModel->getTipoByCod($pre->codice_camera);
         
+        $servizi=$this->_utenteModel->getPrenotazioniByCodPrenot($pre->cod_prenotazione);
+        
         $lista[$counter]= array('prenotazione'=> $pre,
-            'tipo'=> $tipo);
+            'tipo'=> $tipo,
+            'servizi'=>$servizi);
         $counter=$counter +1;}        
         
         $this->view->lista = $lista;
+        $this->view->prenotazioni = $preno;
         
         
     }
@@ -88,7 +92,9 @@ class UtenteController extends Zend_Controller_Action
      public function deleteprenotazioneAction()
     {
         $codice=$this->_getParam('codice');
-	$this->_utenteModel->deletePrenotazioneByCod($codice);     
+        $this->_utenteModel->deletePrenotazioneServByCod($codice);
+	$this->_utenteModel->deletePrenotazioneByCod($codice);  
+        
         return $this->_helper->redirector('listaprenotazioni');
         
     }

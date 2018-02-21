@@ -1,7 +1,7 @@
 <div>
     <h3> LISTA PRENOTAZIONI</h3>   
     
-        <?php $counter=0 ?>    
+           
 	<?php foreach ($this->lista as $lis) :?>
     <table>
         <tr><td><h4>DATA PRENOTAZIONE: </h4></td><td><?php echo' <class="title">' . $lis['prenotazione']->data_prenotazione . '' ?></td></tr>
@@ -9,11 +9,16 @@
         <tr><td><h4>TIPO CAMERA: </h4></td><td><?php echo' <class="title">' . $lis['tipo']->tipo . '' ?></td></tr>
         <tr><td><h4>DATA ARRIVO: </h4></td><td><?php echo' <class="title">' . $lis['prenotazione']->data_inizio_pren . '' ?></td></tr>
         <tr><td><h4>DATA PARTENZA: </h4></td><td><?php echo' <class="title">' . $lis['prenotazione']->data_fine_pren . '' ?></td></tr>
-        <tr><td><h4>SERVIZI AGGIUNTIVI: </h4></td><td><?php  if($lis['prenotazione']->richiesta_servizi== true){
-        echo'Hai richiesto servizi aggiuntivi';}
-            else{
-            echo'Non hai richiesto servizi aggiuntivi';}
+        <tr><td><h4>SERVIZI AGGIUNTIVI: </h4></td><td>
+        <?php if($lis['prenotazione']->richiesta_servizi)  
+        {   foreach ($lis['servizi'] as $serv) 
+        {echo $serv->tipo_servizio.'<br>';
+        }}
+        else
+        {echo 'Non hai richiesto alcun servizio';}
+        
          ?></td></tr>
+        <tr><td><h4>PREZZO TOTALE: </h4></td><td><?php echo' <class="title">' . $lis['prenotazione']->prezzo_totale . ' '.'€' ?></td></tr>
         
     </table>
     <?php $now=new Zend_Date() ?>
@@ -29,12 +34,12 @@
                  .'" ><button>CANCELLA PRENOTAZIONE</button></a>';}
        ?>  
     <br><br>
-    <?php $counter=$counter+1 ?>
 	<?php endforeach ?>
-	
+</div>
+<div>
 	 <!-- Paginazione -->	
-	  <?php if($this->lista instanceof Zend_Paginator) {
-	  		echo $this->paginationControl($this->lista,'Sliding','utente/_paginatorlistaprenotazioni.phtml');
+	  <?php if($this->prenotazioni instanceof Zend_Paginator) {
+	  		echo $this->paginationControl($this->prenotazioni,'Sliding','utente/_paginatorlistaprenotazioni.phtml');
 	  } 
           ?>
        

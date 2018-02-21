@@ -33,4 +33,13 @@ class Application_Model_Utente extends App_Model_Abstract
     {
     	return $this->getResource('Camere')->getTipoByCod($info);
     }
+    
+       public function getPrenotazioniByCodPrenot($info)
+    {
+    	return $this->getResource('Prenotazioneservizi')->getPrenotazioniByCodPrenot($info);
+    }
+     public function deletePrenotazioneServByCod($info)
+    {
+    	return $this->getResource('Prenotazioneservizi')->deletePrenotazioneServByCod($info);
+    }
 }
