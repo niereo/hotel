@@ -8,6 +8,7 @@ class UtenteController extends Zend_Controller_Action
     protected $_formModificapassword;
     protected $_formModificaprofilo;
     protected $_formDataprenotazione;
+    protected $_formSelezionaservizi;
     
     public function init()
     {
@@ -18,6 +19,7 @@ class UtenteController extends Zend_Controller_Action
                 $this->view->modificapassForm = $this->getModificapasswordForm();
                 $this->view->modificaprofiloForm = $this->getModificaprofiloForm();
                 $this->view->dataprenotazioneForm = $this->getDataprenotazioneForm();
+                $this->view->selezionaserviziForm = $this->getSelezionaserviziForm();
                 
     }
 
@@ -115,13 +117,57 @@ class UtenteController extends Zend_Controller_Action
        }
        $this->view->camerelibere = $camerelibere;
     }
+     public function confermaprenotazioneAction()
+	{        
+        $request = $this->getRequest();
+        if (!$request->isPost()) {
+            return $this->_helper->redirector('dataprenotazione');
+        }
+        $form = $this->_formSelezionaservizi;
+        if (!$form->isValid($request->getPost())) {
+            $form->setDescription('Attenzione: alcuni dati inseriti sono errati.');
+        	return $this->render('dataprenotazione');
+        }
+        if (!$this->getRequest()->isPost()) {
+            $this->_helper->redirector('dataprenotazione');
+        }
+        $form=$this->_formSelezionaservizi;
+        if (!$form->isValid($_POST)) { 
+            $form->setDescription('Attenzione: alcuni dati inseriti sono errati.');
+            return $this->render('dataprenotazioni');
+        }     
+         $prenotazione=array(
+             'data_arrivo'=>,
+             'data_partenza'=>,
+             'codice'=>,
+             'prezzo_camera'=>,
+             'richiesta servizi'=>,
+             'servizi'=>
+         )
+    }
     
+    public function sceltaserviziAction()
+    {
+        $codice=$this->_getParam('codicecamera');
+        $dataarrivo=$this->_getParam('data arrivo');
+        $datapartenza=$this->_getParam('data partenza');
+        $prezzo=$this->_getParam('prezzotot');
+        $info=array(
+            
+            'codice_camera'=>$codice,
+            'data_inizio_pren'=>$dataarrivo,
+            'data_fine_pren'=>$datapartenza,
+            'prezzo_totale'=>$prezzo
+            );
+        $this->view->scelta=$info;
+    }
      public function prenotaAction()
     {
         $user=$this->_authService->authInfo('username');
         $codice=$this->_getParam('codicecamera');
         $oggi=new Zend_Date();
         $datstr=$oggi->toString('yyyy-MM-dd');
+        
         
         $dataarrivo=$this->_getParam('data arrivo');
         $datapartenza=$this->_getParam('data partenza');
@@ -138,6 +184,23 @@ class UtenteController extends Zend_Controller_Action
             );
         $this->_utenteModel->insertPrenotazione($info);
         return $this->_helper->redirector('listaprenotazioni');
+    }
+    
+    private function getSelezionaserviziForm()
+    {
+        $urlHelper = $this->_helper->getHelper('url');
+		$this->_formSelezionaservizi = new Application_Form_Utente_Prenotazioni_Selezionaservizi();
+    	$this->_formSelezionaservizi->setAction($urlHelper->url(array(
+			'controller' => 'utente',
+			'action' => 'confermaprenotazione',
+                        'codice_camera'=>$codice=$this->_getParam('codice_camera'),
+                        'data_inizio_pren'=>$dataarrivo=$this->_getParam('data_inizio_pren'),
+                        'data_fine_pren'=>$datapartenza=$this->_getParam('data_fine_pren'),
+                        'prezzo_totale' =>$prezzo=$this->_getParam('prezzo_totale')),
+                       
+			'default'
+		));
+		return $this->_formSelezionaservizi;
     }
     //funzioni per visulizzare la lista delle prenotazioni
     public function listaprenotazioniAction()

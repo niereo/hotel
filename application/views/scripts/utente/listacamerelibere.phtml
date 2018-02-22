@@ -8,9 +8,9 @@
         <tr><td><h4>TV:            </h4></td><td class="camere"> 
             <?php if($cam['camera']->tv)  
         {   
-           echo 'La camera è dotata di tv'.'<br>';}
+           echo 'La camera è dotata di tv satellitare'.'<br>';}
         else
-        {echo 'La camera non è dotata di tv';}
+        {echo 'La camera non è dotata di tv satellitare';}
         
          ?></td></tr>
         <tr><td><h4>INTERNET:            </h4></td><td class="camere"> 
@@ -25,7 +25,7 @@
     </table>
      <?php echo'<a href="'. $this->url(array(
                         'controller' => 'utente',
-                        'action'     => 'prenota',
+                        'action'     => 'sceltaservizi',
                         'codicecamera' => $cam['camera']->cod_camera, 
                         'data arrivo'=> $cam['data arrivo'],
                         'data partenza'=>$cam['data partenza'],

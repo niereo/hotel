@@ -9,7 +9,7 @@ class Application_Form_Utente_Prenotazioni_Dataprenotazione extends App_Form_Abs
     {               
           
         $this->setMethod('post');
-        $this->setName('modificaprofilo');
+        $this->setName('dataprenotazione');
         $this->setAction('');
         $this->_utenteModel = new Application_Model_Utente;
         

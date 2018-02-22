@@ -11,6 +11,20 @@
                         'default',true
                     ); 
                  ?>" >PROFILO UTENTE</a></li>
+                            <li><a href="<?= $this->url(array(
+                        'controller' => 'utente',
+                        'action'     => 'catalogocamere',
+						), 
+                        'default',true
+                    ); 
+                 ?>" >CATALOGO CAMERE</a></li> 
+                        <li><a href="<?= $this->url(array(
+                        'controller' => 'utente',
+                        'action'     => 'catalogoservizi',
+						), 
+                        'default',true
+                    ); 
+                 ?>" >CATALOGO SERVIZI</a></li>
                    <li><a href="<?= $this->url(array(
                         'controller' => 'utente',
                         'action'     => 'dataprenotazione',
@@ -26,20 +40,7 @@
                     ); 
                  ?>" >PRENOTAZIONI EFFETTUATE</a></li>
                    
-                        <li><a href="<?= $this->url(array(
-                        'controller' => 'utente',
-                        'action'     => 'catalogocamere',
-						), 
-                        'default',true
-                    ); 
-                 ?>" >CATALOGO CAMERE</a></li> 
-                        <li><a href="<?= $this->url(array(
-                        'controller' => 'utente',
-                        'action'     => 'catalogoservizi',
-						), 
-                        'default',true
-                    ); 
-                 ?>" >CATALOGO SERVIZI</a></li>
+               
                         
           
                     </ul>
