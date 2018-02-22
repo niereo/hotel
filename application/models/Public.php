@@ -16,9 +16,9 @@ class Application_Model_Public extends App_Model_Abstract
     {
     	return $this->getResource('Faq')->getFaq();
     }
-      public function getCamere()
+      public function getTipoCamere()
     {
-    	return $this->getResource('Tipocamere')->getCamere();
+    	return $this->getResource('Tipocamere')->getTipoCamere();
     }
        public function getServizi()
     {

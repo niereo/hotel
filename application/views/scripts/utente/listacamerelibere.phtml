@@ -4,9 +4,9 @@
            
 	<?php foreach ($this->camerelibere as $cam) :?>
     <table>
-        <tr><td rowspan="5"><img src="http://www.rollingstone.it/wp-content/uploads/2017/04/hitler.jpg" class="foot-img"></td><td><h4>TIPO CAMERA:   </h4></td><td class="camere"><?php echo' <class="title">' . $cam->tipo . '' ?></td></tr>
+        <tr><td rowspan="5"><img src="<?php echo $this->baseUrl() . '/images/'.$cam['camera']->foto.'' ?>" class="foot-img"></td><td><h4>TIPO CAMERA:   </h4></td><td class="camere"><?php echo' <class="title">' . $cam['camera']->tipo . '' ?></td></tr>
         <tr><td><h4>TV:            </h4></td><td class="camere"> 
-            <?php if($cam->tv)  
+            <?php if($cam['camera']->tv)  
         {   
            echo 'La camera è dotata di tv'.'<br>';}
         else
@@ -14,15 +14,26 @@
         
          ?></td></tr>
         <tr><td><h4>INTERNET:            </h4></td><td class="camere"> 
-            <?php if($cam->internet)  
+            <?php if($cam['camera']->internet)  
         {   
            echo 'La camera è dotata di rete wifi'.'<br>';}
         else
         {echo 'La camera non è dotata di rete wifi';}
         
          ?></td></tr>
-        <tr><td><h4>COSTO TOTALE:  </h4></td><td class="camere"><?php echo' <class="title"><h3>' . $cam->prezzo_camera . ' '.'€</h3>' ?></td></tr>
+        <tr><td><h4>COSTO TOTALE:  </h4></td><td class="camere"><?php echo' <class="title"><h3>' . $cam['prezzo'] . ' '.'€</h3>' ?></td></tr>
     </table>
+     <?php echo'<a href="'. $this->url(array(
+                        'controller' => 'utente',
+                        'action'     => 'prenota',
+                        'codicecamera' => $cam['camera']->cod_camera, 
+                        'data arrivo'=> $cam['data arrivo'],
+                        'data partenza'=>$cam['data partenza'],
+                        'prezzotot'=> $cam['prezzo']),
+                        'default' ,true
+                    ) 
+                 .'" ><button>PRENOTA</button></a>';
+       ?> 
     <br>
 	<?php endforeach ?>
 </div>

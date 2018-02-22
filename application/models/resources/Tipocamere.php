@@ -10,10 +10,13 @@ class Application_Resource_Tipocamere extends Zend_Db_Table_Abstract
     {
     }
        
-    public function getCamere()
+    public function getTipoCamere()
     {
         return $this->fetchAll();
     }	
+    
+    
+   
     
 }
 

@@ -62,4 +62,5 @@ class Application_Model_Utente extends App_Model_Abstract
     {
     	return $this->getResource('Prenotazionehotel')->getDisponibilitacamera($info,$dataar,$datapa);
     }
+    
 }

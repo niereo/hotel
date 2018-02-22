@@ -45,7 +45,7 @@ class PublicController extends Zend_Controller_Action
     
     public function catalogocamereAction()
     {
-	$catalogo = $this->_publicModel->getCamere();
+	$catalogo = $this->_publicModel->getTipoCamere();
         $this->view->catalogo = $catalogo;	
     }
     
