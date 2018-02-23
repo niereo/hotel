@@ -1,0 +1,12 @@
+
+
+<?php $prenotazione = new Zend_Session_Namespace('data_arrivo');
+       $prenotazione = new Zend_Session_Namespace('data_partenza');
+       $prenotazione = new Zend_Session_Namespace('giorni'); 
+       $cod = new Zend_Session_Namespace('codicecamera');?>
+       
+        <?php echo $prenotazione->data_arrivo ?><br>
+       <?php echo $prenotazione->data_partenza ?><br>
+       <?php echo $prenotazione->giorni ?><br>
+        <?php echo $cod->codicecamera ?><br>
+       

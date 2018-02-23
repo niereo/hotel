@@ -50,7 +50,7 @@ class UtenteController extends Zend_Controller_Action
     }
     
     
-     private function getDataprenotazioneForm()
+    private function getDataprenotazioneForm()
     {
     	$urlHelper = $this->_helper->getHelper('url');
 		$this->_formDataprenotazione = new Application_Form_Utente_Prenotazioni_Dataprenotazione();
@@ -103,20 +103,64 @@ class UtenteController extends Zend_Controller_Action
            if($count == 0)
            {
               
-               $prezzo=$giorni*$cam->prezzo_camera;
+            $prezzo=$giorni*$cam->prezzo_camera;
               
             $camerelibere[$counter]=array(
                    'camera'=>$cam,
                    'prezzo'=>$prezzo,
-                   'data arrivo'=>$dataarr,
-                   'data partenza'=>$datapar
+                   'data arrivo'=>$dataarr, //cancellare 
+                   'data partenza'=>$datapar //cancellare
                    
                );
            $counter ++;
            }
        }
+       $date = new Zend_Session_Namespace('data_arrivo');
+       $date = new Zend_Session_Namespace('data_partenza');
+       $date = new Zend_Session_Namespace('giorni');
+       $date->data_arrivo = $dataarr;
+       $date->data_partenza = $datapar;
+       $date->giorni=$giorni;
+       
        $this->view->camerelibere = $camerelibere;
     }
+   
+    
+    public function sceltaserviziAction()
+    {
+        $codice=$this->_getParam('codicecamera');
+        $dataarrivo=$this->_getParam('data arrivo'); //cancellare
+        $datapartenza=$this->_getParam('data partenza'); //cancellare
+        $prezzo=$this->_getParam('prezzotot'); //cancellare
+        $cod = new Zend_Session_Namespace('codicecamera');
+        $cod->codicecamera = $codice;
+        $info=array( //cancellare
+            
+            'codice_camera'=>$codice, //cancellare
+            'data_inizio_pren'=>$dataarrivo,//cancellare
+            'data_fine_pren'=>$datapartenza,//cancellare
+            'prezzo_totale'=>$prezzo//cancellare
+            );//cancellare
+        $this->view->scelta=$info;//cancellare
+    }
+    
+    private function getSelezionaserviziForm()
+    {
+        $urlHelper = $this->_helper->getHelper('url');
+		$this->_formSelezionaservizi = new Application_Form_Utente_Prenotazioni_Selezionaservizi();
+    	$this->_formSelezionaservizi->setAction($urlHelper->url(array(
+			'controller' => 'utente',
+			'action' => 'confermaprenotazione',
+                        'codice_camera'=>$codice=$this->_getParam('codice_camera'), //cancellare
+                        'data_inizio_pren'=>$dataarrivo=$this->_getParam('data_inizio_pren'),//cancellare
+                        'data_fine_pren'=>$datapartenza=$this->_getParam('data_fine_pren'),//cancellare
+                        'prezzo_totale' =>$prezzo=$this->_getParam('prezzo_totale')),//cancellare
+                       
+			'default' //cancellare
+		));
+		return $this->_formSelezionaservizi;
+    }
+    
      public function confermaprenotazioneAction()
 	{        
         $request = $this->getRequest();
@@ -135,7 +179,8 @@ class UtenteController extends Zend_Controller_Action
         if (!$form->isValid($_POST)) { 
             $form->setDescription('Attenzione: alcuni dati inseriti sono errati.');
             return $this->render('dataprenotazioni');
-        }     
+        }  
+        /*
          $prenotazione=array(
              'data_arrivo'=>,
              'data_partenza'=>,
@@ -143,36 +188,21 @@ class UtenteController extends Zend_Controller_Action
              'prezzo_camera'=>,
              'richiesta servizi'=>,
              'servizi'=>
-         )
+         )*/
     }
     
-    public function sceltaserviziAction()
-    {
-        $codice=$this->_getParam('codicecamera');
-        $dataarrivo=$this->_getParam('data arrivo');
-        $datapartenza=$this->_getParam('data partenza');
-        $prezzo=$this->_getParam('prezzotot');
-        $info=array(
-            
-            'codice_camera'=>$codice,
-            'data_inizio_pren'=>$dataarrivo,
-            'data_fine_pren'=>$datapartenza,
-            'prezzo_totale'=>$prezzo
-            );
-        $this->view->scelta=$info;
-    }
-     public function prenotaAction()
+    public function prenotaAction()
     {
         $user=$this->_authService->authInfo('username');
-        $codice=$this->_getParam('codicecamera');
+        $codice=$this->_getParam('codicecamera');//cancellare
         $oggi=new Zend_Date();
         $datstr=$oggi->toString('yyyy-MM-dd');
         
         
-        $dataarrivo=$this->_getParam('data arrivo');
-        $datapartenza=$this->_getParam('data partenza');
-        $servizi=false;
-        $prezzo=$this->_getParam('prezzotot');
+        $dataarrivo=$this->_getParam('data arrivo');//cancellare
+        $datapartenza=$this->_getParam('data partenza');//cancellare
+        $servizi=false; //modificare
+        $prezzo=$this->_getParam('prezzotot');//cancellare
         $info=array(
             'username'=>$user,
             'codice_camera'=>$codice,
@@ -186,22 +216,7 @@ class UtenteController extends Zend_Controller_Action
         return $this->_helper->redirector('listaprenotazioni');
     }
     
-    private function getSelezionaserviziForm()
-    {
-        $urlHelper = $this->_helper->getHelper('url');
-		$this->_formSelezionaservizi = new Application_Form_Utente_Prenotazioni_Selezionaservizi();
-    	$this->_formSelezionaservizi->setAction($urlHelper->url(array(
-			'controller' => 'utente',
-			'action' => 'confermaprenotazione',
-                        'codice_camera'=>$codice=$this->_getParam('codice_camera'),
-                        'data_inizio_pren'=>$dataarrivo=$this->_getParam('data_inizio_pren'),
-                        'data_fine_pren'=>$datapartenza=$this->_getParam('data_fine_pren'),
-                        'prezzo_totale' =>$prezzo=$this->_getParam('prezzo_totale')),
-                       
-			'default'
-		));
-		return $this->_formSelezionaservizi;
-    }
+    
     //funzioni per visulizzare la lista delle prenotazioni
     public function listaprenotazioniAction()
     {
