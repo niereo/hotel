@@ -3,20 +3,59 @@
 <?php $prenotazione = new Zend_Session_Namespace('data_arrivo');
        $prenotazione = new Zend_Session_Namespace('data_partenza');
        $prenotazione = new Zend_Session_Namespace('giorni'); 
-       $cod = new Zend_Session_Namespace('codicecamera');
+       
        $serv = new Zend_Session_Namespace('richiestaservizi');
        $ser = new Zend_Session_Namespace('listaservizi');?>
 
-       
-        <?php echo $prenotazione->data_arrivo ?><br>
-       <?php echo $prenotazione->data_partenza ?><br>
-       <?php echo $prenotazione->giorni ?><br>
-        <?php echo $cod->codicecamera ?><br>
-        <?php if($serv->richiestaservizi)
-        {echo 'Hai richiesto i seguenti servizi: <br>';
-         foreach ($ser->listaservizi as $servi)
-        {echo $servi['tiposervizio'].$servi['valore'].'<br>';}
+       <table>
+           <tr><td rowspan="4"><img  src="<?php echo $this->baseUrl() . '/images/'.$this->camera->foto.'' ?>" class="sopra" ></td>
+            <td><h4>CAMERA NUMERO:</h4></td><td class="camere"><?php echo' <class="title">' . $this->camera->cod_camera . '' ?></td></tr>
+        <tr><td><h4>TIPO CAMERA:</h4></td><td class="camere"><?php echo' <class="title">' . $this->camera->tipo . '' ?></td>
+        <tr><td><h4>DAL:</h4></td><td class="camere"><?php echo' <class="title">' . $prenotazione->data_arrivo . '' ?></td>
+        <tr><td><h4>AL:</h4></td><td class="camere"><?php echo' <class="title">' . $prenotazione->data_partenza . '' ?></td>    
+        <tr><td></td><td><h4>TV SATELLITARE:</h4></td><td class="camere"> 
+            <?php if($this->camera->tv)  
+        {   
+           echo 'SI'.'<br>';}
+        else
+        {echo 'NO';}
+        
+         ?></td></tr>
+        <tr><td></td><td><h4>INTERNET:</h4></td><td class="camere"> 
+            <?php if($this->camera->internet)  
+        {   
+           echo 'SI'.'<br>';}
+        else
+        {echo 'NO';}
+        
+         ?></td></tr>
+        <tr><td></td><td><h4>COSTO CAMERA:</h4></td><td class="camere"><?php echo' <class="title"><h3>' . $totale=$this->camera->prezzo_camera*$prenotazione->giorni .' €</h3>' ?></td></tr>
+        <tr><td></td><td border="2" colspan="2"><?php if($serv->richiestaservizi)
+        {echo '<h3>HAI RICHIESTO I SEGUENTI SERVIZI: </h3>';
+         
         }
-        else{echo'Non hai richiesto servizi';}?><br>
+        else{echo'<h4>NON HAI RICHIESTO ALCUN SERVIZIO</h4>';}?></td></tr>
+        <?php foreach ($ser->listaservizi as $servi)
+         {     if($servi['valore']== true)
+         {
+             echo '<tr><td></td><td><h4>'.$servi['tiposervizio']->tipo.'</h4></td> ';
+         echo '<td class="camere"><h3>'.$parz=$servi['tiposervizio']->prezzo_servizio*$prenotazione->giorni.' € </h3></td></tr>';
+          $totale=$totale+$parz;
+         }
+         }?>
+        <tr><td></td><td colspan="2"><h3>COSTO TOTALE PRENOTAZIONE:</h3></td></td></tr>
+        <tr><td></td><td></td><td class="camere"><h3><?php echo $totale.' €'?></h3></td></tr>
+    </table>
+       <?php $costo=new Zend_Session_Namespace('costo');
+       $costo->costo=$totale;?>
+       <?php echo'<a href="'. $this->url(array(
+                        'controller' => 'utente',
+                        'action'     => 'prenota', 
+                        ),
+                        'default' ,true
+                    ) 
+                 .'" ><button>CONFERMA PRENOTAZIONE</button></a>';
+       ?> 
+       
         
         

@@ -21,5 +21,9 @@ class Application_Resource_Prenotazioneservizi extends Zend_Db_Table_Abstract
         $where= $this->getAdapter()->quoteInto('cod_prenotazione = ?', $codice);
 	$this->delete($where);
     }
+      public function insertPrenotazioneservizi($info)
+    {
+        $this->insert($info);
+    }
 }
 

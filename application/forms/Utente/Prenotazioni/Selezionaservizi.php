@@ -30,16 +30,13 @@ class Application_Form_Utente_Prenotazioni_Selezionaservizi extends App_Form_Abs
             
         foreach ($servizi as $serv)
         {
-            
-            
-            
-            
+  
             $this->addElement('checkbox',$serv->tipo, array(
             'label' => $serv->tipo,
             'filters' => array('StringTrim'),
             'decorators' => $this->elementDecorators,
         )); 
-            
+           
         }
 			
         $this->addElement('submit', 'insert', array(

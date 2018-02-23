@@ -158,6 +158,12 @@ img.foto_profilo{
 	border-radius: 5px 5px 5px 5px;
 	margin-left: 10px;
 }
+img.sopra{
+    
+	width: 200px;
+	height: 150px;
+        
+}
 
 li.profilo{
 	padding: 1px 5px;
@@ -185,6 +191,7 @@ td.camere {
         text-align: right;
         border-collapse: collapse;
 }
+
 
 th.title{
 	padding: 10px 50px;	

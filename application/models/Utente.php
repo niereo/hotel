@@ -62,5 +62,13 @@ class Application_Model_Utente extends App_Model_Abstract
     {
     	return $this->getResource('Prenotazionehotel')->getDisponibilitacamera($info,$dataar,$datapa);
     }
+       public function getCodprenotazioneByDati($info)
+    {
+    	return $this->getResource('Prenotazionehotel')->getCodprenotazioneByDati($info);
+    }
+         public function insertPrenotazioneservizi($codcam,$datain)
+    {
+    	return $this->getResource('Prenotazioneservizi')->insertPrenotazioneservizi($codcam,$datain);
+    }
     
 }

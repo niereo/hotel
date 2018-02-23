@@ -175,18 +175,20 @@ class UtenteController extends Zend_Controller_Action
             $servsess->richiestaservizi=true;
         foreach ($servizi as $serv)
         {
-            $nospace= str_replace(' ','', $serv->tipo);
+         $nospace= str_replace(' ','', $serv->tipo);
          $servizisel[$serv->tipo]=array('valore'=>$request->getParam($nospace),
-                 'tiposervizio'=>$serv->tipo );
+                 'tiposervizio'=>$serv );
          
         }
         }else{
              $servsess=new Zend_Session_Namespace('richiestaservizi');
              $servsess->richiestaservizi=false;
         }
-        
+        $codcam=new Zend_Session_Namespace('codicecamera');
+        $camera=$this->_utenteModel->getTipoByCod($codcam->codicecamera);
         $listaservizi=new Zend_Session_Namespace('listaservizi');
         $listaservizi->listaservizi=$servizisel;
+        $this->view->camera=$camera;
     }
     
     public function prenotaAction()
@@ -195,21 +197,41 @@ class UtenteController extends Zend_Controller_Action
         
         $oggi=new Zend_Date();
         $datstr=$oggi->toString('yyyy-MM-dd');
-        
-        
-        
-        $servizi=false; //modificare
-        
+        $codice=new Zend_Session_Namespace('codicecamera');
+        $dataarrivo=new Zend_Session_Namespace('data_arrivo');
+        $datapartenza=new Zend_Session_Namespace('data_partenza');
+        $prezzo=new Zend_Session_Namespace('costo');
+        $listaservizi=new Zend_Session_Namespace('listaservizi');
+        $servizi=new Zend_Session_Namespace('richiestaservizi');
+        $cod=$codice->codicecamera;
+        $daar=new Zend_Date($dataarrivo->data_arrivo);
+        $dapa=new Zend_Date($datapartenza->data_partenza);
+        $costo=$prezzo->costo;
+        $list=$listaservizi->listaservizi;
+        $richiesta=$servizi->richiestaservizi;
         $info=array(
             'username'=>$user,
-            'codice_camera'=>$codice,
+            'codice_camera'=>$cod,
             'data_prenotazione'=>$datstr,
-            'data_inizio_pren'=>$dataarrivo,
-            'data_fine_pren'=>$datapartenza,
-            'richiesta_servizi'=>$servizi,
-            'prezzo_totale'=>$prezzo
+            'data_inizio_pren'=>$daar->toString('yyyy-MM-dd'),
+            'data_fine_pren'=>$dapa->toString('yyyy-MM-dd'),
+            'richiesta_servizi'=>$richiesta,
+            'prezzo_totale'=>$costo
             );
         $this->_utenteModel->insertPrenotazione($info);
+        $codpren=$this->_utenteModel->getCodprenotazioneByDati($cod,$info->data_inizio_pren);
+        $this->_helper->redirector('index');
+        foreach ($listaservizi->listaservizi as $serv)
+        {
+            if($serv['valore']== true)
+            {
+                $prenserv=array(
+                    'cod_prenotazione'=>$codpren->cod_prenotazione,
+                    'tipo_servizio'=>$serv['tipo']
+                );
+                $this->_utenteModel->insertPrenotazioneservizi($prenserv);
+            }
+        }
         return $this->_helper->redirector('listaprenotazioni');
     }
     
