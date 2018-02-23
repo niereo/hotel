@@ -108,8 +108,7 @@ class UtenteController extends Zend_Controller_Action
             $camerelibere[$counter]=array(
                    'camera'=>$cam,
                    'prezzo'=>$prezzo,
-                   'data arrivo'=>$dataarr, //cancellare 
-                   'data partenza'=>$datapar //cancellare
+                   
                    
                );
            $counter ++;
@@ -129,19 +128,10 @@ class UtenteController extends Zend_Controller_Action
     public function sceltaserviziAction()
     {
         $codice=$this->_getParam('codicecamera');
-        $dataarrivo=$this->_getParam('data arrivo'); //cancellare
-        $datapartenza=$this->_getParam('data partenza'); //cancellare
-        $prezzo=$this->_getParam('prezzotot'); //cancellare
+        
         $cod = new Zend_Session_Namespace('codicecamera');
         $cod->codicecamera = $codice;
-        $info=array( //cancellare
-            
-            'codice_camera'=>$codice, //cancellare
-            'data_inizio_pren'=>$dataarrivo,//cancellare
-            'data_fine_pren'=>$datapartenza,//cancellare
-            'prezzo_totale'=>$prezzo//cancellare
-            );//cancellare
-        $this->view->scelta=$info;//cancellare
+       
     }
     
     private function getSelezionaserviziForm()
@@ -150,13 +140,8 @@ class UtenteController extends Zend_Controller_Action
 		$this->_formSelezionaservizi = new Application_Form_Utente_Prenotazioni_Selezionaservizi();
     	$this->_formSelezionaservizi->setAction($urlHelper->url(array(
 			'controller' => 'utente',
-			'action' => 'confermaprenotazione',
-                        'codice_camera'=>$codice=$this->_getParam('codice_camera'), //cancellare
-                        'data_inizio_pren'=>$dataarrivo=$this->_getParam('data_inizio_pren'),//cancellare
-                        'data_fine_pren'=>$datapartenza=$this->_getParam('data_fine_pren'),//cancellare
-                        'prezzo_totale' =>$prezzo=$this->_getParam('prezzo_totale')),//cancellare
-                       
-			'default' //cancellare
+			'action' => 'confermaprenotazione'),
+			'default'
 		));
 		return $this->_formSelezionaservizi;
     }
@@ -180,29 +165,41 @@ class UtenteController extends Zend_Controller_Action
             $form->setDescription('Attenzione: alcuni dati inseriti sono errati.');
             return $this->render('dataprenotazioni');
         }  
-        /*
-         $prenotazione=array(
-             'data_arrivo'=>,
-             'data_partenza'=>,
-             'codice'=>,
-             'prezzo_camera'=>,
-             'richiesta servizi'=>,
-             'servizi'=>
-         )*/
+       
+        $richiestaservizi=$request->getParam('servizi');
+        $servizi = $this->_publicModel->getServizi();
+        $servizisel=new ArrayObject();
+        if($richiestaservizi == 'SI')
+        {
+            $servsess=new Zend_Session_Namespace('richiestaservizi');
+            $servsess->richiestaservizi=true;
+        foreach ($servizi as $serv)
+        {
+            $nospace= str_replace(' ','', $serv->tipo);
+         $servizisel[$serv->tipo]=array('valore'=>$request->getParam($nospace),
+                 'tiposervizio'=>$serv->tipo );
+         
+        }
+        }else{
+             $servsess=new Zend_Session_Namespace('richiestaservizi');
+             $servsess->richiestaservizi=false;
+        }
+        
+        $listaservizi=new Zend_Session_Namespace('listaservizi');
+        $listaservizi->listaservizi=$servizisel;
     }
     
     public function prenotaAction()
     {
         $user=$this->_authService->authInfo('username');
-        $codice=$this->_getParam('codicecamera');//cancellare
+        
         $oggi=new Zend_Date();
         $datstr=$oggi->toString('yyyy-MM-dd');
         
         
-        $dataarrivo=$this->_getParam('data arrivo');//cancellare
-        $datapartenza=$this->_getParam('data partenza');//cancellare
+        
         $servizi=false; //modificare
-        $prezzo=$this->_getParam('prezzotot');//cancellare
+        
         $info=array(
             'username'=>$user,
             'codice_camera'=>$codice,

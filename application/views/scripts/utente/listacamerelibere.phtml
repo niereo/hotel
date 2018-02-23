@@ -26,10 +26,8 @@
      <?php echo'<a href="'. $this->url(array(
                         'controller' => 'utente',
                         'action'     => 'sceltaservizi',
-                        'codicecamera' => $cam['camera']->cod_camera, 
-                        'data arrivo'=> $cam['data arrivo'],
-                        'data partenza'=>$cam['data partenza'],
-                        'prezzotot'=> $cam['prezzo']),
+                        'codicecamera' => $cam['camera']->cod_camera 
+                        ),
                         'default' ,true
                     ) 
                  .'" ><button>PRENOTA</button></a>';
