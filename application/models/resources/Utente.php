@@ -13,7 +13,11 @@ class Application_Resource_Utente extends Zend_Db_Table_Abstract
     public function getUtenteByName($usrName)
     {
         return $this->fetchRow($this->select()->where('username = ?', $usrName));
-    }	
+    }
+     public function getPasswordByUser($usrName)
+    {
+        return $this->fetchRow($this->select()->where('username = ?', $usrName));
+    }
     
     public function insertUtente($info)
     {
@@ -25,6 +29,7 @@ class Application_Resource_Utente extends Zend_Db_Table_Abstract
 	$where= array('username = ?' => $info['username']);
 	$this->update($info,$where);
     }	
+    
     
 }
 

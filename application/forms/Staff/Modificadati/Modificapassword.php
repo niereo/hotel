@@ -1,22 +1,21 @@
 <?php
 
-class Application_Form_Utente_Modificadati_Modificapassword extends App_Form_Abstract
+class Application_Form_Staff_Modificadati_Modificapassword extends App_Form_Abstract
 {
-    protected $_authService;
     protected $_utenteModel;
+    protected $_authService;
 	public function init()
     {               
-        $this->_authService = new Application_Service_Auth(); 
-        $this->_utenteModel = new Application_Model_Utente();
+        $this->_authService = new Application_Service_Auth();
+        $this->_utenteModel = new Application_Model_Utente();   
         $this->setMethod('post');
         $this->setName('modificapassword');
         $this->setAction('');
     	 $user=$this->_authService->authInfo('username');
          $oldpass=$this->_utenteModel->getPasswordByUser($user);
-         
          $confoldpass=new Zend_Validate_Identical($oldpass);
          $this->addElement('password', 'oldpass', array(
-            'validators' => array($confoldpass),
+            'validators' => $confoldpass,
             'required'   => true,
             'label'      => 'Vecchia Password',
             'decorators' => $this->elementDecorators,

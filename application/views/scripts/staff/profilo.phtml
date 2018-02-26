@@ -9,13 +9,13 @@
 <tr><td>NUMERO DI TELEFONO</td><td> <?php echo' <class="title">' . $this->profilo->numero_telefono . '' ?> </td></tr>
 <tr><td>EMAIL</td><td> <?php echo' <class="title">' . $this->profilo->email . '' ?> </td></tr>
 <tr><td><a href="<?= $this->url(array(
-                        'controller' => 'utente',
+                        'controller' => 'staff',
                         'action'     => 'modificaprofilo',
 						), 
                         'default',true
                     ); 
 ?>"><button>MODIFICA PROFILO</button></a></td><td><a href="<?= $this->url(array(
-                        'controller' => 'utente',
+                        'controller' => 'staff',
                         'action'     => 'modificapassword',
 						), 
                         'default',true
