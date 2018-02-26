@@ -2,7 +2,7 @@
    <?= $this->headScript(); ?>
 </head>   
 <body>
-    <h3>CAMERE</h3>
+    <h3>CAMERE:</h3>
     <?php foreach ($this->catalogo as $CAT) :?>
 <h3> <?php echo' <class="title">' . $CAT->tipo . '' ?> </h3>
 	<img src="<?php echo $this->baseUrl() . '/images/'.$CAT->foto.'' ?> "  class="cat-img" >

@@ -51,7 +51,8 @@ class PublicController extends Zend_Controller_Action
     
     public function catalogoserviziAction()
     {
-	$servizi = $this->_publicModel->getServizi();
+        $paged = $this->_getParam('page', 1);
+	$servizi = $this->_publicModel->getServizi($paged);
         $this->view->servizi = $servizi;
     }
     

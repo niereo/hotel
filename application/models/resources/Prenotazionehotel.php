@@ -10,9 +10,9 @@ class Application_Resource_Prenotazionehotel extends Zend_Db_Table_Abstract
     {
     }
        
-    public function getPrenotazioniByUser($usrName,$paged=null)
+    public function getPrenotazioniByUser($usrName,$paged=null,$order=null)
     {
-        $select=$this->select()->where('username = ?', $usrName);
+        $select=$this->select()->where('username = ?', $usrName)->order($order);
         
 		if (null !== $paged) {
 			$adapter = new Zend_Paginator_Adapter_DbTableSelect($select);
@@ -52,8 +52,7 @@ class Application_Resource_Prenotazionehotel extends Zend_Db_Table_Abstract
       public function getCodprenotazioneByDati($codcam,$datain)
     {
         $select=$this->select()
-                ->where('codice_camera = ?', $codcam)
-                
+                ->where('codice_camera = ?', $codcam)  
                 ->where('data_inizio_pren = ?', $datain);
         return $this->fetchRow($select);
     }

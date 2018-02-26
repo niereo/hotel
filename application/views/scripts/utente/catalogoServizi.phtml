@@ -2,7 +2,7 @@
    <?= $this->headScript(); ?>
 </head>   
 <body>
-     <h3>SERVIZI</h3>
+    <h3>SERVIZI:</h3>
     <?php foreach ($this->servizi as $SER) :?>
 <h3> <?php echo' <class="title">' . $SER->tipo . '' ?> </h3>
 	<img src="<?php echo $this->baseUrl() . '/images/'.$SER->foto.'' ?> "  class="cat-img" >
@@ -10,4 +10,9 @@
         <?php echo' <class="title">' . $SER->descrizione . '' ?>
             	<br><br>
 	<?php endforeach ?>
+                 <!-- Paginazione -->	
+	  <?php if($this->servizi instanceof Zend_Paginator) {
+	  		echo $this->paginationControl($this->servizi,'Sliding','utente/_paginatorcatalogoservizi.phtml');
+	  } 
+          ?>
 </body>

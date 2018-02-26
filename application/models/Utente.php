@@ -21,9 +21,9 @@ class Application_Model_Utente extends App_Model_Abstract
     {
 	return $this->getResource('Cliente')->updateProfiloByUser($info);
     }
-     public function getPrenotazioniByUser($info,$paged=null)
+     public function getPrenotazioniByUser($info,$paged=null,$order=null)
     {
-    	return $this->getResource('Prenotazionehotel')->getPrenotazioniByUser($info,$paged);
+    	return $this->getResource('Prenotazionehotel')->getPrenotazioniByUser($info,$paged,$order);
     }
      public function deletePrenotazioneByCod($info)
     {
@@ -46,13 +46,13 @@ class Application_Model_Utente extends App_Model_Abstract
     {
     	return $this->getResource('Prenotazionehotel')->getPrenotazioniByCamera($info);
     }
-       public function getCamere()
+       public function getCamere($order=null)
     {
-    	return $this->getResource('Camere')->getCamere();
+    	return $this->getResource('Camere')->getCamere($order);
     } 
-        public function getCamereByTipo($info)
+        public function getCamereByTipo($info,$order=null)
     {
-    	return $this->getResource('Camere')->getCamereByTipo($info);
+    	return $this->getResource('Camere')->getCamereByTipo($info,$order);
     } 
         public function insertPrenotazione($info)
     {
@@ -62,13 +62,13 @@ class Application_Model_Utente extends App_Model_Abstract
     {
     	return $this->getResource('Prenotazionehotel')->getDisponibilitacamera($info,$dataar,$datapa);
     }
-       public function getCodprenotazioneByDati($info)
+       public function getCodprenotazioneByDati($info,$data)
     {
-    	return $this->getResource('Prenotazionehotel')->getCodprenotazioneByDati($info);
+    	return $this->getResource('Prenotazionehotel')->getCodprenotazioneByDati($info,$data);
     }
-         public function insertPrenotazioneservizi($codcam,$datain)
+         public function insertPrenotazioneservizi($info)
     {
-    	return $this->getResource('Prenotazioneservizi')->insertPrenotazioneservizi($codcam,$datain);
+    	return $this->getResource('Prenotazioneservizi')->insertPrenotazioneservizi($info);
     }
     
 }

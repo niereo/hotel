@@ -20,9 +20,9 @@ class Application_Model_Public extends App_Model_Abstract
     {
     	return $this->getResource('Tipocamere')->getTipoCamere();
     }
-       public function getServizi()
+       public function getServizi($paged=null)
     {
-    	return $this->getResource('Tiposervizi')->getServizi();
+    	return $this->getResource('Tiposervizi')->getServizi($paged);
     }
         public function insertUtente($info)
     {

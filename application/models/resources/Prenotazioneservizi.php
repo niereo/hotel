@@ -10,9 +10,9 @@ class Application_Resource_Prenotazioneservizi extends Zend_Db_Table_Abstract
     {
     }
        
-    public function getPrenotazioniByCodPrenot($usrName)
+    public function getPrenotazioniByCodPrenot($codice)
     {
-        $select=$this->select()->where('cod_prenotazione = ?', $usrName);
+        $select=$this->select()->where('cod_prenotazione = ?', $codice);
         return $this->fetchAll($select);
     }	
     public function deletePrenotazioneServByCod($codice)

@@ -1,6 +1,6 @@
 
 
-<?php $prenotazione = new Zend_Session_Namespace('data_arrivo');
+<?php  $prenotazione = new Zend_Session_Namespace('data_arrivo');
        $prenotazione = new Zend_Session_Namespace('data_partenza');
        $prenotazione = new Zend_Session_Namespace('giorni'); 
        
@@ -51,6 +51,8 @@
        <?php echo'<a href="'. $this->url(array(
                         'controller' => 'utente',
                         'action'     => 'prenota', 
+                        'dataarrivo'=>$prenotazione->data_arrivo,
+                        'datapartenza'=>$prenotazione->data_partenza,
                         ),
                         'default' ,true
                     ) 
