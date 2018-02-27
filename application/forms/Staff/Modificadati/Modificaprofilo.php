@@ -6,11 +6,12 @@ class Application_Form_Staff_Modificadati_Modificaprofilo extends App_Form_Abstr
     protected $_staffModel;
 	public function init()
     {               
-        $this->_authService = new Application_Service_Auth();   
+         
         $this->setMethod('post');
         $this->setName('modificaprofilo');
         $this->setAction('');
-        $this->_staffModel = new Application_Model_Staff;
+        $this->_authService = new Application_Service_Auth();  
+        $this->_staffModel = new Application_Model_Staff();
         $user = $this->_authService->authInfo('username');
         $staff = $this->_staffModel->getStaffByUser($user);
     	

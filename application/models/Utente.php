@@ -12,9 +12,9 @@ class Application_Model_Utente extends App_Model_Abstract
     {
     	return $this->getResource('Cliente')->getClienteByUser($info);
     }
-     public function getPasswordByUser($info)
+     public function getUtenteByName($info)
     {
-    	return $this->getResource('Utente')->getPasswordByUser($info);
+    	return $this->getResource('Utente')->getUtenteByName($info);
     }
    
     public function updatePassByUser($info)

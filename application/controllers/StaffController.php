@@ -6,6 +6,7 @@ class StaffController extends Zend_Controller_Action
     protected $_authService;
     protected $_formModificapassword;
     protected $_formModificaprofilo;
+    protected $_formListaprenotazioni;
     public function init()
     {
 		$this->_helper->layout->setLayout('layout_staff');
@@ -13,12 +14,55 @@ class StaffController extends Zend_Controller_Action
                 $this->_staffModel = new Application_Model_Staff();
                 $this->view->modificapassForm = $this->getModificapasswordForm();
                 $this->view->modificaprofiloForm = $this->getModificaprofiloForm();
+                $this->view->listaprenotazioniForm = $this->getListaprenotazioniForm();
     }
 
+    
     public function indexAction()
     {
         
     }  
+     public function filtraprenotazioniAction()
+    {
+        
+    }
+    public function listaprenotazioniAction()
+    {
+        $request = $this->getRequest();
+        if (!$request->isPost()) {
+            return $this->_helper->redirector('filtraprenotazioni');
+        }
+        $form = $this->_formListaprenotazioni;
+        if (!$form->isValid($request->getPost())) {
+            $form->setDescription('Attenzione: alcuni dati inseriti sono errati.');
+        	return $this->render('filtraprenotazioni');
+        }
+        if (!$this->getRequest()->isPost()) {
+            $this->_helper->redirector('filtraprenotazioni');
+        }
+        $form=$this->_formListaprenotazioni;
+        if (!$form->isValid($_POST)) { 
+            $form->setDescription('Attenzione: alcuni dati inseriti sono errati.');
+            return $this->render('filtraprenotazioni');
+        }     
+       $nominativo=$request->getParam('nominativo');
+        $camera=$request->getParam('camera');
+        $servizi=$request->getParam('servizi');
+        
+        $prenotazioni=$this->_staffModel->getPrenotazioniByFiltri($nominativo,$camera,$servizi);
+        $this->view->listapren=$prenotazioni;
+    }
+     private function getListaprenotazioniForm()
+    {
+    	$urlHelper = $this->_helper->getHelper('url');
+		$this->_formListaprenotazioni = new Application_Form_Staff_Prenotazioni_Listaprenotazioni();
+    	$this->_formListaprenotazioni->setAction($urlHelper->url(array(
+			'controller' => 'staff',
+			'action' => 'listaprenotazioni'),
+			'default'
+		));
+		return $this->_formListaprenotazioni;
+    } 
     
     public function contattiAction()
     {

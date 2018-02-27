@@ -14,10 +14,7 @@ class Application_Resource_Utente extends Zend_Db_Table_Abstract
     {
         return $this->fetchRow($this->select()->where('username = ?', $usrName));
     }
-     public function getPasswordByUser($usrName)
-    {
-        return $this->fetchRow($this->select()->where('username = ?', $usrName));
-    }
+   
     
     public function insertUtente($info)
     {

@@ -11,7 +11,10 @@ class Application_Resource_Cliente extends Zend_Db_Table_Abstract
     }
        
    
-    
+    public function getClienti()
+    {
+        return $this->fetchAll();
+    }
     public function insertCliente($info)
     {
         $this->insert($info);

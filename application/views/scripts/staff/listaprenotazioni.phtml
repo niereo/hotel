@@ -1,0 +1,12 @@
+<?php foreach ($this->listapren as $pren) :?>
+<?php echo $pren->codice_camera.' ' ?>
+<?php echo $pren->username.' ' ?>
+<?php echo $pren->data_prenotazione.' ' ?>
+<?php echo $pren->data_inizio_pren.' ' ?>
+<?php echo $pren->data_fine_pren.' ' ?>
+<?php echo $pren->richiesta_servizi.' ' ?>
+<?php Zend_Debug::dump($pren)?>
+<br>
+<?php endforeach; ?>
+
+    

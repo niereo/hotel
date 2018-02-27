@@ -12,10 +12,11 @@ class Application_Form_Staff_Modificadati_Modificapassword extends App_Form_Abst
         $this->setName('modificapassword');
         $this->setAction('');
     	 $user=$this->_authService->authInfo('username');
-         $oldpass=$this->_utenteModel->getPasswordByUser($user);
+         $utente=$this->_utenteModel->getUtenteByName($user);
+         $oldpass=$utente->password;
          $confoldpass=new Zend_Validate_Identical($oldpass);
          $this->addElement('password', 'oldpass', array(
-            'validators' => $confoldpass,
+            'validators' => array($confoldpass),
             'required'   => true,
             'label'      => 'Vecchia Password',
             'decorators' => $this->elementDecorators,

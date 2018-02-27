@@ -7,7 +7,10 @@ class Application_Model_Staff extends App_Model_Abstract
     {
     }
 
-
+     public function getClienti()
+    {
+    	return $this->getResource('Cliente')->getClienti();
+    }
     public function getStaffByUser($info)
     {
     	return $this->getResource('Staff')->getStaffByUser($info);
@@ -21,6 +24,9 @@ class Application_Model_Staff extends App_Model_Abstract
     {
 	return $this->getResource('Staff')->updateProfiloByUser($info);
     }
-   
+   public function getPrenotazioniByFiltri($user,$camere,$servizi,$paged=null)
+    {
+    	return $this->getResource('Prenotazionehotel')->getPrenotazioniByFiltri($user,$camere,$servizi,$paged);
+    }
     
 }

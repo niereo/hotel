@@ -12,8 +12,8 @@ class Application_Form_Utente_Modificadati_Modificapassword extends App_Form_Abs
         $this->setName('modificapassword');
         $this->setAction('');
     	 $user=$this->_authService->authInfo('username');
-         $oldpass=$this->_utenteModel->getPasswordByUser($user);
-         
+         $utente=$this->_utenteModel->getUtenteByName($user);
+         $oldpass=$utente->password;
          $confoldpass=new Zend_Validate_Identical($oldpass);
          $this->addElement('password', 'oldpass', array(
             'validators' => array($confoldpass),
