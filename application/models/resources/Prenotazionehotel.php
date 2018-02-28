@@ -11,8 +11,14 @@ class Application_Resource_Prenotazionehotel extends Zend_Db_Table_Abstract
     }
     public function getPrenotazioniByFiltri($user,$camera,$servizi,$datain,$datafin,$paged=null)
     {
+        $where= '(((data_inizio_pren >= '.$datain.')AND(data_inizio_pren <= '.$datafin.'))'
+                . 'OR((data_fine_pren >= '.$datain.')AND(data_fine_pren <= '.$datafin.'))'
+                . 'OR((data_inizio_pren <= '.$datain.') AND ( data_fine_pren >= '.$datafin.')))';
+
+        $select=$this->select()->where($where);
         
-        $select=$this->select();
+                                   
+                             
                 /*->orWhere('data_inizio_pren >= '.$datain)->where('data_inizio_pren <= '.$datafin)
                              ->orWhere('data_fine_pren >= '.$datain)->where('data_fine_pren <= '.$datafin)
                              ->orWhere('data_inizio_pren <= '.$datain)->where('data_fine_pren >= '.$datafin);*/
