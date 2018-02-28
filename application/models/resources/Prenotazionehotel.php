@@ -9,12 +9,14 @@ class Application_Resource_Prenotazionehotel extends Zend_Db_Table_Abstract
 	public function init()
     {
     }
-    public function getPrenotazioniByFiltri($user,$camera,$servizi,$paged=null)
+    public function getPrenotazioniByFiltri($user,$camera,$servizi,$datain,$datafin,$paged=null)
     {
-        $select= $this->select()->setIntegrityCheck(false)
-                                ->from('prenotazione_hotel')
-                                ->joinLeft('prenotazione_servizi', 'prenotazione_servizi.cod_prenotazione = prenotazione_hotel.cod_prenotazione')
-                                ->group('prenotazione_hotel.cod_prenotazione');
+        
+        $select=$this->select();
+                /*->orWhere('data_inizio_pren >= '.$datain)->where('data_inizio_pren <= '.$datafin)
+                             ->orWhere('data_fine_pren >= '.$datain)->where('data_fine_pren <= '.$datafin)
+                             ->orWhere('data_inizio_pren <= '.$datain)->where('data_fine_pren >= '.$datafin);*/
+       
         if($user !== 'Qualsiasi')
             {$select=$select->where('username = ?',$user);}
           if($camera !== 'Qualsiasi')
@@ -24,7 +26,12 @@ class Application_Resource_Prenotazionehotel extends Zend_Db_Table_Abstract
     }else if ($servizi == 'Nessuno')
         {
         $select=$select->where('richiesta_servizi = ?',false);
-    }else              $select=$select->where('prenotazione_servizi.tipo_servizio = ?',$servizi);
+    }else             {
+        $select=$select->setIntegrityCheck(false)
+                                ->from('prenotazione_hotel')
+                                ->joinLeft('prenotazione_servizi', 'prenotazione_hotel.cod_prenotazione = prenotazione_servizi.cod_prenotazione')
+                ->where('prenotazione_servizi.tipo_servizio = ?',$servizi);
+    }
         if (null !== $paged) {
 			$adapter = new Zend_Paginator_Adapter_DbTableSelect($select);
 			$paginator = new Zend_Paginator($adapter);

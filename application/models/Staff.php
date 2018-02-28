@@ -24,9 +24,9 @@ class Application_Model_Staff extends App_Model_Abstract
     {
 	return $this->getResource('Staff')->updateProfiloByUser($info);
     }
-   public function getPrenotazioniByFiltri($user,$camere,$servizi,$paged=null)
+   public function getPrenotazioniByFiltri($user,$camere,$servizi,$datain,$datafin,$paged=null)
     {
-    	return $this->getResource('Prenotazionehotel')->getPrenotazioniByFiltri($user,$camere,$servizi,$paged);
+    	return $this->getResource('Prenotazionehotel')->getPrenotazioniByFiltri($user,$camere,$servizi,$datain,$datafin,$paged);
     }
     
 }

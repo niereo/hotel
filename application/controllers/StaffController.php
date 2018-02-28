@@ -3,6 +3,7 @@
 class StaffController extends Zend_Controller_Action
 {	
     protected $_staffModel;
+    protected $_utenteModel;
     protected $_authService;
     protected $_formModificapassword;
     protected $_formModificaprofilo;
@@ -12,6 +13,7 @@ class StaffController extends Zend_Controller_Action
 		$this->_helper->layout->setLayout('layout_staff');
 		$this->_authService = new Application_Service_Auth();
                 $this->_staffModel = new Application_Model_Staff();
+                $this->_utenteModel = new Application_Model_Utente();
                 $this->view->modificapassForm = $this->getModificapasswordForm();
                 $this->view->modificaprofiloForm = $this->getModificaprofiloForm();
                 $this->view->listaprenotazioniForm = $this->getListaprenotazioniForm();
@@ -44,13 +46,48 @@ class StaffController extends Zend_Controller_Action
         if (!$form->isValid($_POST)) { 
             $form->setDescription('Attenzione: alcuni dati inseriti sono errati.');
             return $this->render('filtraprenotazioni');
-        }     
+        } 
+        $datain=$request->getParam('data_inizio');
+        $datafin=$request->getParam('data_fine');
+        $di=new Zend_Date();
+        $df=new Zend_Date();
+        if($datain == "")
+        {
+            $di=new Zend_Date('0001-01-01');
+           
+        }else $di= new Zend_Date($datain);
+        if($datafin == "")
+        {
+            $df=new Zend_Date('9999-12-31');
+        }else $df= new Zend_Date($datafin);
+        
+       
+        
+        
+        if($di->isLater($df))
+        {
+            $form->setDescription('Attenzione:la data di inizio non può essere successiva a quella di fine.');
+            return $this->render('filtraprenotazioni');
+        }
+        
        $nominativo=$request->getParam('nominativo');
         $camera=$request->getParam('camera');
         $servizi=$request->getParam('servizi');
+        $counter=0;
+        $listaprenot=new ArrayObject();
+        $prenotazioni=$this->_staffModel->getPrenotazioniByFiltri($nominativo,$camera,$servizi,$di,$df);
         
-        $prenotazioni=$this->_staffModel->getPrenotazioniByFiltri($nominativo,$camera,$servizi);
-        $this->view->listapren=$prenotazioni;
+        foreach ($prenotazioni as $pren)
+        {
+            $cod=$pren->cod_prenotazione;
+            $servizi=$this->_utenteModel->getPrenotazioniByCodPrenot($pren->cod_prenotazione);
+            $listaprenot[$counter]=array(
+                'prenotazione'=>$pren,
+                'servizi'=>$servizi
+            );
+            $counter++;
+        }
+        $this->view->listapren=$listaprenot;
     }
      private function getListaprenotazioniForm()
     {

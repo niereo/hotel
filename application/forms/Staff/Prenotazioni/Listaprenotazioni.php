@@ -16,30 +16,7 @@ class Application_Form_Staff_Prenotazioni_Listaprenotazioni extends App_Form_Abs
         $this->_publicModel = new Application_Model_Public();
         $this->_utenteModel = new Application_Model_Utente();
         $this->_staffModel = new Application_Model_Staff();
-        
-        
-       
-        
-       
-      	/*		
-		$date = new Zend_Validate_Date(array('format' => 'yyyy-MM-dd'));$date->setMessage("Il campo Data di Nascita deve contenere caratteri numerici che rispettano il formato 'yyyy-MM-dd' ");
-		
-		$this->addElement('text', 'data_inizio', array(
-            'label' => 'Data Arrivo',
-            'required' =>true,
-	    'filters' => array('StringTrim'),
-            'validators' => array($date),
-            'decorators' => $this->elementDecorators,
-        ));
-                
-                $this->addElement('text', 'data_fine', array(
-            'label' => 'Data Partenza',
-            'required' =>true,
-	    'filters' => array('StringTrim'),
-            'validators' => array($date),
-            'decorators' => $this->elementDecorators,
-        ));
-           */  
+             
         $camere=$this->_utenteModel->getCamere();
     	$sceltacamere = array();
          $sceltacamere['Qualsiasi']='Qualsiasi';
@@ -79,6 +56,25 @@ class Application_Form_Staff_Prenotazioni_Listaprenotazioni extends App_Form_Abs
             'label' => 'Filtra per Servizio',
             'filters' => array('StringTrim'),
             'multiOptions' => $sceltaservizi,
+            'decorators' => $this->elementDecorators,
+        ));
+             
+             		
+		$date = new Zend_Validate_Date(array('format' => 'yyyy-MM-dd'));$date->setMessage("Il campo deve contenere caratteri numerici che rispettano il formato 'yyyy-MM-dd' ");
+		
+		$this->addElement('text', 'data_inizio', array(
+            'label' => 'DAL',
+            
+	    'filters' => array('StringTrim'),
+            'validators' => array($date),
+            'decorators' => $this->elementDecorators,
+        ));
+                
+                $this->addElement('text', 'data_fine', array(
+            'label' => 'AL',
+            
+	    'filters' => array('StringTrim'),
+            'validators' => array($date),
             'decorators' => $this->elementDecorators,
         ));
 			

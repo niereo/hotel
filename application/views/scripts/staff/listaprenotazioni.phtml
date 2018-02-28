@@ -1,11 +1,17 @@
 <?php foreach ($this->listapren as $pren) :?>
-<?php echo $pren->codice_camera.' ' ?>
-<?php echo $pren->username.' ' ?>
-<?php echo $pren->data_prenotazione.' ' ?>
-<?php echo $pren->data_inizio_pren.' ' ?>
-<?php echo $pren->data_fine_pren.' ' ?>
-<?php echo $pren->richiesta_servizi.' ' ?>
-<?php Zend_Debug::dump($pren)?>
+<?php echo $pren['prenotazione']->cod_prenotazione.' ' ?>
+<?php echo $pren['prenotazione']->codice_camera.' ' ?>
+<?php echo $pren['prenotazione']->username.' ' ?>
+<?php echo $pren['prenotazione']->data_prenotazione.' ' ?>
+<?php echo $pren['prenotazione']->data_inizio_pren.' ' ?>
+<?php echo $pren['prenotazione']->data_fine_pren.' ' ?>
+<?php echo $pren['prenotazione']->richiesta_servizi.' ' ?>
+
+<?php foreach ($pren['servizi'] as $serv)
+{
+    echo $serv->tipo_servizio;
+} ?>
+<?php //Zend_Debug::dump($this->date);?>
 <br>
 <?php endforeach; ?>
 
