@@ -70,14 +70,29 @@ class StaffController extends Zend_Controller_Action
             return $this->render('filtraprenotazioni');
         }
         
-       $nominativo=$request->getParam('nominativo');
+        $nominativo=$request->getParam('nominativo');
         $camera=$request->getParam('camera');
         $servizi=$request->getParam('servizi');
         $counter=0;
         $listaprenot=new ArrayObject();
-        $prenotazioni=$this->_staffModel->getPrenotazioniByFiltri($nominativo,$camera,$servizi,$di,$df);
+        $prenotazioni=$this->_staffModel->getPrenotazioniByFiltri($nominativo,$camera,$servizi);
+        $pre= new ArrayObject();
+        $counter=0;
+        foreach ($prenotazioni as $prenotazione)
+        {
+            $dip=new Zend_Date($prenotazione->data_inizio_pren);
+            $dfp=new Zend_Date($prenotazione->data_fine_pren);
+            
+            if((!($dip->isEarlier($di)) && !($dip->isLater($df))) || (!($dfp->isEarlier($di)) && !($dfp->isLater($df))) || (!($dip->isLater($di)) && !($dfp->isEarlier($df))) )
+            {
+                $pre[$counter]=$prenotazione;
+                $counter++;
+            }
+            
+            
+        }
         
-        foreach ($prenotazioni as $pren)
+        foreach ($pre as $pren)
         {
             $cod=$pren->cod_prenotazione;
             $servizi=$this->_utenteModel->getPrenotazioniByCodPrenot($pren->cod_prenotazione);
