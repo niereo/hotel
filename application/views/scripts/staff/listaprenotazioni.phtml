@@ -1,18 +1,25 @@
+ 
 <?php foreach ($this->listapren as $pren) :?>
-<?php echo $pren['prenotazione']->cod_prenotazione.' ' ?>
-<?php echo $pren['prenotazione']->codice_camera.' ' ?>
-<?php echo $pren['prenotazione']->username.' ' ?>
-<?php echo $pren['prenotazione']->data_prenotazione.' ' ?>
-<?php echo $pren['prenotazione']->data_inizio_pren.' ' ?>
-<?php echo $pren['prenotazione']->data_fine_pren.' ' ?>
-<?php echo $pren['prenotazione']->richiesta_servizi.' ' ?>
-
-<?php foreach ($pren['servizi'] as $serv)
-{
-    echo $serv->tipo_servizio;
-} ?>
-<?php //Zend_Debug::dump($this->date);?>
-<br>
-<?php endforeach; ?>
-
+<table border="2">
+    <tr><td width="40%"><h5>NOMINATIVO:</h5></td><td align="left"><?php echo $pren['nominativo']->nome.' '.$pren['nominativo']->cognome ?></td></tr>
+    <tr><td width="40%"><h5>CAMERA NUMERO:</h5></td><td align="left"><?php echo $pren['prenotazione']->codice_camera ?></td></tr>
+    <tr><td width="40%"><h5>DAL:</h5></td><td align="left"><?php echo $pren['prenotazione']->data_inizio_pren ?></td></tr>
+    <tr><td width="40%"><h5>AL:</h5></td><td align="left"><?php echo $pren['prenotazione']->data_fine_pren ?></td></tr>
+    <tr><td width="40%"><h5>SERVIZI:</h5></td><td align="left"><?php foreach ($pren['servizi'] as $serv)
+{  
+    echo $serv->tipo_servizio.'<br>';
+} ?></td></tr> 
+    <br>
     
+    <tr><td colspan="2" align="right"><a href="<?= $this->url(array(
+                        'controller' => 'staff',
+                        'action'     => 'dettaglipren',
+                        'codicepren' => $pren['prenotazione']->cod_prenotazione
+						), 
+                        'default',true
+                    ); 
+?>"><button>DETTAGLI</button></a></td></tr>
+<br>
+</table>
+<?php endforeach; ?>
+      

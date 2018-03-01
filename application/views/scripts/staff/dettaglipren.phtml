@@ -1,0 +1,39 @@
+<h3>PRENOTAZIONE:</h3>
+       <table> 
+           <tr><td><h4>EFFETTUATA DA:</h4></td><td align="left"><h5><?php echo' <class="title">' . $this->dettagli['nominativo']->nome . ' '.$this->dettagli['nominativo']->cognome ?></h5></td></tr>
+        <tr><td><h4>DATA PRENOTAZIONE:</h4></td><td align="left"><h5><?php echo' <class="title">' . $this->dettagli['prenotazione']->data_prenotazione . '' ?></h5></td></tr>
+        <tr><td><h4>CAMERA NUMERO:</h4></td><td align="left"><h5><?php echo' <class="title">' . $this->dettagli['camera']->cod_camera . '' ?></h5></td></tr>
+        <tr><td><h4>TIPO:</h4></td><td align="left"><h5><?php echo' <class="title">' . $this->dettagli['camera']->tipo . '' ?></h5></td></tr>    
+        <tr><td><h4>TV SATELLITARE:</h4></td><td align="left"><h5> 
+            <?php if($this->dettagli['camera']->tv)  
+        {   
+           echo 'SI'.'<br>';}
+        else
+        {echo 'NO';}
+        
+         ?></h5></td></tr>
+        <tr><td><h4>INTERNET:</h4></td><td align="left"><h5> 
+            <?php if($this->dettagli['camera']->internet)  
+        {   
+           echo 'SI'.'<br>';}
+        else
+        {echo 'NO';}
+        
+         ?></h5></td></tr>
+        <tr><td><h4>DAL:</h4></td><td align="left"><h5><?php echo' <class="title">' . $this->dettagli['prenotazione']->data_inizio_pren . '' ?></h5></td></tr>
+        <tr><td><h4>AL:</h4></td><td align="left"><h5><?php echo' <class="title">' . $this->dettagli['prenotazione']->data_fine_pren . '' ?></h5></td></tr>
+        <tr><td><h4>SERVIZI RICHIESTI:</h4></td><td align="left"><h5><?php if($this->dettagli['prenotazione']->richiesta_servizi)
+        {
+             foreach ($this->dettagli['servizi'] as $servi)
+         {     
+             echo $servi->tipo_servizio.'<br>';
+         }
+        }
+        else{echo'<h5>NON SONO STATI RICHIESTI SERVIZI</h5>';}?></h5></td></tr>
+        <tr><td colspan="2"><h3>COSTO TOTALE PRENOTAZIONE:</h3></td></tr>
+        <tr><td></td><td align="left"><h3><?php echo $this->dettagli['prenotazione']->prezzo_totale.' €'?></h3></td></tr>
+    </table>
+       
+       
+        
+        

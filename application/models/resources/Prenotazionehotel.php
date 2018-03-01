@@ -9,7 +9,12 @@ class Application_Resource_Prenotazionehotel extends Zend_Db_Table_Abstract
 	public function init()
     {
     }
-    public function getPrenotazioniByFiltri($user,$camera,$servizi,$paged=null)
+    public function getPrenotazioneByCodice($codice)
+    {
+        $select=$this->select()->where('cod_prenotazione = ?', $codice);
+        return $this->fetchRow($select);
+    }
+    public function getPrenotazioniByFiltri($user,$camera,$servizi)
     {
        
         $select=$this->select();
@@ -28,17 +33,7 @@ class Application_Resource_Prenotazionehotel extends Zend_Db_Table_Abstract
                                 ->from('prenotazione_hotel')
                                 ->joinLeft('prenotazione_servizi', 'prenotazione_hotel.cod_prenotazione = prenotazione_servizi.cod_prenotazione')
                 ->where('prenotazione_servizi.tipo_servizio = ?',$servizi);
-    }
-   
-        
-        if (null !== $paged) {
-			$adapter = new Zend_Paginator_Adapter_DbTableSelect($select);
-			$paginator = new Zend_Paginator($adapter);
-			$paginator->setItemCountPerPage(1)
-		          	  ->setCurrentPageNumber((int) $paged);
-			return $paginator;
-		}
-                
+    }             
                 return $this->fetchAll($select);
                                 
     }

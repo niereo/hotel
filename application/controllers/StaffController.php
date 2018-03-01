@@ -28,6 +28,20 @@ class StaffController extends Zend_Controller_Action
     {
         
     }
+    public function dettagliprenAction()
+    {
+        $codice=$this->_getParam('codicepren');
+        $prenotazione=$this->_staffModel->getPrenotazioneByCodice($codice);
+        $servizi=$this->_utenteModel->getPrenotazioniByCodPrenot($codice);
+        $nominativo=$this->_utenteModel->getClienteByUser($prenotazione->username);
+        $camera=$this->_utenteModel->getTipoByCod($prenotazione->codice_camera);
+        $this->view->dettagli=array(
+            'prenotazione'=>$prenotazione,
+            'servizi'=>$servizi,
+            'nominativo'=>$nominativo,
+            'camera'=>$camera
+        );
+    }
     public function listaprenotazioniAction()
     {
         $request = $this->getRequest();
@@ -59,11 +73,7 @@ class StaffController extends Zend_Controller_Action
         if($datafin == "")
         {
             $df=new Zend_Date('9999-12-31');
-        }else $df= new Zend_Date($datafin);
-        
-       
-        
-        
+        }else $df= new Zend_Date($datafin);   
         if($di->isLater($df))
         {
             $form->setDescription('Attenzione:la data di inizio non può essere successiva a quella di fine.');
@@ -78,6 +88,7 @@ class StaffController extends Zend_Controller_Action
         $prenotazioni=$this->_staffModel->getPrenotazioniByFiltri($nominativo,$camera,$servizi);
         $pre= new ArrayObject();
         $counter=0;
+        
         foreach ($prenotazioni as $prenotazione)
         {
             $dip=new Zend_Date($prenotazione->data_inizio_pren);
@@ -94,14 +105,17 @@ class StaffController extends Zend_Controller_Action
         
         foreach ($pre as $pren)
         {
+            $nome=$this->_utenteModel->getClienteByUser($pren->username);
             $cod=$pren->cod_prenotazione;
             $servizi=$this->_utenteModel->getPrenotazioniByCodPrenot($pren->cod_prenotazione);
             $listaprenot[$counter]=array(
                 'prenotazione'=>$pren,
+                'nominativo'=>$nome,
                 'servizi'=>$servizi
             );
             $counter++;
         }
+
         $this->view->listapren=$listaprenot;
     }
      private function getListaprenotazioniForm()
