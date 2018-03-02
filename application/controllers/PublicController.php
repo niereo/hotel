@@ -21,7 +21,7 @@ class PublicController extends Zend_Controller_Action
     {    
         
     }
-    
+        
     public function contattiAction()
     {
 		
@@ -149,7 +149,8 @@ class PublicController extends Zend_Controller_Action
         return $this->_helper->redirector('index', $this->_authService->getIdentity()->ruolo);
 	}
 
-	// Validazione AJAX
+
+		// Validazione AJAX
 	public function validateloginAction() 
     {
         $this->_helper->getHelper('layout')->disableLayout();
@@ -161,7 +162,6 @@ class PublicController extends Zend_Controller_Action
         	$this->getResponse()->setHeader('Content-type','application/json')->setBody($response);        	
         }
     }
-	
 	private function getLoginForm()
     {
     	$urlHelper = $this->_helper->getHelper('url');
