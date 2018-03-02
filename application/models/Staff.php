@@ -32,4 +32,8 @@ class Application_Model_Staff extends App_Model_Abstract
     {
     	return $this->getResource('Prenotazionehotel')->getPrenotazioneByCodice($codice);
     }
+     public function getDisponibilitaByCamera($codice)
+     {
+         return $this->getResource('Prenotazionehotel')->getDisponibilitaByCamera($codice);
+     }
 }

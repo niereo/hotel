@@ -267,6 +267,20 @@ class StaffController extends Zend_Controller_Action
         $profilo = $this->_staffModel->getStaffByUser($user);
         $this->view->profilo = $profilo;
     }
+    
+    public function disponibilitaAction()
+    {
+        $camera=$this->_utenteModel->getCamere();
+        $disponibilita=new ArrayObject();
+        foreach ($camera as $cam)
+        {
+            $pren=$this->_staffModel->getDisponibilitaByCamera($cam->cod_camera);
+            $disponibilita[$cam->cod_camera]=array(
+                    'prenotazione'=>$pren,
+                    'camera'=>$cam);
+        }
+      $this->view->disponibile=$disponibilita;  
+    }
 
     public function logoutAction()
 	{

@@ -47,7 +47,7 @@ class Application_Form_Staff_Modificadati_Modificaprofilo extends App_Form_Abstr
             'decorators' => $this->elementDecorators,
         ));
 					
-		$date = new Zend_Validate_Date(array('format' => 'yyyy-MM-dd'));$date->setMessage("Il campo Data di Nascita deve contenere caratteri numerici che rispettano il formato 'yyyy-MM-dd' ");
+		$date = new Zend_Validate_Date(array('format' => 'yyyy-MM-dd'));$date->setMessage("Il campo deve contenere una data valida che rispetta il formato 'yyyy-MM-dd' ");
 		
 		$this->addElement('text', 'data_nascita', array(
             'label' => 'Data di Nascita',

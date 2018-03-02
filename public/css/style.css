@@ -263,6 +263,16 @@ a.button_top{
     text-decoration: none;
     text-transform: uppercase;
 }
+a.button_left{
+	background-color: #DB2C39;  
+    color: #FFFFFF;
+    display: inline-block;
+    font-size: 15px;
+    font-weight: normal;
+    padding: 25px 19px;
+    text-decoration: none;
+    text-transform: uppercase;
+}
 
 a.button_top:hover{
 	background-color: #4076AB;  
@@ -564,6 +574,7 @@ article .article-info a {
 	padding-bottom: 0;
 	font-size: 13px;
 	color: #fff;
+        
 	text-transform: uppercase;
 	font-weight: normal;
 	padding: 7px 7px;

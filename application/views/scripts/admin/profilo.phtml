@@ -1,0 +1,24 @@
+
+<table>
+    <th class="profilo"><h2> IL MIO PROFILO</h2></th><th class="profilo"></th>
+<tr><td>NOME</td><td> <?php echo' <class="title">' . $this->profilo->nome . '' ?> </td></tr>
+<tr><td>COGNOME</td><td> <?php echo' <class="title">' . $this->profilo->cognome . '' ?> </td></tr>
+<tr><td>DATA DI NASCITA</td><td> <?php echo' <class="title">' . $this->profilo->data_nascita . '' ?></td></tr>
+<tr><td>CITTA</td><td> <?php echo' <class="title">' . $this->profilo->citta . '' ?> </td></tr>
+<tr><td>INDIRIZZO</td><td> <?php echo' <class="title">' . $this->profilo->indirizzo . '' ?> </td></tr>
+<tr><td>NUMERO DI TELEFONO</td><td> <?php echo' <class="title">' . $this->profilo->numero_telefono . '' ?> </td></tr>
+<tr><td>EMAIL</td><td> <?php echo' <class="title">' . $this->profilo->email . '' ?> </td></tr>
+<tr><td><a href="<?= $this->url(array(
+                        'controller' => 'admin',
+                        'action'     => 'modificaprofilo',
+						), 
+                        'default',true
+                    ); 
+?>"><button>MODIFICA PROFILO</button></a></td><td><a href="<?= $this->url(array(
+                        'controller' => 'admin',
+                        'action'     => 'modificapassword',
+						), 
+                        'default',true
+                    ); 
+?>"><button>MODIFICA PASSWORD</button></a></td></tr>
+</table>

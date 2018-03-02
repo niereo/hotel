@@ -1,0 +1,16 @@
+<?php foreach ($this->disponibile as $disp) :?>
+<table border="2">
+<tr><td colspan="2" align="center"><?php echo '<h3>CAMERA: '.$disp['camera']->cod_camera.'</h3>'; ?></td></tr>
+<?php if($disp['prenotazione']->count()==0)
+{
+    echo '<tr><td colspan="2"><h4>La camera è sempre disponibile </h4></td></tr>';
+}else{
+ 
+ foreach($disp['prenotazione'] as $pren) 
+ {  echo '<tr><td><h4>PRENOTATA DAL: </h4></td><td>'.$pren->data_inizio_pren.'</td></tr>'; 
+ echo '<tr><td><h4>AL: </h4></td><td>'.$pren->data_fine_pren.'</td></tr>';} 
+}
+echo '</td></tr>' ?>
+</table>
+<br>
+<?php endforeach; ?>
