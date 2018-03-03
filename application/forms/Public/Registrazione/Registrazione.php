@@ -69,14 +69,17 @@ $this->addElement('text', 'username', array(
         ));
 					
 		$date = new Zend_Validate_Date(array('format' => 'yyyy-MM-dd'));$date->setMessage("Il campo deve contenere una data valida che rispetta il formato 'yyyy-MM-dd' ");
-		
-		$this->addElement('text', 'data_nascita', array(
+		$datepicker=new ZendX_JQuery_Form_Element_DatePicker('data_nascita');
+                
+		/*$datepicker->addElement('text', 'data_nascita', array(
             'label' => 'Data di Nascita',
             'required' =>true,
+                    'id'=>'datepicker',
+                    'class'=>'datepicker',
 			'filters' => array('StringTrim'),
             'validators' => array($date),
             'decorators' => $this->elementDecorators,
-        ));
+        ));*/
                 
                 
                 
