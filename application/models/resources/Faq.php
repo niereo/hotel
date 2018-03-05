@@ -14,5 +14,9 @@ class Application_Resource_Faq extends Zend_Db_Table_Abstract
     {
         return $this->fetchAll();
     }	
+     public function insertFaq($info)
+    {
+        $this->insert($info);
+    }	
 }
 

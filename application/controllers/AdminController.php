@@ -4,19 +4,25 @@ class AdminController extends Zend_Controller_Action
 {	
     protected $_staffModel;
     protected $_utenteModel;
+    protected $_publicModel;
+    protected $_adminModel;
     protected $_authService;
     protected $_formModificapassword;
     protected $_formModificaprofilo;
     protected $_formListaprenotazioni;
+    protected $_formInsertfaq;
     public function init()
     {
 		$this->_helper->layout->setLayout('layout_admin');
 		$this->_authService = new Application_Service_Auth();
                 $this->_staffModel = new Application_Model_Staff();
+                $this->_publicModel = new Application_Model_Public();
                 $this->_utenteModel = new Application_Model_Utente();
+                $this->_adminModel = new Application_Model_Admin();
                 $this->view->modificapassForm = $this->getModificapasswordForm();
                 $this->view->modificaprofiloForm = $this->getModificaprofiloForm();
                 $this->view->listaprenotazioniForm = $this->getListaprenotazioniForm();
+                $this->view->insertfaqForm = $this->getInsertfaqForm();
     }
 
     public function indexAction()
@@ -40,11 +46,56 @@ class AdminController extends Zend_Controller_Action
     }
       public function faqAction()
     {
-         $this->view->headTitle( 'Elenco delle F.A.Q.' );
-        $faq = new Application_Resource_Faq();
-        $fa = $faq->fetchAll();
-        $this->view->faq = $fa;
+        $this->view->headTitle( 'Elenco delle F.A.Q.' );
+        $faq=$this->_publicModel->getFaq();
+        $this->view->faq = $faq;
     }
+    
+    public function insertfaqAction()
+    {
+        
+    }
+    public function inseriscifaqAction()
+    {
+              
+        $request = $this->getRequest();
+        if (!$request->isPost()) {
+            return $this->_helper->redirector('inseriscifaq');
+        }
+        $form = $this->_formInsertfaq;
+        if (!$form->isValid($request->getPost())) {
+            $form->setDescription('Attenzione: alcuni dati inseriti sono errati.');
+        	return $this->render('inseriscifaq');
+        }
+        if (!$this->getRequest()->isPost()) {
+            $this->_helper->redirector('inseriscifaq');
+        }
+        $form=$this->_formInsertfaq;
+        if (!$form->isValid($_POST)) { 
+            $form->setDescription('Attenzione: alcuni dati inseriti sono errati.');
+            return $this->render('inseriscifaq');
+        }
+        $domanda=$this->getRequest()->getParam('domanda');
+        $risposta=$this->getRequest()->getParam('risposta');
+        $faq= array(
+            'domanda'=>$domanda,
+            'risposta'=>$risposta
+        );
+        $this->_adminModel->insertfaq($faq);
+        $this->_helper->redirector('faq');
+    }
+    
+     private function getInsertfaqForm()
+    {
+    	$urlHelper = $this->_helper->getHelper('url');
+		$this->_formInsertfaq = new Application_Form_Admin_Faq_Insertfaq();
+    	$this->_formInsertfaq->setAction($urlHelper->url(array(
+			'controller' => 'admin',
+			'action' => 'inseriscifaq'),
+			'default'
+		));
+		return $this->_formInsertfaq;
+    }   
        //funzioni per modificare la password
     public function modificapasswordAction()
     {

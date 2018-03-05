@@ -10,6 +10,15 @@
 	<?php echo' <class="title">' . $FAQ->risposta . '' ?> 
 	<br><br>
 	<?php endforeach ?>
+       
 	</ul>
-	
+    <div align="right">
+           <a href="<?= $this->url(array(
+                        'controller' => 'admin',
+                        'action'     => 'insertfaq',
+						), 
+                        'default',true
+                    ); 
+?>"><button>INSERISCI NUOVA FAQ</button></a>
+	</div>
 </div>

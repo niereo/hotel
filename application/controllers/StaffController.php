@@ -146,10 +146,9 @@ class StaffController extends Zend_Controller_Action
     }
       public function faqAction()
     {
-         $this->view->headTitle( 'Elenco delle F.A.Q.' );
-        $faq = new Application_Resource_Faq();
-        $fa = $faq->fetchAll();
-        $this->view->faq = $fa;
+        $this->view->headTitle( 'Elenco delle F.A.Q.' );
+        $faq=$this->_publicModel->getFaq();
+        $this->view->faq = $faq;
     }
      //funzioni per modificare la password
     public function modificapasswordAction()
