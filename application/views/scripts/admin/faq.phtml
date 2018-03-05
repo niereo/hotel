@@ -9,8 +9,24 @@
 	<li> <?php echo' <class="title">' . $FAQ->domanda . '' ?> </li>
 	<?php echo' <class="title">' . $FAQ->risposta . '' ?> 
 	<br><br>
+        <a href="<?= $this->url(array(
+                        'controller' => 'admin',
+                        'action'     => 'updatefaq',
+                        'id'         =>$FAQ->id,
+						), 
+                        'default',true
+                    ); 
+        ?>"><button>Aggiorna</button></a>
+        <a href="<?= $this->url(array(
+                        'controller' => 'admin',
+                        'action'     => 'index',
+						), 
+                        'default',true
+                    ); 
+        ?>"><button>MODIFICA PASSWORD</button></a>
+        <br>
 	<?php endforeach ?>
-       
+        
 	</ul>
     <div align="right">
            <a href="<?= $this->url(array(

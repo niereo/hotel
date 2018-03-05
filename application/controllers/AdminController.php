@@ -11,6 +11,7 @@ class AdminController extends Zend_Controller_Action
     protected $_formModificaprofilo;
     protected $_formListaprenotazioni;
     protected $_formInsertfaq;
+    protected $_formUpdatefaq;
     public function init()
     {
 		$this->_helper->layout->setLayout('layout_admin');
@@ -22,7 +23,12 @@ class AdminController extends Zend_Controller_Action
                 $this->view->modificapassForm = $this->getModificapasswordForm();
                 $this->view->modificaprofiloForm = $this->getModificaprofiloForm();
                 $this->view->listaprenotazioniForm = $this->getListaprenotazioniForm();
+
                 $this->view->insertfaqForm = $this->getInsertfaqForm();
+
+                $this->view->updatefaqForm = new Application_Form_Admin_Faq_Updatefaq();
+                
+
     }
 
     public function indexAction()
@@ -44,7 +50,9 @@ class AdminController extends Zend_Controller_Action
     {
 		
     }
-      public function faqAction()
+    //funzioni perle faq
+   
+    public function faqAction()
     {
         $this->view->headTitle( 'Elenco delle F.A.Q.' );
         $faq=$this->_publicModel->getFaq();
@@ -97,6 +105,53 @@ class AdminController extends Zend_Controller_Action
 		return $this->_formInsertfaq;
     }   
        //funzioni per modificare la password
+
+     function updatefaqAction()
+    {
+        $codice=$this->_getParam('id');
+        $faq=$this->_adminModel->getFaqByCod($codice);
+        $this->view->faq=$faq;
+    }
+    private function getUpdatefaqForm()
+    {
+    	$urlHelper = $this->_helper->getHelper('url');
+	$this->_formUpdatefaq = new Application_Form_Admin_Faq_Updatefaq();
+    	$this->_formUpdatefaq->setAction($urlHelper->url(array(
+			'controller' => 'admin',
+			'action' => 'aggiornafaq'),
+			'default'
+		));
+		return $this->_formUpdatefaq;
+    }   
+    public function aggiornafaqAction()
+	{        
+        $request = $this->getRequest();
+        if (!$request->isPost()) {
+            return $this->_helper->redirector('aggiornafaq');
+        }
+        $form = $this->_formUpdatefaq;
+        if (!$form->isValid($request->getPost())) {
+            $form->setDescription('Attenzione: alcuni dati inseriti sono errati.');
+        	return $this->render('aggiornafaq');
+        }
+        if (!$this->getRequest()->isPost()) {
+            $this->_helper->redirector('aggiornafaq');
+        }
+        $form=$this->_formUpdatefaq;
+        if (!$form->isValid($_POST)) { 
+            $form->setDescription('Attenzione: alcuni dati inseriti sono errati.');
+            return $this->render('aggiornafaq');
+        }     
+        
+        $info=array(
+            'id '=> $codice,
+            'domanda' => $domanda,
+            'risposta' => $risposta
+        );
+        $this->_adminModel->UpdateFaq($info);
+        return $this->_helper->redirector('faq');       
+    }
+    //funzioni per modificare la password
     public function modificapasswordAction()
     {
         
@@ -330,6 +385,8 @@ class AdminController extends Zend_Controller_Action
 		));
 		return $this->_formListaprenotazioni;
     } 
+   
+    
     public function logoutAction()
 	{
 		$this->_authService->clear();
