@@ -12,5 +12,12 @@ class Application_Model_Admin extends App_Model_Abstract
     {
     	return $this->getResource('Utente')->getUtenteByName($info);
     }
-
+    public function getFaqByCod($codice)
+    {
+        return $this->getResource('Faq')->getFaqByCod($codice);
+    }
+    public function UpdateFaq($info)
+    {
+        return $this->getResource('Faq')->updateFaq($info);
+    }
 }
