@@ -2,17 +2,23 @@
 
 class Application_Form_Admin_Faq_Updatefaq extends App_Form_Abstract
 {
+   
+    
 	public function init()
-    {               
-       
-    	
-        $this->addElement('textarea', 'doamnda', array(
+    {        
+           
+           $this->addElement('hidden', 'id', array(
+           
+            'decorators' => $this->elementDecorators,
+            ));
+        
+        $this->addElement('textarea', 'domanda', array(
             'filters'    => array('StringTrim'),
             'validators' => array(
                 array('StringLength', true, array(3, 400))
             ),
             'required'   => true,
-            'value'     => $this->faq->domanda,
+            
             'cols'      => 50,
             'rows'      => 15,
             'label'      => 'Domanda',
@@ -25,7 +31,7 @@ class Application_Form_Admin_Faq_Updatefaq extends App_Form_Abstract
                 array('StringLength', true, array(3, 400))
             ),
             'required'   => true,
-            'value'     => $this->faq->risposta,
+            
             'cols'      => 50,
             'rows'      => 15,
             'label'      => 'Risposta',
@@ -33,7 +39,7 @@ class Application_Form_Admin_Faq_Updatefaq extends App_Form_Abstract
             ));
 
         $this->addElement('submit', 'login', array(
-            'label'    => 'Aggiotna',
+            'label'    => 'Aggiorna',
             'decorators' => $this->buttonDecorators,
         ));
 
@@ -43,5 +49,8 @@ class Application_Form_Admin_Faq_Updatefaq extends App_Form_Abstract
         	array('Description', array('placement' => 'prepend', 'class' => 'formerror')),
             'Form'
         ));
+        
     }
+    
+        
 }

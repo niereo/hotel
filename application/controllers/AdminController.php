@@ -24,7 +24,7 @@ class AdminController extends Zend_Controller_Action
                 $this->view->modificaprofiloForm = $this->getModificaprofiloForm();
                 $this->view->listaprenotazioniForm = $this->getListaprenotazioniForm();
                 $this->view->insertfaqForm = $this->getInsertfaqForm();
-                $this->view->updatefaqForm = new Application_Form_Admin_Faq_Updatefaq();
+                $this->_formUpdatefaq = new Application_Form_Admin_Faq_Updatefaq();
                 
     }
 
@@ -101,50 +101,65 @@ class AdminController extends Zend_Controller_Action
 		return $this->_formInsertfaq;
     }   
     
-     function updatefaqAction()
+     public function updatefaqAction()
     {
         $codice=$this->_getParam('id');
         $faq=$this->_adminModel->getFaqByCod($codice);
-        $this->view->faq=$faq;
-    }
-    private function getUpdatefaqForm()
-    {
-    	$urlHelper = $this->_helper->getHelper('url');
-	$this->_formUpdatefaq = new Application_Form_Admin_Faq_Updatefaq();
+        $info=array(
+            'id'=>$faq->id,
+          'domanda'=>$faq->domanda,
+          'risposta'=>$faq->risposta
+        );
+        $this->_formUpdatefaq = new Application_Form_Admin_Faq_Updatefaq();
+        $this->_formUpdatefaq->populate($info);
+        $urlHelper = $this->_helper->getHelper('url');
+	
     	$this->_formUpdatefaq->setAction($urlHelper->url(array(
 			'controller' => 'admin',
 			'action' => 'aggiornafaq'),
 			'default'
 		));
-		return $this->_formUpdatefaq;
-    }   
+       
+        
+        $this->view->updatefaqForm=$this->_formUpdatefaq;
+       
+    }
+   
     public function aggiornafaqAction()
 	{        
         $request = $this->getRequest();
         if (!$request->isPost()) {
-            return $this->_helper->redirector('aggiornafaq');
+            return $this->_helper->redirector('faq');
         }
         $form = $this->_formUpdatefaq;
         if (!$form->isValid($request->getPost())) {
             $form->setDescription('Attenzione: alcuni dati inseriti sono errati.');
-        	return $this->render('aggiornafaq');
+        	return $this->render('faq');
         }
         if (!$this->getRequest()->isPost()) {
-            $this->_helper->redirector('aggiornafaq');
+            $this->_helper->redirector('faq');
         }
         $form=$this->_formUpdatefaq;
         if (!$form->isValid($_POST)) { 
             $form->setDescription('Attenzione: alcuni dati inseriti sono errati.');
-            return $this->render('aggiornafaq');
+            return $this->render('faq');
         }     
-        
+        $id=$request->getParam('id');
+        $domanda=$request->getParam('domanda');
+        $risposta=$request->getParam('risposta');
         $info=array(
-            'id '=> $codice,
+            'id'=> $id,
             'domanda' => $domanda,
             'risposta' => $risposta
         );
-        $this->_adminModel->UpdateFaq($info);
+        $this->_adminModel->updateFaq($info);
         return $this->_helper->redirector('faq');       
+    }
+    public function deletefaqAction()
+    {
+        $codice=$this->_getParam('id');
+        $this->_adminModel->deleteFaq($codice);
+        $this->_helper->redirector('faq');
     }
     //funzioni per modificare la password
     public function modificapasswordAction()

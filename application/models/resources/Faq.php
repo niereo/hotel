@@ -23,10 +23,15 @@ class Application_Resource_Faq extends Zend_Db_Table_Abstract
         $select=$this->select()->where('id = ?',$codice);
         return $this->fetchRow($select);
     }
-    public function UpdateFaq($info)
+    public function updateFaq($info)
     {
-        $where=$this->select()->where('id = ?',$info->id);
-        return $this->update($info, $where);
+        $where= array('id = ?' => $info['id']);
+        return $this->update($info,$where);
+    }
+    public function deleteFaq($id)
+    {
+         $where= $this->getAdapter()->quoteInto('id = ?', $id);
+	$this->delete($where);
     }
 }
 

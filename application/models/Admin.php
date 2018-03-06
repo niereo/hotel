@@ -20,8 +20,12 @@ class Application_Model_Admin extends App_Model_Abstract
     {
         return $this->getResource('Faq')->getFaqByCod($codice);
     }
-    public function UpdateFaq($info)
+    public function updateFaq($info)
     {
         return $this->getResource('Faq')->updateFaq($info);
+    }
+    public function deleteFaq($info)
+    {
+        return $this->getResource('Faq')->deleteFaq($info);
     }
 }

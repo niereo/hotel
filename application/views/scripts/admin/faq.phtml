@@ -13,15 +13,16 @@
         <a href="<?= $this->url(array(
                         'controller' => 'admin',
                         'action'     => 'updatefaq',
-                        'id'         =>$FAQ->id,
+                        'id'         =>$FAQ->id
 						), 
                         'default',true
                     ); 
         ?>"><button>Modifica</button></a>
         <a href="<?= $this->url(array(
                         'controller' => 'admin',
-                        'action'     => 'index',
-						), 
+                        'action'     => 'deletefaq',
+			'id'         =>$FAQ->id
+            ), 
                         'default',true
                     ); 
         ?>"><button>Cancella</button></a>

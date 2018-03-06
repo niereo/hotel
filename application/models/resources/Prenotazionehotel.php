@@ -39,8 +39,19 @@ class Application_Resource_Prenotazionehotel extends Zend_Db_Table_Abstract
     }
     public function getPrenotazioniByUser($usrName,$paged=null,$order=null)
     {
-        $select=$this->select()->where('username = ?', $usrName)->order($order);
-        
+        $data=new Zend_Date();
+        $di=$data->getYear();
+        $anno=$data->getYear();
+        $anno=$anno->setDay(31);
+        $anno=$anno->setMonth(12);
+        $datainizio=$di->toString('yyyy-MM-dd');
+        //$datafine=$anno->toString('yyyy-MM-dd');
+    
+        $select=$this->select()->where('username = ?', $usrName)
+                ->where('data_fine_pren >= ?',$datainizio)
+                
+                ->order($order);
+         
 		if (null !== $paged) {
 			$adapter = new Zend_Paginator_Adapter_DbTableSelect($select);
 			$paginator = new Zend_Paginator($adapter);
