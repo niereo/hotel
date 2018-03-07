@@ -13,7 +13,23 @@ class Application_Form_Utente_Prenotazioni_Selezionaservizi extends App_Form_Abs
         $this->setAction('');
         $this->_publicModel = new Application_Model_Public;
         
-    	
+    	$this->addElement('hidden', 'codice', array(
+           
+            'decorators' => $this->elementDecorators,
+            ));
+        
+        $this->addElement('hidden', 'datai', array(
+           
+            'decorators' => $this->elementDecorators,
+            ));
+        
+        $this->addElement('hidden', 'dataf', array(
+           
+            'decorators' => $this->elementDecorators,
+            ));
+        
+        
+        
         $servizi=$this->_publicModel->getServizi();
         
             $this->addElement('radio', 'servizi', array(

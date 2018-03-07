@@ -11,15 +11,14 @@ class Application_Form_Utente_Prenotazioni_Dataprenotazione extends App_Form_Abs
         $this->setMethod('post');
         $this->setName('dataprenotazione');
         $this->setAction('');
-        $this->_publicModel = new Application_Model_Public();
-        $tipi=$this->_publicModel->getTipoCamere();
-    	$scelte = array();
         
-        $scelte['Qualsiasi']='Qualsiasi';
-        foreach ($tipi as $tipo)
-        {
-            $scelte[$tipo->tipo]=$tipo->tipo;
-        }
+        
+    	$this->addElement('hidden', 'codice', array(
+           
+            'decorators' => $this->elementDecorators,
+            ));
+        
+        
       			
 		$date = new Zend_Validate_Date(array('format' => 'yyyy-MM-dd'));$date->setMessage("Il campo deve contenere caratteri numerici che rispettano il formato 'yyyy-MM-dd' ");
 		
@@ -39,12 +38,6 @@ class Application_Form_Utente_Prenotazioni_Dataprenotazione extends App_Form_Abs
             'decorators' => $this->elementDecorators,
         ));
                 
-            $this->addElement('select', 'tipo', array(
-            'label' => 'Filtra per Tipo',
-            'filters' => array('StringTrim'),
-            'multiOptions' => $scelte,
-            'decorators' => $this->elementDecorators,
-        ));
 			
         $this->addElement('submit', 'insert', array(
             'label' => 'Conferma',
