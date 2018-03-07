@@ -1,35 +1,36 @@
+<body>
 <div>
-    <table>
-        <tr><td><h4>NOME: </h4></td><td><?php echo' <class="title">' . $this->nominativo->nome . '' ?></td></tr>
-        <tr><td><h4>COGNOME: </h4></td><td><?php echo' <class="title">' . $this->nominativo->cognome . '' ?></td></tr>
-        <tr><td><h4>DATA PRENOTAZIONE: </h4></td><td><?php echo' <class="title">' . $this->prenotazione->data_prenotazione . '' ?></td></tr>
-        <tr><td><h4>CAMERA NUMERO: </h4></td><td><?php echo' <class="title">' . $this->prenotazione->codice_camera . '' ?></td></tr>
-        <tr><td><h4>TIPO CAMERA: </h4></td><td><?php echo' <class="title">' . $this->camera->tipo . '' ?></td></tr>
+    <table border="2" align="center" bgcolor="white">
+        <tr><td width="25%"><h3>NOME: </h3></td><td  width="25%"><h4><?php echo' <class="title">' . $this->nominativo->nome . '' ?></h4></td></tr>
+        <tr><td><h3>COGNOME: </h3></td><td><h4><?php echo' <class="title">' . $this->nominativo->cognome . '' ?></h4></td></tr>
+        <tr><td><h3>DATA PRENOTAZIONE: </h3></td><td><h4><?php echo' <class="title">' . $this->prenotazione->data_prenotazione . '' ?></h4></td></tr>
+        <tr><td><h3>CAMERA NUMERO: </h3></td><td><h4><?php echo' <class="title">' . $this->prenotazione->codice_camera . '' ?></h4></td></tr>
+        <tr><td><h3>TIPO CAMERA: </h3></td><td><h4><?php echo' <class="title">' . $this->camera->tipo . '' ?></h4></td></tr>
        <tr>
-            <td><h4>TV SATELLITARE:            </h4></td>
-            <td class="camere"> 
+            <td><h3>TV SATELLITARE:            </h3></td>
+            <td class="camere"><h4> 
             <?php if($this->camera->tv)  
             {   
            echo 'SI<br>';}
             else
                 {echo 'NO';}
         
-            ?></td>
+            ?></h4></td>
         </tr>
         <tr>
-            <td><h4>INTERNET:            </h4></td>
-            <td class="camere"> 
+            <td><h3>INTERNET:            </h3></td>
+            <td class="camere"><h4> 
             <?php if($this->camera->internet)  
             {   
              echo 'SI<br>';}
             else
             {echo 'NO';}
         
-            ?></td>
+            ?></h4></td>
         </tr>
-        <tr><td><h4>DATA ARRIVO: </h4></td><td><?php echo' <class="title">' . $this->prenotazione->data_inizio_pren . '' ?></td></tr>
-        <tr><td><h4>DATA PARTENZA: </h4></td><td><?php echo' <class="title">' . $this->prenotazione->data_fine_pren . '' ?></td></tr>
-        <tr><td><h4>SERVIZI AGGIUNTIVI: </h4></td><td>
+        <tr><td><h4>DATA ARRIVO: </h4></td><td><h5><?php echo' <class="title">' . $this->prenotazione->data_inizio_pren . '' ?></h4></td></tr>
+        <tr><td><h3>DATA PARTENZA: </h3></td><td><h4><?php echo' <class="title">' . $this->prenotazione->data_fine_pren . '' ?></h4></td></tr>
+        <tr><td><h3>SERVIZI AGGIUNTIVI: </h3></td><td><h4>
         <?php if($this->prenotazione->richiesta_servizi)  
         {   foreach ($this->servizi as $serv) 
         {echo $serv->tipo_servizio.'<br>';
@@ -37,17 +38,20 @@
         else
         {echo 'Non hai richiesto alcun servizio';}
         
-         ?></td></tr>
-        <tr><td><h4>PREZZO TOTALE: </h4></td><td><?php echo' <class="title">' . $this->prenotazione->prezzo_totale . ' '.'€' ?></td></tr>
+         ?></h4></td></tr>
+        <tr><td><h3>PREZZO TOTALE: </h3></td><td><h4><?php echo' <class="title">' . $this->prenotazione->prezzo_totale . ' '.'€' ?></h4></td></tr>
         
     </table>
-  <a href="<?= $this->url(array(
+    <br><br>
+    <div align="center">
+  <a  href="<?= $this->url(array(
                         'controller' => 'utente',
                         'action'     => 'listaprenotazioni',
 						), 
                         'default',true
                     ); 
         ?>"><button>INDIETRO</button></a>
-   
+   </div>
 	
 </div>
+</body>
