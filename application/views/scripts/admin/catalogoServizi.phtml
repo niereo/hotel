@@ -1,0 +1,34 @@
+<head>
+   <?= $this->headScript(); ?>
+</head>   
+<body>
+    <h3>SERVIZI:</h3>
+    <?php foreach ($this->servizi as $SER) :?>
+<h3> <?php echo' <class="title">' . $SER->tipo . '' ?> </h3>
+	<img src="<?php echo $this->baseUrl() . '/images/'.$SER->foto.'' ?> "  class="cat-img" >
+        <h4>DESCRIZIONE:</h4>
+        <?php echo' <class="title">' . $SER->descrizione . '' ?>
+            	<br><br>
+                 <a href="<?= $this->url(array(
+                        'controller' => 'admin',
+                        'action'     => 'updateservizi',
+                        'tipo' => $SER->tipo
+						), 
+                        'default',true
+                    ); 
+        ?>"><button>Modifica</button></a>
+        <a href="<?= $this->url(array(
+                        'controller' => 'admin',
+                        'action'     => 'deleteservizi',
+			'tipo'         =>$SER->tipo
+            ), 
+                        'default',true
+                    ); 
+        ?>"><button>Cancella</button></a>
+	<?php endforeach ?>
+                         <!-- Paginazione -->	
+	  <?php if($this->servizi instanceof Zend_Paginator) {
+	  		echo $this->paginationControl($this->servizi,'Sliding','admin/_paginatorcatalogoservizi.phtml');
+	  } 
+          ?>
+</body>

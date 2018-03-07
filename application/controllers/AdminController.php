@@ -12,6 +12,8 @@ class AdminController extends Zend_Controller_Action
     protected $_formListaprenotazioni;
     protected $_formInsertfaq;
     protected $_formUpdatefaq;
+    protected $_formInsertservizi;
+    protected $_formUpdateservizi;
     public function init()
     {
 		$this->_helper->layout->setLayout('layout_admin');
@@ -25,6 +27,8 @@ class AdminController extends Zend_Controller_Action
                 $this->view->listaprenotazioniForm = $this->getListaprenotazioniForm();
                 $this->view->insertfaqForm = $this->getInsertfaqForm();
                 $this->_formUpdatefaq = new Application_Form_Admin_Faq_Updatefaq();
+                $this->view->insertserviziForm = $this->getInsertserviziForm();
+                $this->_formUpdateservizi = new Application_Form_Admin_Servizi_Updateservizi();
                 
     }
 
@@ -47,7 +51,123 @@ class AdminController extends Zend_Controller_Action
     {
 		
     }
-    //funzioni perle faq
+   
+    //funzioni per i servizi
+      public function catalogoserviziAction()
+    {
+        $paged = $this->_getParam('page', 1);
+	$servizi = $this->_publicModel->getServizi($paged);
+        $this->view->servizi = $servizi;
+    }
+     public function insertserviziAction()
+    {
+        
+    }
+    public function inserisciserviziAction()
+    {
+              
+        $request = $this->getRequest();
+        if (!$request->isPost()) {
+            return $this->_helper->redirector('insertservizi');
+        }
+        $form = $this->_formInsertservizi;
+        if (!$form->isValid($request->getPost())) {
+            $form->setDescription('Attenzione: alcuni dati inseriti sono errati.');
+        	return $this->render('insertservizi');
+        }
+        if (!$this->getRequest()->isPost()) {
+            $this->_helper->redirector('insertservizi');
+        }
+        $form=$this->_formInsertservizi;
+        if (!$form->isValid($_POST)) { 
+            $form->setDescription('Attenzione: alcuni dati inseriti sono errati.');
+            return $this->render('insertservizi');
+        }
+        
+        $info = $form->getValues();
+        $this->_adminModel->insertServizi($info);
+        $this->_helper->redirector('catalogoservizi');
+    }
+    
+     private function getInsertserviziForm()
+    {
+    	$urlHelper = $this->_helper->getHelper('url');
+		$this->_formInsertservizi = new Application_Form_Admin_Servizi_Insertservizi();
+    	$this->_formInsertservizi->setAction($urlHelper->url(array(
+			'controller' => 'admin',
+			'action' => 'inserisciservizi'),
+			'default'
+		));
+		return $this->_formInsertservizi;
+    }   
+     public function updateserviziAction()
+    {
+        $codice=$this->_getParam('tipo');
+        $servizi=$this->_adminModel->getServiziByTipo($codice);
+        $info=array(
+            'tipovecchio'=>$servizi->tipo,
+            'tipo'=>$servizi->tipo,
+          'prezzo_servizio'=>$servizi->prezzo_servizio,
+          'foto'=>$servizi->foto,
+          'descrizione'=>$servizi->descrizione
+        );
+        $this->_formUpdateservizi = new Application_Form_Admin_Servizi_Updateservizi();
+        $this->_formUpdateservizi->populate($info);
+        $urlHelper = $this->_helper->getHelper('url');
+	
+    	$this->_formUpdateservizi->setAction($urlHelper->url(array(
+			'controller' => 'admin',
+			'action' => 'aggiornaservizi'),
+			'default'
+		));
+       
+        
+        $this->view->updateserviziForm=$this->_formUpdateservizi;
+       
+    }
+   
+    public function aggiornaserviziAction()
+	{        
+        $request = $this->getRequest();
+        if (!$request->isPost()) {
+            return $this->_helper->redirector('catalogoservizi');
+        }
+        $form = $this->_formUpdateservizi;
+        if (!$form->isValid($request->getPost())) {
+            $form->setDescription('Attenzione: alcuni dati inseriti sono errati.');
+        	return $this->render('catalogoservizi');
+        }
+        if (!$this->getRequest()->isPost()) {
+            $this->_helper->redirector('catalogoservizi');
+        }
+        $form=$this->_formUpdateservizi;
+        if (!$form->isValid($_POST)) { 
+            $form->setDescription('Attenzione: alcuni dati inseriti sono errati.');
+            return $this->render('catalogoservizi');
+        }     
+         $codice = $form->getValue('tipovecchio');
+         $info=array(
+             'tipo'=>$form->getValue('tipo'),
+             'prezzo_servizio'=>$form->getValue('prezzo_servizio'),
+             'foto'=>$form->getValue('foto'),
+             'descrizione'=>$form->getValue('descrizione')
+         );
+         if($info['foto']==null)
+         {
+             $serv=$this->_adminModel->getServiziByTipo($codice);
+             $foto=$serv->foto;
+             $info['foto']=$foto;
+         }
+        $this->_adminModel->updateServizi($info,$codice);
+        return $this->_helper->redirector('catalogoservizi');       
+    }
+     public function deleteserviziAction()
+    {
+        $codice=$this->_getParam('tipo');
+        $this->_adminModel->deleteServizi($codice);
+        $this->_helper->redirector('catalogoservizi');
+    }
+    //funzioni per le faq
    
     public function faqAction()
     {

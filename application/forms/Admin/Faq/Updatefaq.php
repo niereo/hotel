@@ -7,18 +7,16 @@ class Application_Form_Admin_Faq_Updatefaq extends App_Form_Abstract
 	public function init()
     {        
            
-           $this->addElement('hidden', 'id', array(
-           
+           $this->addElement('hidden', 'id', array(   
             'decorators' => $this->elementDecorators,
             ));
         
         $this->addElement('textarea', 'domanda', array(
             'filters'    => array('StringTrim'),
             'validators' => array(
-                array('StringLength', true, array(3, 400))
+                array('StringLength', true, array(1, 400))
             ),
             'required'   => true,
-            
             'cols'      => 50,
             'rows'      => 15,
             'label'      => 'Domanda',
@@ -28,7 +26,7 @@ class Application_Form_Admin_Faq_Updatefaq extends App_Form_Abstract
         $this->addElement('textarea', 'risposta', array(
             'filters'    => array('StringTrim'),
             'validators' => array(
-                array('StringLength', true, array(3, 400))
+                array('StringLength', true, array(1, 400))
             ),
             'required'   => true,
             
@@ -38,7 +36,7 @@ class Application_Form_Admin_Faq_Updatefaq extends App_Form_Abstract
             'decorators' => $this->elementDecorators,
             ));
 
-        $this->addElement('submit', 'login', array(
+        $this->addElement('submit', 'aggiorna', array(
             'label'    => 'Aggiorna',
             'decorators' => $this->buttonDecorators,
         ));

@@ -11,7 +11,7 @@ class Application_Form_Admin_Faq_Insertfaq extends App_Form_Abstract
         $this->addElement('textarea', 'domanda', array(
             'filters'    => array('StringTrim'),
             'validators' => array(
-                array('StringLength', true, array(3, 400))
+                array('StringLength', true, array(1, 400))
             ),
             'cols'=>50,
             'rows'=>15,
@@ -23,7 +23,7 @@ class Application_Form_Admin_Faq_Insertfaq extends App_Form_Abstract
        $this->addElement('textarea', 'risposta', array(
             'filters'    => array('StringTrim'),
             'validators' => array(
-                array('StringLength', true, array(3, 400))
+                array('StringLength', true, array(1, 400))
             ),
             'cols'=>50,
             'rows'=>15,
@@ -32,7 +32,7 @@ class Application_Form_Admin_Faq_Insertfaq extends App_Form_Abstract
             'decorators' => $this->elementDecorators,
             ));
        
-        $this->addElement('submit', 'login', array(
+        $this->addElement('submit', 'inserisci', array(
             'label'    => 'Inserisci',
             'decorators' => $this->buttonDecorators,
         ));

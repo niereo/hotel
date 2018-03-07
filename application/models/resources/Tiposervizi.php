@@ -22,5 +22,25 @@ class Application_Resource_Tiposervizi extends Zend_Db_Table_Abstract
 		}
         return $this->fetchAll($paged);
     }	
+      public function insertServizi($info)
+    {
+        $this->insert($info);
+    }
+    public function getServiziByTipo($tipo)
+    {
+        $select=$this->select()->where('tipo = ?',$tipo);
+        return $this->fetchRow($select);
+    }
+     public function updateServizi($info,$codice)
+    {
+        $where= array('tipo = ?' => $codice);
+        return $this->update($info,$where);
+    }
+     public function deleteServizi($tipo)
+    {
+         $where= $this->getAdapter()->quoteInto('tipo = ?', $tipo);
+	$this->delete($where);
+    }
+    
 }
 
