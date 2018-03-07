@@ -1,6 +1,6 @@
-<body>
+<body bgcolor="lightblue">
 <div>
-    <table border="2" align="center" bgcolor="white">
+    <table align="left">
         <tr><td width="25%"><h3>NOME: </h3></td><td  width="25%"><h4><?php echo' <class="title">' . $this->nominativo->nome . '' ?></h4></td></tr>
         <tr><td><h3>COGNOME: </h3></td><td><h4><?php echo' <class="title">' . $this->nominativo->cognome . '' ?></h4></td></tr>
         <tr><td><h3>DATA PRENOTAZIONE: </h3></td><td><h4><?php echo' <class="title">' . $this->prenotazione->data_prenotazione . '' ?></h4></td></tr>
@@ -41,17 +41,17 @@
          ?></h4></td></tr>
         <tr><td><h3>PREZZO TOTALE: </h3></td><td><h4><?php echo' <class="title">' . $this->prenotazione->prezzo_totale . ' '.'€' ?></h4></td></tr>
         
-    </table>
+   
     <br><br>
-    <div align="center">
-  <a  href="<?= $this->url(array(
+    
+    <tr><td><a  href="<?= $this->url(array(
                         'controller' => 'utente',
                         'action'     => 'listaprenotazioni',
 						), 
                         'default',true
                     ); 
-        ?>"><button>INDIETRO</button></a>
-   </div>
-	
+        ?>"><button>INDIETRO</button></a></td></tr>
+
+	 </table>
 </div>
 </body>
