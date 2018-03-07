@@ -33,6 +33,14 @@
                     ) 
                  .'" ><button>CANCELLA PRENOTAZIONE</button></a>';}
        ?>  
+    <a href="<?= $this->url(array(
+                        'controller' => 'utente',
+                        'action'     => 'stampaprenotazione',
+                        'codice'         =>$lis['prenotazione']->cod_prenotazione
+						), 
+                        'default',true
+                    ); 
+        ?>"><button>STAMPA PRENOTAZIONE</button></a>
     <br><br>
 	<?php endforeach ?>
 </div>

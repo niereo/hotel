@@ -58,6 +58,10 @@ class Application_Model_Utente extends App_Model_Abstract
     {
     	return $this->getResource('Camere')->getCamereByTipo($info,$order);
     } 
+      public function getCamereByCodice($info)
+    {
+    	return $this->getResource('Camere')->getCamereByCodice($info);
+    } 
         public function insertPrenotazione($info)
     {
     	return $this->getResource('Prenotazionehotel')->insertPrenotazione($info);

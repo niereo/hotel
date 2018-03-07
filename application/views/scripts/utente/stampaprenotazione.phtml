@@ -1,0 +1,53 @@
+<div>
+    <table>
+        <tr><td><h4>NOME: </h4></td><td><?php echo' <class="title">' . $this->nominativo->nome . '' ?></td></tr>
+        <tr><td><h4>COGNOME: </h4></td><td><?php echo' <class="title">' . $this->nominativo->cognome . '' ?></td></tr>
+        <tr><td><h4>DATA PRENOTAZIONE: </h4></td><td><?php echo' <class="title">' . $this->prenotazione->data_prenotazione . '' ?></td></tr>
+        <tr><td><h4>CAMERA NUMERO: </h4></td><td><?php echo' <class="title">' . $this->prenotazione->codice_camera . '' ?></td></tr>
+        <tr><td><h4>TIPO CAMERA: </h4></td><td><?php echo' <class="title">' . $this->camera->tipo . '' ?></td></tr>
+       <tr>
+            <td><h4>TV SATELLITARE:            </h4></td>
+            <td class="camere"> 
+            <?php if($this->camera->tv)  
+            {   
+           echo 'SI<br>';}
+            else
+                {echo 'NO';}
+        
+            ?></td>
+        </tr>
+        <tr>
+            <td><h4>INTERNET:            </h4></td>
+            <td class="camere"> 
+            <?php if($this->camera->internet)  
+            {   
+             echo 'SI<br>';}
+            else
+            {echo 'NO';}
+        
+            ?></td>
+        </tr>
+        <tr><td><h4>DATA ARRIVO: </h4></td><td><?php echo' <class="title">' . $this->prenotazione->data_inizio_pren . '' ?></td></tr>
+        <tr><td><h4>DATA PARTENZA: </h4></td><td><?php echo' <class="title">' . $this->prenotazione->data_fine_pren . '' ?></td></tr>
+        <tr><td><h4>SERVIZI AGGIUNTIVI: </h4></td><td>
+        <?php if($this->prenotazione->richiesta_servizi)  
+        {   foreach ($this->servizi as $serv) 
+        {echo $serv->tipo_servizio.'<br>';
+        }}
+        else
+        {echo 'Non hai richiesto alcun servizio';}
+        
+         ?></td></tr>
+        <tr><td><h4>PREZZO TOTALE: </h4></td><td><?php echo' <class="title">' . $this->prenotazione->prezzo_totale . ' '.'€' ?></td></tr>
+        
+    </table>
+  <a href="<?= $this->url(array(
+                        'controller' => 'utente',
+                        'action'     => 'listaprenotazioni',
+						), 
+                        'default',true
+                    ); 
+        ?>"><button>INDIETRO</button></a>
+   
+	
+</div>

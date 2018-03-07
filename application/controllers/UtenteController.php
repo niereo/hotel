@@ -4,6 +4,7 @@ class UtenteController extends Zend_Controller_Action
 {	
     protected $_publicModel;
     protected $_utenteModel;
+    protected $_staffModel;
     protected $_authService;
     protected $_formModificapassword;
     protected $_formModificaprofilo;
@@ -16,6 +17,7 @@ class UtenteController extends Zend_Controller_Action
 		$this->_authService = new Application_Service_Auth();
                 $this->_publicModel = new Application_Model_Public();
                 $this->_utenteModel = new Application_Model_Utente();
+                $this->_staffModel = new Application_Model_Staff();
                 $this->_formDataprenotazione = new Application_Form_Utente_Prenotazioni_Dataprenotazione();
                 $this->_formSelezionaservizi = new Application_Form_Utente_Prenotazioni_Selezionaservizi();
                 $this->view->modificapassForm = $this->getModificapasswordForm();
@@ -248,6 +250,19 @@ class UtenteController extends Zend_Controller_Action
     
     
     //funzioni per visulizzare la lista delle prenotazioni
+    public function stampaprenotazioneAction()
+    {
+        $codice=$this->_getParam('codice');
+        $pren=$this->_staffModel->getPrenotazioneByCodice($codice);
+        $nominativo=$this->_utenteModel->getClienteByUser($pren->username);
+        $servizi=$this->_utenteModel->getPrenotazioniByCodPrenot($pren->cod_prenotazione);
+        $camera=$this->_utenteModel->getCamereByCodice($pren->codice_camera);
+        $this->view->prenotazione =$pren;
+        $this->view->nominativo =$nominativo;
+        $this->view->servizi =$servizi;
+        $this->view->camera =$camera;
+        $this->_helper->layout()->disableLayout();
+    }
     public function listaprenotazioniAction()
     {
         $info=$this->_authService->authInfo('username');
