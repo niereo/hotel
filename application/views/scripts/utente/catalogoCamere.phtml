@@ -1,15 +1,27 @@
-<head>
-   <?= $this->headScript(); ?>
-</head>   
-<body>
+  <body>
     <h3>CAMERE:</h3>
     <?php foreach ($this->catalogo as $CAT) :?>
-<h3> <?php echo' <class="title">' . $CAT->tipo . '' ?> </h3>
-	<img src="<?php echo $this->baseUrl() . '/images/'.$CAT->foto.'' ?> "  class="cat-img" >
-        
-        <h4>DESCRIZIONE:</h4>
-         <?php echo' <class="title">' . $CAT->descrizione . '' ?>
-        
+    
+    <table>
+        <tr>
+            <td rowspan="3"><img src="<?php echo $this->baseUrl() . '/images/'.$CAT->foto.'' ?> "  class="foot-img" ></td>
+            <td align="left" ><h3> <?php echo' <class="title">' . $CAT->tipo . '' ?> </h3></td>
+        </tr>
+        <tr>
+            <td align="left" ><?php echo' <class="title">' . $CAT->descrizione . '' ?></td>
+        </tr>
+        <tr>
+            <td align="right" ><a href="<?= $this->url(array(
+                        'controller' => 'utente',
+                        'action'     => 'listacamere',
+                        'tipo'      =>  $CAT->tipo,
+						), 
+                        'default',true
+                    ); 
+            ?>"><button>Prenota</button></a></td>
+        </tr>
+    </table>
+   
 	<br><br>
 	<?php endforeach ?>
 </body>
