@@ -28,6 +28,27 @@ class StaffController extends Zend_Controller_Action
     {
         
     }
+    
+    public function catalogocamereAction()
+    {
+	$catalogo = $this->_publicModel->getTipoCamere();
+        $this->view->catalogo = $catalogo;	
+    }
+    
+    public function listacamereAction(){
+        
+        $tipo=$this->_getParam('tipo');
+        $camere=$this->_utenteModel->getCamereByTipo($tipo);
+        $this->view->camere=$camere;
+    }
+    
+    public function catalogoserviziAction()
+    {
+        $paged = $this->_getParam('page', 1);
+	$servizi = $this->_publicModel->getServizi($paged);
+        $this->view->servizi = $servizi;
+    }
+    
     public function dettagliprenAction()
     {
         $codice=$this->_getParam('codicepren');

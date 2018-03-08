@@ -7,6 +7,7 @@ class PublicController extends Zend_Controller_Action
 	protected $_formLogin;
         protected $_formRegistrazione;
         protected $_publicModel;
+        protected $_utenteModel;
 	
     public function init()
     {
@@ -15,6 +16,7 @@ class PublicController extends Zend_Controller_Action
         $this->view->loginForm = $this->getLoginForm();
         $this->view->registrazioneForm = $this->getRegistrazioneForm();
         $this->_publicModel = new Application_Model_Public();
+        $this->_utenteModel = new Application_Model_Utente();
     }
 
     public function indexAction()
@@ -47,6 +49,13 @@ class PublicController extends Zend_Controller_Action
     {
 	$catalogo = $this->_publicModel->getTipoCamere();
         $this->view->catalogo = $catalogo;	
+    }
+    
+    public function listacamereAction(){
+        
+        $tipo=$this->_getParam('tipo');
+        $camere=$this->_utenteModel->getCamereByTipo($tipo);
+        $this->view->camere=$camere;
     }
     
     public function catalogoserviziAction()

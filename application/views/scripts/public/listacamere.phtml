@@ -1,0 +1,41 @@
+<div>
+    <h3> LISTA CAMERE</h3>   
+    
+           
+	<?php foreach ($this->camere as $cam) :?>
+    <table>
+        <tr><td rowspan="4"><img src="<?php echo $this->baseUrl() . '/images/'.$cam->foto.'' ?>" class="foot-img"></td>
+            <td><h4>TIPO CAMERA:   </h4></td>
+            <td class="camere"><?php echo' <class="title">' . $cam->tipo . '' ?></td>
+        </tr>
+        <tr>
+            <td><h4>TV SATELLITARE:            </h4></td>
+            <td class="camere"> 
+            <?php if($cam->tv)  
+            {   
+           echo 'SI<br>';}
+            else
+                {echo 'NO';}
+        
+            ?></td>
+        </tr>
+        <tr>
+            <td><h4>INTERNET:            </h4></td>
+            <td class="camere"> 
+            <?php if($cam->internet)  
+            {   
+             echo 'SI<br>';}
+            else
+            {echo 'NO';}
+        
+            ?></td>
+        </tr>
+        <tr>
+            <td><h4>COSTO GIORNALIERO:  </h4></td>
+            <td class="camere"><?php echo' <class="title"><h3>' . $cam->prezzo_camera. ' '.'€</h3>' ?></td>
+        </tr>
+    </table>
+     
+    <br>
+	<?php endforeach ?>
+</div>
