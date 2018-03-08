@@ -4,7 +4,7 @@
     
     <table>
         <tr>
-            <td rowspan="3"><img src="<?php echo $this->baseUrl() . '/images/'.$CAT->foto.'' ?> "  class="foot-img" ></td>
+            <td rowspan="3" width="33%"><img src="<?php echo $this->baseUrl() . '/images/'.$CAT->foto.'' ?> "  class="foot-img" ></td>
             <td align="left" ><h3> <?php echo' <class="title">' . $CAT->tipo . '' ?> </h3></td>
         </tr>
         <tr>
@@ -12,7 +12,7 @@
         </tr>
         <tr>
             <td align="right" ><a href="<?= $this->url(array(
-                        'controller' => 'public',
+                        'controller' => 'staff',
                         'action'     => 'listacamere',
                         'tipo'      =>  $CAT->tipo,
 						), 

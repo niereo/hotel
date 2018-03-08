@@ -5,6 +5,7 @@ class StaffController extends Zend_Controller_Action
     protected $_staffModel;
     protected $_utenteModel;
     protected $_authService;
+    protected $_publicModel;
     protected $_formModificapassword;
     protected $_formModificaprofilo;
     protected $_formListaprenotazioni;
@@ -14,6 +15,7 @@ class StaffController extends Zend_Controller_Action
 		$this->_authService = new Application_Service_Auth();
                 $this->_staffModel = new Application_Model_Staff();
                 $this->_utenteModel = new Application_Model_Utente();
+                $this->_publicModel = new Application_Model_Public();
                 $this->view->modificapassForm = $this->getModificapasswordForm();
                 $this->view->modificaprofiloForm = $this->getModificaprofiloForm();
                 $this->view->listaprenotazioniForm = $this->getListaprenotazioniForm();
