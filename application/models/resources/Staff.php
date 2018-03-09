@@ -11,7 +11,19 @@ class Application_Resource_Staff extends Zend_Db_Table_Abstract
     }
        
    
-    
+    public function insertStaff($info)
+    {
+        $this->insert($info);
+    }
+    public function getStaff()
+    {
+        return $this->fetchAll();
+    }
+     public function deleteStaff($user)
+    {
+         $where= $this->getAdapter()->quoteInto('username = ?', $user);
+	$this->delete($where);
+    }
    
    public function getStaffByUser($usrName)
     {

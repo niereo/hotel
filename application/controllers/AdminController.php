@@ -14,6 +14,7 @@ class AdminController extends Zend_Controller_Action
     protected $_formUpdatefaq;
     protected $_formInsertservizi;
     protected $_formUpdateservizi;
+    protected $_formInsertutente;
     public function init()
     {
 		$this->_helper->layout->setLayout('layout_admin');
@@ -29,6 +30,7 @@ class AdminController extends Zend_Controller_Action
                 $this->_formUpdatefaq = new Application_Form_Admin_Faq_Updatefaq();
                 $this->view->insertserviziForm = $this->getInsertserviziForm();
                 $this->_formUpdateservizi = new Application_Form_Admin_Servizi_Updateservizi();
+                $this->view->insertutenteForm = $this->getInsertutenteForm();
                 
     }
 
@@ -51,7 +53,88 @@ class AdminController extends Zend_Controller_Action
     {
 		
     }
+    //funzioni inserimento nuovo utente
+     public function insertutenteAction()
+    {
+        
+    }
+    
+    	private function getInsertUtenteForm()
+    {
+    	$urlHelper = $this->_helper->getHelper('url');
+		$this->_formInsertutente = new Application_Form_Admin_Utenti_Insertutente();
+    	$this->_formInsertutente->setAction($urlHelper->url(array(
+			'controller' => 'admin',
+			'action' => 'inserisciutente'),
+			'default'
+		));
+		return $this->_formInsertutente;
+    }   
+    
+    public function inserisciutenteAction()
+	{        
+        $request = $this->getRequest();
+        if (!$request->isPost()) {
+            return $this->_helper->redirector('insertutente');
+        }
+        $form = $this->_formInsertutente;
+        if (!$form->isValid($request->getPost())) {
+            $form->setDescription('Attenzione: alcuni dati inseriti sono errati.');
+        	return $this->render('insertutente');
+        }
+        if (!$this->getRequest()->isPost()) {
+            $this->_helper->redirector('insertutente');
+        }
+  $form=$this->_formInsertutente;
+        if (!$form->isValid($_POST)) { 
+            $form->setDescription('Attenzione: alcuni dati inseriti sono errati.');
+            return $this->render('insertutente');
+        } 
+
+    $username = $this->getRequest()->getParam('username');
+    $ruolo = $this->getRequest()->getParam('ruolo');
+    $password = $this->getRequest()->getParam('password');
+    $cognome = $this->getRequest()->getParam('cognome'); 
+     $nome = $this->getRequest()->getParam('nome'); 
+     $data = $this->getRequest()->getParam('data_nascita'); 
+     $cell = $this->getRequest()->getParam('numero_telefono');
+      $gen = $this->getRequest()->getParam('genere');
+      $cit = $this->getRequest()->getParam('citta');
+      $ind = $this->getRequest()->getParam('indirizzo');
+      $email = $this->getRequest()->getParam('email');
    
+  $cli=array('username' => $username,
+     'cognome' => $cognome,
+     'nome' => $nome,
+     'data_nascita' => $data,
+     'numero_telefono' => $cell,
+     'genere' => $gen,
+     'citta' => $cit,
+     'indirizzo' => $ind,
+     'email' => $email);
+  $info=array('username' => $username,
+      'password' => $password,
+      'ruolo' => $ruolo);
+     if($ruolo == 'utente')
+     {$this->_publicModel->insertCliente($cli);}
+        else {$this->_adminModel->insertStaff($cli);}
+    $this->_publicModel->insertUtente($info);
+        return $this->_helper->redirector('index');
+	}
+   //funzioni modifica e cancella staff
+       public function listastaffAction()
+       {
+           $staff=$this->_adminModel->getStaff();
+           $this->view->staff =$staff;
+       }
+        public function cancellastaffAction()
+    {
+        $user=$this->_getParam('username');
+        $this->_adminModel->deleteStaff($user);
+        $this->_adminModel->deleteUtente($user);
+        $this->_helper->redirector('listastaff');
+    }
+        
     //funzioni per i servizi
       public function catalogoserviziAction()
     {

@@ -45,4 +45,20 @@ class Application_Model_Admin extends App_Model_Abstract
     {
         return $this->getResource('Tiposervizi')->deleteServizi($info);
     }
+     public function insertStaff($info)
+    {
+    	return $this->getResource('Staff')->insertStaff($info);
+    }
+     public function getStaff()
+    {
+        return $this->getResource('Staff')->getStaff();
+    }
+    public function deleteStaff($info)
+    {
+        return $this->getResource('Staff')->deleteStaff($info);
+    }
+    public function deleteUtente($info)
+    {
+        return $this->getResource('Utente')->deleteUtente($info);
+    }
 }

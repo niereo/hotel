@@ -28,6 +28,20 @@
                  ?>" >DISPONIBILIT&Aacute;</a></li>
                    <li><a href="<?= $this->url(array(
                         'controller' => 'admin',
+                        'action'     => 'insertutente',
+						), 
+                        'default',true
+                    ); 
+                 ?>" >INSERISCI UTENTE</a></li>
+                   <li><a href="<?= $this->url(array(
+                        'controller' => 'admin',
+                        'action'     => 'listastaff',
+						), 
+                        'default',true
+                    ); 
+                 ?>" >LISTA STAFF</a></li>
+                   <li><a href="<?= $this->url(array(
+                        'controller' => 'admin',
                         'action'     => 'insertservizi',
 						), 
                         'default',true
