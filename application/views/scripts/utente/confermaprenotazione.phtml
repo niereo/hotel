@@ -29,7 +29,8 @@
         {echo 'NO';}
         
          ?></td></tr>
-        <tr><td></td><td><h4>COSTO CAMERA:</h4></td><td class="camere"><?php echo' <class="title"><h3>' . $totale=$this->camera->prezzo_camera*$prenotazione->giorni .' €</h3>' ?></td></tr>
+        <?php $totale=$this->camera->prezzo_camera*$prenotazione->giorni ?>
+        <tr><td></td><td><h4>COSTO CAMERA:</h4></td><td class="camere"><?php echo' <class="title"><h3>' .$totale  .' €</h3>' ?></td></tr>
         <tr><td></td><td border="2" colspan="2"><?php if($serv->richiestaservizi)
         {echo '<h3>HAI RICHIESTO I SEGUENTI SERVIZI: </h3>';
          
