@@ -243,7 +243,7 @@ class UtenteController extends Zend_Controller_Action
         $info=array(
             'username'=>$user,
             'codice_camera'=>$cod,
-            'tipo_camera'=>$tipocamera,
+            'tipo_camera'=>$tipocamera->tipo,
             'data_prenotazione'=>$datstr,
             'data_inizio_pren'=>$darrivo,
             'data_fine_pren'=>$dpartenza,
@@ -291,12 +291,11 @@ class UtenteController extends Zend_Controller_Action
         $lista= new ArrayObject();
         $counter=0;
         foreach($preno as $pre)
-        {$tipo=$this->_utenteModel->getTipoByCod($pre->codice_camera);
+        {
         
         $servizi=$this->_utenteModel->getPrenotazioniByCodPrenot($pre->cod_prenotazione);
         
         $lista[$counter]= array('prenotazione'=> $pre,
-            'tipo'=> $tipo,
             'servizi'=>$servizi);
         $counter=$counter +1;}        
         
