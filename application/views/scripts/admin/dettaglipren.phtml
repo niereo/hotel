@@ -2,10 +2,10 @@
        <table> 
            <tr><td><h4>EFFETTUATA DA:</h4></td><td align="left"><h5><?php echo' <class="title">' . $this->dettagli['nominativo']->nome . ' '.$this->dettagli['nominativo']->cognome ?></h5></td></tr>
         <tr><td><h4>DATA PRENOTAZIONE:</h4></td><td align="left"><h5><?php echo' <class="title">' . $this->dettagli['prenotazione']->data_prenotazione . '' ?></h5></td></tr>
-        <tr><td><h4>CAMERA NUMERO:</h4></td><td align="left"><h5><?php echo' <class="title">' . $this->dettagli['camera']->cod_camera . '' ?></h5></td></tr>
-        <tr><td><h4>TIPO:</h4></td><td align="left"><h5><?php echo' <class="title">' . $this->dettagli['camera']->tipo . '' ?></h5></td></tr>    
+        <tr><td><h4>CAMERA NUMERO:</h4></td><td align="left"><h5><?php echo' <class="title">' . $this->dettagli['prenotazione']->codice_camera . '' ?></h5></td></tr>
+        <tr><td><h4>TIPO:</h4></td><td align="left"><h5><?php echo' <class="title">' . $this->dettagli['prenotazione']->tipo_camera . '' ?></h5></td></tr>    
         <tr><td><h4>TV SATELLITARE:</h4></td><td align="left"><h5> 
-            <?php if($this->dettagli['camera']->tv)  
+            <?php if($this->dettagli['prenotazione']->tv)  
         {   
            echo 'SI'.'<br>';}
         else
@@ -13,7 +13,7 @@
         
          ?></h5></td></tr>
         <tr><td><h4>INTERNET:</h4></td><td align="left"><h5> 
-            <?php if($this->dettagli['camera']->internet)  
+            <?php if($this->dettagli['prenotazione']->internet)  
         {   
            echo 'SI'.'<br>';}
         else

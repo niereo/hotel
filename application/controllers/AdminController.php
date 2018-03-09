@@ -424,8 +424,7 @@ class AdminController extends Zend_Controller_Action
         $this->view->dettagli=array(
             'prenotazione'=>$prenotazione,
             'servizi'=>$servizi,
-            'nominativo'=>$nominativo,
-            'camera'=>$camera
+            'nominativo'=>$nominativo
         );
     }
     public function listaprenotazioniAction()
