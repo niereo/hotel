@@ -275,11 +275,11 @@ class UtenteController extends Zend_Controller_Action
         $pren=$this->_staffModel->getPrenotazioneByCodice($codice);
         $nominativo=$this->_utenteModel->getClienteByUser($pren->username);
         $servizi=$this->_utenteModel->getPrenotazioniByCodPrenot($pren->cod_prenotazione);
-        $camera=$this->_utenteModel->getCamereByCodice($pren->codice_camera);
+        
         $this->view->prenotazione =$pren;
         $this->view->nominativo =$nominativo;
         $this->view->servizi =$servizi;
-        $this->view->camera =$camera;
+       
         $this->_helper->layout()->disableLayout();
     }
     public function listaprenotazioniAction()
