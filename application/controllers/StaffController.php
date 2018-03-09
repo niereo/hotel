@@ -57,12 +57,11 @@ class StaffController extends Zend_Controller_Action
         $prenotazione=$this->_staffModel->getPrenotazioneByCodice($codice);
         $servizi=$this->_utenteModel->getPrenotazioniByCodPrenot($codice);
         $nominativo=$this->_utenteModel->getClienteByUser($prenotazione->username);
-        $camera=$this->_utenteModel->getTipoByCod($prenotazione->codice_camera);
+        
         $this->view->dettagli=array(
             'prenotazione'=>$prenotazione,
             'servizi'=>$servizi,
-            'nominativo'=>$nominativo,
-            'camera'=>$camera
+            'nominativo'=>$nominativo
         );
     }
     public function listaprenotazioniAction()

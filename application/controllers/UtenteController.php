@@ -238,12 +238,14 @@ class UtenteController extends Zend_Controller_Action
         
         
         $costo=$prezzo->costo;
-        $tipocamera=$this->_utenteModel->getTipoByCod($cod);
+        $camera=$this->_utenteModel->getCamereByCodice($cod);
         $richiesta=$servizi->richiestaservizi;
         $info=array(
             'username'=>$user,
-            'codice_camera'=>$cod,
-            'tipo_camera'=>$tipocamera->tipo,
+            'codice_camera'=>$camera->cod_camera,
+            'tipo_camera'=>$camera->tipo,
+            'tv'   => $camera->tv,
+            'internet' => $camera->internet,
             'data_prenotazione'=>$datstr,
             'data_inizio_pren'=>$darrivo,
             'data_fine_pren'=>$dpartenza,
