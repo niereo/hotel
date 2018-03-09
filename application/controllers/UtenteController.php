@@ -6,6 +6,7 @@ class UtenteController extends Zend_Controller_Action
     protected $_utenteModel;
     protected $_staffModel;
     protected $_authService;
+    protected $_redirector = null;
     protected $_formModificapassword;
     protected $_formModificaprofilo;
     protected $_formDataprenotazione;
@@ -18,6 +19,7 @@ class UtenteController extends Zend_Controller_Action
                 $this->_publicModel = new Application_Model_Public();
                 $this->_utenteModel = new Application_Model_Utente();
                 $this->_staffModel = new Application_Model_Staff();
+                $this->_redirector = $this->_helper->getHelper('Redirector');
                 $this->_formDataprenotazione = new Application_Form_Utente_Prenotazioni_Dataprenotazione();
                 $this->_formSelezionaservizi = new Application_Form_Utente_Prenotazioni_Selezionaservizi();
                 $this->view->modificapassForm = $this->getModificapasswordForm();
@@ -91,21 +93,34 @@ class UtenteController extends Zend_Controller_Action
     public function sceltaserviziAction()
     {
         $request = $this->getRequest();
+        $codice=$this->_getParam('codice');
         if (!$request->isPost()) {
-            return $this->_helper->redirector('catalogocamere');
+            $this->_redirector->gotoSimple('disponibilita',
+                                       'utente',
+                                       null,
+                                       array('camera' => $codice));
         }
         $form = $this->_formDataprenotazione;
         if (!$form->isValid($request->getPost())) {
             $form->setDescription('Attenzione: alcuni dati inseriti sono errati.');
-        	return $this->render('catalogocamere');
+        	return $this->_redirector->gotoSimple('disponibilita',
+                                       'utente',
+                                       null,
+                                       array('camera' => $codice));
         }
         if (!$this->getRequest()->isPost()) {
-            $this->_helper->redirector('catalogocamere');
+            $this->_redirector->gotoSimple('disponibilita',
+                                       'utente',
+                                       null,
+                                       array('camera' => $codice));
         }
         $form=$this->_formDataprenotazione;
         if (!$form->isValid($_POST)) { 
             $form->setDescription('Attenzione: alcuni dati inseriti sono errati.');
-            return $this->render('catalogocamere');
+            return $this->_redirector->gotoSimple('disponibilita',
+                                       'utente',
+                                       null,
+                                       array('camera' => $codice));
         }
        $dataarr = $this->getRequest()->getParam('data_inizio');
        $datapar = $this->getRequest()->getParam('data_fine');
@@ -116,7 +131,10 @@ class UtenteController extends Zend_Controller_Action
            if($count !== 0)
            {
               $form->setDescription('Attenzione: intervallo non valido.');
-            return $this->_helper->redirector('catalogocamere'); 
+            return $this->_redirector->gotoSimple('disponibilita',
+                                       'utente',
+                                       null,
+                                       array('camera' => $codice));
            }
        
        
