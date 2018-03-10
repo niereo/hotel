@@ -30,6 +30,10 @@ class Application_Resource_Cliente extends Zend_Db_Table_Abstract
 	$this->update($info,$where);
         
     }	
-    
+     public function deleteCliente($user)
+    {
+         $where= $this->getAdapter()->quoteInto('username = ?', $user);
+	$this->delete($where);
+    }
 }
 

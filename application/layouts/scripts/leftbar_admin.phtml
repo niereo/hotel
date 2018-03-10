@@ -35,6 +35,13 @@
                  ?>" >INSERISCI UTENTE</a></li>
                    <li><a href="<?= $this->url(array(
                         'controller' => 'admin',
+                        'action'     => 'listaclienti',
+						), 
+                        'default',true
+                    ); 
+                 ?>" >LISTA CLIENTI</a></li>
+                   <li><a href="<?= $this->url(array(
+                        'controller' => 'admin',
                         'action'     => 'listastaff',
 						), 
                         'default',true

@@ -57,6 +57,14 @@ class Application_Model_Admin extends App_Model_Abstract
     {
         return $this->getResource('Staff')->deleteStaff($info);
     }
+     public function getDipendenti()
+    {
+    	return $this->getResource('Staff')->getDipendenti();
+    }
+     public function deleteCliente($info)
+    {
+        return $this->getResource('Cliente')->deleteCliente($info);
+    }
     public function deleteUtente($info)
     {
         return $this->getResource('Utente')->deleteUtente($info);

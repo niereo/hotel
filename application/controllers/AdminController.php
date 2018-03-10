@@ -15,6 +15,7 @@ class AdminController extends Zend_Controller_Action
     protected $_formInsertservizi;
     protected $_formUpdateservizi;
     protected $_formInsertutente;
+    protected $_formUpdateutente;
     public function init()
     {
 		$this->_helper->layout->setLayout('layout_admin');
@@ -31,7 +32,7 @@ class AdminController extends Zend_Controller_Action
                 $this->view->insertserviziForm = $this->getInsertserviziForm();
                 $this->_formUpdateservizi = new Application_Form_Admin_Servizi_Updateservizi();
                 $this->view->insertutenteForm = $this->getInsertutenteForm();
-                
+                $this->_formUpdateutente = new Application_Form_Admin_Utenti_Updateutente();
     }
 
     public function indexAction()
@@ -52,6 +53,18 @@ class AdminController extends Zend_Controller_Action
     public function chisiamoAction()
     {
 		
+    }
+     public function catalogocamereAction()
+    {
+	$catalogo = $this->_publicModel->getTipoCamere();
+        $this->view->catalogo = $catalogo;	
+    }
+    
+    public function listacamereAction(){
+        
+        $tipo=$this->_getParam('tipo');
+        $camere=$this->_utenteModel->getCamereByTipo($tipo);
+        $this->view->camere=$camere;
     }
     //funzioni inserimento nuovo utente
      public function insertutenteAction()
@@ -121,12 +134,103 @@ class AdminController extends Zend_Controller_Action
     $this->_publicModel->insertUtente($info);
         return $this->_helper->redirector('index');
 	}
-   //funzioni modifica e cancella staff
+   //funzioni modifica e cancella utente
        public function listastaffAction()
        {
-           $staff=$this->_adminModel->getStaff();
+           $staff=$this->_adminModel->getDipendenti();
            $this->view->staff =$staff;
        }
+        public function listaclientiAction()
+       {
+           $clienti=$this->_staffModel->getClienti();
+           $this->view->clienti =$clienti;
+       }
+       
+        public function updateutenteAction()
+    {
+        $user=$this->_getParam('username');
+        $account=$this->_utenteModel->getUtenteByName($user);
+        if($account->ruolo == 'utente')
+        {$utente=$this->_utenteModel->getClienteByUser($user);}
+        else {
+            $utente=$this->_staffModel->getStaffByUser($user);
+        }
+        
+        $info=array(
+            'ruolo'=>$account->ruolo,
+            'username'=>$user,
+            'cognome'=>$utente->cognome,
+          'nome'=>$utente->nome,
+          'genere'=>$utente->genere,
+          'data_nascita'=>$utente->data_nascita,
+            'citta'=>$utente->citta,
+            'indirizzo'=>$utente->indirizzo,
+            'numero_telefono'=>$utente->numero_telefono,
+            'email'=>$utente->email
+        );
+        $this->_formUpdateutente = new Application_Form_Admin_Utenti_Updateutente();
+        $this->_formUpdateutente->populate($info);
+        $urlHelper = $this->_helper->getHelper('url');
+	
+    	$this->_formUpdateutente->setAction($urlHelper->url(array(
+			'controller' => 'admin',
+			'action' => 'aggiornautente'),
+			'default'
+		));
+       
+        
+        $this->view->updateutenteForm=$this->_formUpdateutente;
+       
+    }
+   
+    public function aggiornautenteAction()
+	{        
+        $request = $this->getRequest();
+        if (!$request->isPost()) {
+            return $this->_helper->redirector('updateutente');
+        }
+        $form = $this->_formUpdateutente;
+        if (!$form->isValid($request->getPost())) {
+            $form->setDescription('Attenzione: alcuni dati inseriti sono errati.');
+        	return $this->render('updateutente');
+        }
+        if (!$this->getRequest()->isPost()) {
+            $this->_helper->redirector('updateutente');
+        }
+        $form=$this->_formUpdateutente;
+        if (!$form->isValid($_POST)) { 
+            $form->setDescription('Attenzione: alcuni dati inseriti sono errati.');
+            return $this->render('updateutente');
+        }     
+         $ruolo = $form->getValue('ruolo');
+          $info=array(
+              'username'=>$form->getValue('username'),
+            'cognome'=>$form->getValue('cognome'),
+          'nome'=>$form->getValue('nome'),
+          'genere'=>$form->getValue('genere'),
+          'data_nascita'=>$form->getValue('data_nascita'),
+            'citta'=>$form->getValue('citta'),
+            'indirizzo'=>$form->getValue('indirizzo'),
+            'numero_telefono'=>$form->getValue('numero_telefono'),
+            'email'=>$form->getValue('email')
+        );
+          if($ruolo == 'utente')
+          {$this->_utenteModel->updateProfiloByUser($info);
+          return $this->_helper->redirector('listaclienti');
+          }
+          else 
+          {$this->_staffModel->updateProfiloByUser($info); 
+          return $this->_helper->redirector('listastaff');
+          }
+               
+    }
+         public function cancellaclienteAction()
+    {
+        $user=$this->_getParam('username');
+        $this->_adminModel->deleteCliente($user);
+        $this->_adminModel->deleteUtente($user);
+        $this->_helper->redirector('listaclienti');
+    }
         public function cancellastaffAction()
     {
         $user=$this->_getParam('username');

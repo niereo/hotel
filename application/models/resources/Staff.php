@@ -36,5 +36,14 @@ class Application_Resource_Staff extends Zend_Db_Table_Abstract
         
     }	
     
+    public function getDipendenti()
+    {
+       $select=$this->select()->setIntegrityCheck(false)
+                                ->from('staff')
+                                ->join('utente', 'staff.username = utente.username')
+                                ->where('utente.ruolo = ?', 'staff');
+        return $this->fetchAll($select);
+                                              
+    }
 }
 

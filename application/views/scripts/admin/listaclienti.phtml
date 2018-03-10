@@ -1,18 +1,18 @@
 <table>
     <tr><td><h3>NOME</h3></td><td><h3>COGNOME</h3></td><td></td><td></td></tr>   
-<?php foreach ($this->staff as $ST) :?>
+<?php foreach ($this->clienti as $CLI) :?>
 
-    <tr><td><h4><?php echo $ST->nome ?></h4></td><td><h4><?php echo $ST->cognome ?></h4></td><td><a href="<?= $this->url(array(
+    <tr><td><h4><?php echo $CLI->nome ?></h4></td><td><h4><?php echo $CLI->cognome ?></h4></td><td><a href="<?= $this->url(array(
                         'controller' => 'admin',
                         'action'     => 'updateutente',
-                        'username'=>$ST->username
+                        'username'=>$CLI->username
 						), 
                         'default',true
                     ); 
 ?>"><button>MODIFICA</button></a></td><td><a href="<?= $this->url(array(
                         'controller' => 'admin',
-                        'action'     => 'cancellastaff',
-                        'username'=>$ST->username
+                        'action'     => 'cancellacliente',
+                        'username'=>$CLI->username
 						), 
                         'default',true
                     ); 
