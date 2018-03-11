@@ -224,8 +224,6 @@ class AdminController extends Zend_Controller_Action
         }
         
         $info = $form->getValues();
-        //$this->view->form=$info;
-        //$this->view->tipo=$this->_tipocameraselezionata;
         $this->_adminModel->insertCamera($info);
         $this->_helper->redirector('catalogocamere');
     }
