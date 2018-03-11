@@ -34,6 +34,28 @@
             <td><h4>COSTO GIORNALIERO:  </h4></td>
             <td class="camere"><?php echo' <class="title"><h3>' . $cam->prezzo_camera. ' '.'€</h3>' ?></td>
         </tr>
+        <tr>
+            <td></td>
+            <td>
+            
+            <a href="<?= $this->url(array(
+                        'controller' => 'admin',
+                        'action'     => 'updatecamera',
+                        'tipo'      =>  $cam->tipo,
+						), 
+                        'default',true
+                    ); 
+            ?>"><button>Modifica</button></a></td>
+            
+            <td><a href="<?= $this->url(array(
+                        'controller' => 'admin',
+                        'action'     => 'deletecamera',
+                        'tipo'      =>  $cam->tipo,
+						), 
+                        'default',true
+                    ); 
+            ?>"><button>Cancella</button></a></td>
+        </tr>
     </table>
      
     <br>
@@ -44,4 +66,15 @@
                         'default',true
                     ); 
             ?>"><button>INDIETRO</button></a>
+  
+        <a href="<?= $this->url(array(
+                        'controller' => 'admin',
+                        'action'     => 'insertcamera',
+                        'tipo'      =>  $this->tipo
+						), 
+                        'default',true
+                    ); 
+            ?>"><button>INSERISCI NUOVA CAMERA</button></a>
+   
+    
 </div>

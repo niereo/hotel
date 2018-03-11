@@ -69,4 +69,24 @@ class Application_Model_Admin extends App_Model_Abstract
     {
         return $this->getResource('Utente')->deleteUtente($info);
     }
+     public function insertTipoCamera($info)
+    {
+    	return $this->getResource('Tipocamere')->insertTipoCamera($info);
+    }
+    public function getTipoCameraByTipo($tipo) 
+    {    
+        return $this->getResource('Tipocamere')->getTipoCameraByTipo($tipo);
+    }
+    public function updateTipoCamera($info,$codice)
+    {    
+        return $this->getResource('Tipocamere')->updateTipoCamera($info,$codice);
+    }
+    public function deleteTipoCamera($tipo) 
+    {    
+        return $this->getResource('Tipocamere')->deleteTipoCamera($tipo);
+    }
+     public function insertCamera($info)
+    {
+    	return $this->getResource('Camere')->insertCamera($info);
+    }
 }

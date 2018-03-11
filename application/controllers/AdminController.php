@@ -16,6 +16,10 @@ class AdminController extends Zend_Controller_Action
     protected $_formUpdateservizi;
     protected $_formInsertutente;
     protected $_formUpdateutente;
+    protected $_formInserttipo;
+    protected $_formUpdatetipo;
+    protected $_formInsertcamera;
+    
     public function init()
     {
 		$this->_helper->layout->setLayout('layout_admin');
@@ -30,9 +34,12 @@ class AdminController extends Zend_Controller_Action
                 $this->view->insertfaqForm = $this->getInsertfaqForm();
                 $this->_formUpdatefaq = new Application_Form_Admin_Faq_Updatefaq();
                 $this->view->insertserviziForm = $this->getInsertserviziForm();
+                $this->view->insertipicamereForm = $this->getInserttipocameraForm();
+                
                 $this->_formUpdateservizi = new Application_Form_Admin_Servizi_Updateservizi();
-                $this->view->insertutenteForm = $this->getInsertutenteForm();
+                $this->_formInsertcamera = new Application_Form_Admin_Camere_Insertcamera();
                 $this->_formUpdateutente = new Application_Form_Admin_Utenti_Updateutente();
+                $this->_formUpdatetipo = new Application_Form_Admin_Camere_Updatetipo();
     }
 
     public function indexAction()
@@ -65,7 +72,167 @@ class AdminController extends Zend_Controller_Action
         $tipo=$this->_getParam('tipo');
         $camere=$this->_utenteModel->getCamereByTipo($tipo);
         $this->view->camere=$camere;
+        $this->view->tipo=$tipo;
     }
+    //funzioni di inserimeto nuovo tipo camera
+    public function inserttipocamereAction()
+    {
+       
+    }
+    public function inseriscitipocamereAction()
+    {
+              
+        $request = $this->getRequest();
+        if (!$request->isPost()) {
+            return $this->_helper->redirector('inserttipocamere');
+        }
+        $form = $this->_formInserttipo;
+        if (!$form->isValid($request->getPost())) {
+            $form->setDescription('Attenzione: alcuni dati inseriti sono errati.');
+        	return $this->render('insertservizi');
+        }
+        if (!$this->getRequest()->isPost()) {
+            $this->_helper->redirector('inserttipocamere');
+        }
+        $form=$this->_formInserttipo;
+        if (!$form->isValid($_POST)) { 
+            $form->setDescription('Attenzione: alcuni dati inseriti sono errati.');
+            return $this->render('inserttipocamere');
+        }
+        
+        $info = $form->getValues();
+        $this->_adminModel->insertTipoCamera($info);
+        $this->_helper->redirector('catalogocamere');
+    }
+    
+     private function getInserttipocameraForm()
+    {
+    	$urlHelper = $this->_helper->getHelper('url');
+		$this->_formInserttipo = new Application_Form_Admin_Camere_Inserttipo();
+    	$this->_formInserttipo->setAction($urlHelper->url(array(
+			'controller' => 'admin',
+			'action' => 'inseriscitipocamere'),
+			'default'
+		));
+		return $this->_formInserttipo;
+    }
+    //modifica tipi camere
+     public function updatetipicamereAction()
+    {
+        $codice=$this->_getParam('tipo');
+        $tipo=$this->_adminModel->getTipoCameraByTipo($codice);
+        $info=array(
+            'tipovecchio'=>$tipo->tipo,
+            'tipo'=>$tipo->tipo,
+          'foto'=>$tipo->foto,
+          'descrizione'=>$tipo->descrizione
+        );
+        $this->_formUpdatetipo = new Application_Form_Admin_Camere_Updatetipo();
+        $this->_formUpdatetipo->populate($info);
+        $urlHelper = $this->_helper->getHelper('url');
+	
+    	$this->_formUpdatetipo->setAction($urlHelper->url(array(
+			'controller' => 'admin',
+			'action' => 'aggiornatipicamere'),
+			'default'
+		));
+       
+        
+        $this->view->updatetipicamereForm=$this->_formUpdatetipo;
+       
+    }
+   
+    public function aggiornatipicamereAction()
+	{        
+        $request = $this->getRequest();
+        if (!$request->isPost()) {
+            return $this->_helper->redirector('catalogocamere');
+        }
+        $form = $this->_formUpdatetipo;
+        if (!$form->isValid($request->getPost())) {
+            $form->setDescription('Attenzione: alcuni dati inseriti sono errati.');
+        	return $this->render('catalogocamere');
+        }
+        if (!$this->getRequest()->isPost()) {
+            $this->_helper->redirector('catalogocamere');
+        }
+        $form=$this->_formUpdatetipo;
+        if (!$form->isValid($_POST)) { 
+            $form->setDescription('Attenzione: alcuni dati inseriti sono errati.');
+            return $this->render('catalogocamere');
+        }     
+         $codice = $form->getValue('tipovecchio');
+         $info=array(
+             'tipo'=>$form->getValue('tipo'),
+             'foto'=>$form->getValue('foto'),
+             'descrizione'=>$form->getValue('descrizione')
+         );
+         if($info['foto']==null)
+         {
+             $camera=$this->_adminModel->getTipoCameraByTipo($codice);
+             $foto=$camera->foto;
+             $info['foto']=$foto;
+         }
+        $this->_adminModel->updateTipoCamera($info,$codice);
+        return $this->_helper->redirector('catalogocamere');       
+    }
+    //cancellazione tipi camere
+     public function deletetipicamereAction()
+    {
+        $codice=$this->_getParam('tipo');
+        $this->_adminModel->deleteTipoCamera($codice);
+        $this->_helper->redirector('catalogocamere');
+    }
+    //funzioni per inserimento di una nuova camera
+    
+    public function insertcameraAction()
+    {
+        $tipo=$this->_getParam('tipo');
+        
+        $urlHelper = $this->_helper->getHelper('url');
+	$this->_formInsertcamera = new Application_Form_Admin_Camere_Insertcamera();
+        $this->_formInsertcamera->populate(array(
+            'tipo'  =>  $tipo
+                                ));
+    	$this->_formInsertcamera->setAction($urlHelper->url(array(
+			'controller' => 'admin',
+			'action' => 'inseriscicamera'),
+			'default'
+		));
+        
+       $this->view->insertcameraForm=$this->_formInsertcamera;
+    }
+    public function inseriscicameraAction()
+    {
+              
+        $request = $this->getRequest();
+        if (!$request->isPost()) {
+            return $this->_helper->redirector('insertcamera');
+        }
+        $form = $this->_formInsertcamera;
+        if (!$form->isValid($request->getPost())) {
+            $form->setDescription('Attenzione: alcuni dati inseriti sono errati.');
+        	return $this->render('insertservizi');
+        }
+        if (!$this->getRequest()->isPost()) {
+            $this->_helper->redirector('insertcamera');
+        }
+        $form=$this->_formInsertcamera;
+        if (!$form->isValid($_POST)) { 
+            $form->setDescription('Attenzione: alcuni dati inseriti sono errati.');
+            return $this->render('insertcamera');
+        }
+        
+        $info = $form->getValues();
+        //$this->view->form=$info;
+        //$this->view->tipo=$this->_tipocameraselezionata;
+        $this->_adminModel->insertCamera($info);
+        $this->_helper->redirector('catalogocamere');
+    }
+    //funzioni per la modifica di una camera
+    
+    //funzioni per la cancellazione di una camera
+     
     //funzioni inserimento nuovo utente
      public function insertutenteAction()
     {
@@ -246,7 +413,8 @@ class AdminController extends Zend_Controller_Action
 	$servizi = $this->_publicModel->getServizi($paged);
         $this->view->servizi = $servizi;
     }
-     public function insertserviziAction()
+    //inserimento servizi
+    public function insertserviziAction()
     {
         
     }
@@ -286,7 +454,8 @@ class AdminController extends Zend_Controller_Action
 			'default'
 		));
 		return $this->_formInsertservizi;
-    }   
+    } 
+    //modifica servizi
      public function updateserviziAction()
     {
         $codice=$this->_getParam('tipo');
@@ -348,6 +517,7 @@ class AdminController extends Zend_Controller_Action
         $this->_adminModel->updateServizi($info,$codice);
         return $this->_helper->redirector('catalogoservizi');       
     }
+    //cancellazione servizi
      public function deleteserviziAction()
     {
         $codice=$this->_getParam('tipo');

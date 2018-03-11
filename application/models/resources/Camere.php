@@ -28,6 +28,9 @@ class Application_Resource_Camere extends Zend_Db_Table_Abstract
     {
         return $this->fetchRow($this->select()->where('cod_camera = ?', $codice));
     }
-    
+      public function insertCamera($info)
+    {
+        $this->insert($info);
+    }
 }
 
