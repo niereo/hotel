@@ -8,9 +8,11 @@ class Application_Form_Admin_Camere_Updatecamera  extends App_Form_Abstract
         $this->setMethod('post');
         $this->setName('updatecamera');
         $this->setAction('');
-        
+          
+        $this->_publicModel= new Application_Model_Public();
         $tipi=$this->_publicModel->getTipoCamere();
-        $scelte= new ArrayObject();
+        
+        $scelte=  array();
         foreach ($tipi as $tipo) {
             $scelte[$tipo->tipo]=$tipo->tipo;
         }
@@ -23,16 +25,8 @@ class Application_Form_Admin_Camere_Updatecamera  extends App_Form_Abstract
             'multiOptions' => $scelte,           
             'decorators' => $this->elementDecorators,
         ));
-        
-         $this->addElement('text', 'prezzo_camera', array(
-            'label' => 'Prezzo',
-            'required' => true,
-            'filters' => array('LocalizedToNormalized'),
-            'validators' => array(array('Float', true, array('locale' => 'en_US'))),
-            'decorators' => $this->elementDecorators,
-        ));
-         
-          $this->addElement('file', 'foto', array(
+       
+        $this->addElement('file', 'foto', array(
         	'label' => 'Immagine',
         	'destination' => APPLICATION_PATH . '/../public/images',
         	'validators' => array( 
@@ -41,6 +35,16 @@ class Application_Form_Admin_Camere_Updatecamera  extends App_Form_Abstract
         			array('Extension', false, array('jpg', 'gif'))),
             'decorators' => $this->fileDecorators,
         			));
+       
+         $this->addElement('text', 'prezzo_camera', array(
+            'label' => 'Prezzo',
+            'required' => true,
+            'filters' => array('LocalizedToNormalized'),
+            'validators' => array(array('Float', true, array('locale' => 'en_US'))),
+            'decorators' => $this->elementDecorators,
+        ));
+         
+         
        $this->addElement('radio', 'tv', array(
             'label' => 'TV',
             'filters' => array('StringTrim'),    
@@ -66,7 +70,7 @@ class Application_Form_Admin_Camere_Updatecamera  extends App_Form_Abstract
         ));
        
         $this->addElement('submit', 'inserisci', array(
-            'label'    => 'Inserisci',
+            'label'    => 'Modifica',
             'decorators' => $this->buttonDecorators,
         ));
 

@@ -41,7 +41,7 @@
             <a href="<?= $this->url(array(
                         'controller' => 'admin',
                         'action'     => 'updatecamera',
-                        'tipo'      =>  $cam->tipo,
+                        'camera'      =>  $cam->cod_camera,
 						), 
                         'default',true
                     ); 
@@ -50,7 +50,7 @@
             <td><a href="<?= $this->url(array(
                         'controller' => 'admin',
                         'action'     => 'deletecamera',
-                        'tipo'      =>  $cam->tipo,
+                        'camera'      =>  $cam->cod_camera,
 						), 
                         'default',true
                     ); 

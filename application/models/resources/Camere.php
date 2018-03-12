@@ -32,5 +32,20 @@ class Application_Resource_Camere extends Zend_Db_Table_Abstract
     {
         $this->insert($info);
     }
+     public function updateCamera($info)
+    {
+	$where= array('cod_camera = ?' => $info['cod_camera']);
+	$this->update($info,$where);
+    }
+    public function deleteCamera($camera)
+    {
+         $where= $this->getAdapter()->quoteInto('cod_camera = ?', $camera);
+	$this->delete($where);
+    }
+     public function deleteCamereByTipo($tipo)
+    {
+         $where= $this->getAdapter()->quoteInto('tipo = ?', $tipo);
+	$this->delete($where);
+    }
 }
 

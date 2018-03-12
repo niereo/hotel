@@ -89,4 +89,19 @@ class Application_Model_Admin extends App_Model_Abstract
     {
     	return $this->getResource('Camere')->insertCamera($info);
     }
+     public function updateCamera($info)
+    {
+        return $this->getResource('Camere')->updateCamera($info);
+    }
+    public function deleteCamera($tipo) 
+    {    
+        return $this->getResource('Camere')->deleteCamera($tipo);
+    }
+    public function deleteCamereByTipo($tipo) 
+    {    
+        return $this->getResource('Camere')->deleteCamereByTipo($tipo);
+    }
+    public function getIncassi(){
+        return $this->getResource('Prenotazionehotel')->getIncassi();
+    }
 }

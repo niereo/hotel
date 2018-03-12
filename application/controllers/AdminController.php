@@ -39,7 +39,7 @@ class AdminController extends Zend_Controller_Action
                 
                 $this->_formUpdateservizi = new Application_Form_Admin_Servizi_Updateservizi();
                 $this->_formInsertcamera = new Application_Form_Admin_Camere_Insertcamera();
-                $this->_formUpdatecamera = new Apllicatioin_Form_Admin_Camere_Updatecamera();
+                $this->_formUpdatecamera = new Application_Form_Admin_Camere_Updatecamera();
                 $this->_formUpdateutente = new Application_Form_Admin_Utenti_Updateutente();
                 $this->_formUpdatetipo = new Application_Form_Admin_Camere_Updatetipo();
     }
@@ -183,6 +183,7 @@ class AdminController extends Zend_Controller_Action
     {
         $codice=$this->_getParam('tipo');
         $this->_adminModel->deleteTipoCamera($codice);
+        $this->_adminModel->deleteCamereByTipo($codice);
         $this->_helper->redirector('catalogocamere');
     }
     //funzioni per inserimento di una nuova camera
@@ -233,12 +234,15 @@ class AdminController extends Zend_Controller_Action
     public function updatecameraAction()
     {
         $codice=$this->_getParam('camera');
+        $camera = $this->_utenteModel->getCamereByCodice($codice);
         
         $info=array(
-            'tipovecchio'=>$tipo->tipo,
-            'tipo'=>$tipo->tipo,
-          'foto'=>$tipo->foto,
-          'descrizione'=>$tipo->descrizione
+          'cod_camera'     => $camera->cod_camera,
+          'tipo'           =>$camera->tipo,
+          'foto'          =>$camera->foto,
+          'prezzo_camera'   =>$camera->prezzo_camera,
+          'tv'              =>$camera->tv,
+          'internet'        =>$camera->internet
         );
         $this->_formUpdatecamera = new Application_Form_Admin_Camere_Updatecamera();
         $this->_formUpdatecamera->populate($info);
@@ -246,12 +250,13 @@ class AdminController extends Zend_Controller_Action
 	
     	$this->_formUpdatecamera->setAction($urlHelper->url(array(
 			'controller' => 'admin',
-			'action' => 'aggiornatipicamere'),
+			'action' => 'aggiornacamera'),
 			'default'
 		));
        
         
-        $this->view->updatecameraForm=$this->_formUpdatetipo;
+        $this->view->updatecameraForm=$this->_formUpdatecamera;
+        
        
     }
    
@@ -275,7 +280,15 @@ class AdminController extends Zend_Controller_Action
             return $this->render('catalogocamere');
         }     
   
-         $info=$form->getValues();
+         $info= array(
+             'cod_camera'       => $request->getParam('cod_camera'),
+             'tipo'             => $request->getParam('tipo'),
+             'foto'             => $request->getParam('foto'),
+             'prezzo_camera'    => $request->getParam('prezzo_camera'),
+             'tv'               => $request->getParam('tv'),
+             'internet'         => $request->getParam('internet')
+         );
+                 
          
          if($info['foto']==null)
          {
@@ -283,11 +296,17 @@ class AdminController extends Zend_Controller_Action
              $foto=$camera->foto;
              $info['foto']=$foto;
          }
+         
         $this->_adminModel->updateCamera($info);
         return $this->_helper->redirector('catalogocamere');       
     }
     //funzioni per la cancellazione di una camera
-     
+    public function deletecameraAction() 
+    {
+      $camera = $this->_getParam('camera');
+      $this->_adminModel->deleteCamera($camera);
+      $this->_helper->redirector('catalogocamere');
+    } 
     //funzioni inserimento nuovo utente
      public function insertutenteAction()
     {
@@ -927,7 +946,17 @@ class AdminController extends Zend_Controller_Action
 		return $this->_formListaprenotazioni;
     } 
    
-    
+    public function incassiAction()
+    {
+        $prenotazioni=$this->_adminModel->getIncassi();
+        $totale=0;
+        foreach($prenotazioni as $pren){
+           $totale=$totale+$pren->prezzo_totale;
+        }
+        $this->view->incassi = $totale;
+    }
+
+
     public function logoutAction()
 	{
 		$this->_authService->clear();
