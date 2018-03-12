@@ -2,31 +2,36 @@
 
 class Application_Form_Admin_Camere_Updatecamera  extends App_Form_Abstract
 {
+    protected $_publicModel;
 	public function init()
     {               
         $this->setMethod('post');
         $this->setName('updatecamera');
         $this->setAction('');
+        
+        $tipi=$this->_publicModel->getTipoCamere();
+        $scelte= new ArrayObject();
+        foreach ($tipi as $tipo) {
+            $scelte[$tipo->tipo]=$tipo->tipo;
+        }
     	
-        $this->addElement('hidden', 'tipovecchio', array(   
+        $this->addElement('hidden', 'cod_camera');
+        
+       $this->addElement('select', 'tipo', array(
+            'label' => 'Internet',
+            'filters' => array('StringTrim'),    
+            'multiOptions' => $scelte,           
             'decorators' => $this->elementDecorators,
-            ));
-        $this->addElement('text', 'tipo', array(
-            'filters'    => array('StringTrim'),
-            'validators' => array(
-                array('StringLength', true, array(1, 20))
-            ),
-            'required'   => true,
-            'label'      => 'Tipo Camera',
-            'decorators' => $this->elementDecorators,
-            ));
-         $this->addElement('text', 'prezzo_servizio', array(
+        ));
+        
+         $this->addElement('text', 'prezzo_camera', array(
             'label' => 'Prezzo',
             'required' => true,
             'filters' => array('LocalizedToNormalized'),
             'validators' => array(array('Float', true, array('locale' => 'en_US'))),
             'decorators' => $this->elementDecorators,
         ));
+         
           $this->addElement('file', 'foto', array(
         	'label' => 'Immagine',
         	'destination' => APPLICATION_PATH . '/../public/images',
@@ -36,17 +41,29 @@ class Application_Form_Admin_Camere_Updatecamera  extends App_Form_Abstract
         			array('Extension', false, array('jpg', 'gif'))),
             'decorators' => $this->fileDecorators,
         			));
-       $this->addElement('textarea', 'descrizione', array(
-            'filters'    => array('StringTrim'),
-            'validators' => array(
-                array('StringLength', true, array(1, 400))
-            ),
-            'cols'=>50,
-            'rows'=>15,
-            'required'   => true,
-            'label'      => 'Descrizione',
+       $this->addElement('radio', 'tv', array(
+            'label' => 'TV',
+            'filters' => array('StringTrim'),    
+            'multiOptions' => array(
+                        true => 'SI',
+                        false => 'NO',
+                        ),
+                'value'=>'NO',
+            
             'decorators' => $this->elementDecorators,
-            ));
+        ));
+        
+        $this->addElement('radio', 'internet', array(
+            'label' => 'Internet',
+            'filters' => array('StringTrim'),    
+            'multiOptions' => array(
+                        true => 'SI',
+                        false => 'NO',
+                        ),
+                'value'=>'NO',
+            
+            'decorators' => $this->elementDecorators,
+        ));
        
         $this->addElement('submit', 'inserisci', array(
             'label'    => 'Inserisci',

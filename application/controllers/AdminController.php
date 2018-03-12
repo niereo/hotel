@@ -19,6 +19,7 @@ class AdminController extends Zend_Controller_Action
     protected $_formInserttipo;
     protected $_formUpdatetipo;
     protected $_formInsertcamera;
+    protected $_formUpdatecamera;
     
     public function init()
     {
@@ -38,6 +39,7 @@ class AdminController extends Zend_Controller_Action
                 
                 $this->_formUpdateservizi = new Application_Form_Admin_Servizi_Updateservizi();
                 $this->_formInsertcamera = new Application_Form_Admin_Camere_Insertcamera();
+                $this->_formUpdatecamera = new Apllicatioin_Form_Admin_Camere_Updatecamera();
                 $this->_formUpdateutente = new Application_Form_Admin_Utenti_Updateutente();
                 $this->_formUpdatetipo = new Application_Form_Admin_Camere_Updatetipo();
     }
@@ -228,7 +230,62 @@ class AdminController extends Zend_Controller_Action
         $this->_helper->redirector('catalogocamere');
     }
     //funzioni per la modifica di una camera
-    
+    public function updatecameraAction()
+    {
+        $codice=$this->_getParam('camera');
+        
+        $info=array(
+            'tipovecchio'=>$tipo->tipo,
+            'tipo'=>$tipo->tipo,
+          'foto'=>$tipo->foto,
+          'descrizione'=>$tipo->descrizione
+        );
+        $this->_formUpdatecamera = new Application_Form_Admin_Camere_Updatecamera();
+        $this->_formUpdatecamera->populate($info);
+        $urlHelper = $this->_helper->getHelper('url');
+	
+    	$this->_formUpdatecamera->setAction($urlHelper->url(array(
+			'controller' => 'admin',
+			'action' => 'aggiornatipicamere'),
+			'default'
+		));
+       
+        
+        $this->view->updatecameraForm=$this->_formUpdatetipo;
+       
+    }
+   
+    public function aggiornacameraAction()
+	{        
+        $request = $this->getRequest();
+        if (!$request->isPost()) {
+            return $this->_helper->redirector('catalogocamere');
+        }
+        $form = $this->_formUpdatecamera;
+        if (!$form->isValid($request->getPost())) {
+            $form->setDescription('Attenzione: alcuni dati inseriti sono errati.');
+        	return $this->render('catalogocamere');
+        }
+        if (!$this->getRequest()->isPost()) {
+            $this->_helper->redirector('catalogocamere');
+        }
+        $form=$this->_formUpdatecamera;
+        if (!$form->isValid($_POST)) { 
+            $form->setDescription('Attenzione: alcuni dati inseriti sono errati.');
+            return $this->render('catalogocamere');
+        }     
+  
+         $info=$form->getValues();
+         
+         if($info['foto']==null)
+         {
+             $camera=$this->_utenteModel->getCamereByCodice($info['cod_camera']);
+             $foto=$camera->foto;
+             $info['foto']=$foto;
+         }
+        $this->_adminModel->updateCamera($info);
+        return $this->_helper->redirector('catalogocamere');       
+    }
     //funzioni per la cancellazione di una camera
      
     //funzioni inserimento nuovo utente
