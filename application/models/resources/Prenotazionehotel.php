@@ -103,6 +103,7 @@ class Application_Resource_Prenotazionehotel extends Zend_Db_Table_Abstract
         return $this->fetchRow($select);
     }
     public function getIncassi() {
+        $select=$this->select()->order('data_inizio_pren DESC');
         return $this->fetchAll();
     }
 }

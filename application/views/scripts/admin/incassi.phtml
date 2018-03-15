@@ -1,2 +1,13 @@
 <h3>incassi totali</h3>
-<?php echo $this->incassi ?>
+<table>
+    <tr><td><h3>Mese</h3></td><td><h3>Incassi</h3></td></tr>
+<?php foreach($this->incassi as $mese):?>
+    
+   
+
+    <tr><td><?php echo $mese['mese'] ?></td><td align="left"><?php echo $mese['valore'].' €' ?></td></tr>
+
+<?php endforeach ?>
+    <tr><td><h3>Totale</h3></td><td><h3><?php echo $this->totale.' €' ?></h3></td></tr>
+</table>
+

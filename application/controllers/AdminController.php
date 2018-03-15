@@ -20,6 +20,7 @@ class AdminController extends Zend_Controller_Action
     protected $_formUpdatetipo;
     protected $_formInsertcamera;
     protected $_formUpdatecamera;
+    protected $_formSelectanno;
     
     public function init()
     {
@@ -948,12 +949,74 @@ class AdminController extends Zend_Controller_Action
    
     public function incassiAction()
     {
+        
         $prenotazioni=$this->_adminModel->getIncassi();
+        
+        $anno = array(
+            1       => array(
+                'valore'    =>  0,
+                'mese'      =>  'Gennaio'
+            ),
+            2       => array(
+                'valore'    =>  0,
+                'mese'      =>  'Febbraio'
+            ),
+            3       => array(
+                'valore'    =>  0,
+                'mese'      =>  'Marzo'
+            ),
+            4       => array(
+                'valore'    =>  0,
+                'mese'      =>  'Aprile'
+            ),
+            5       => array(
+                'valore'    =>  0,
+                'mese'      =>  'Maggio'
+            ),
+            6       => array(
+                'valore'    =>  0,
+                'mese'      =>  'Giugno'
+            ),
+            7       => array(
+                'valore'    =>  0,
+                'mese'      =>  'Luglio'
+            ),
+            8       => array(
+                'valore'    =>  0,
+                'mese'      =>  'Agosto'
+            ),
+            9       => array(
+                'valore'    =>  0,
+                'mese'      =>  'Settembre'
+            ),
+            10      => array(
+                'valore'    =>  0,
+                'mese'      =>  'Ottobre'
+            ),
+            11      => array(
+                'valore'    =>  0,
+                'mese'      =>  'Novembre'
+            ),
+            12      => array(
+                'valore'    =>  0,
+                'mese'      =>  'Dicembre'
+            )
+        );
         $totale=0;
+        $dataarrivo;
         foreach($prenotazioni as $pren){
            $totale=$totale+$pren->prezzo_totale;
+           $data = $pren->data_inizio_pren;
+           $datazend = new Zend_Date($data);
+           $dataarray = $datazend->toArray();
+           $mese =$dataarray['month'];
+                   
+           $anno[$mese]['valore']=$anno[$mese]['valore']+$pren->prezzo_totale;  
+           
         }
-        $this->view->incassi = $totale;
+       
+        $this->view->totale = $totale;
+        $this->view->incassi =  $anno;
     }
 
 
