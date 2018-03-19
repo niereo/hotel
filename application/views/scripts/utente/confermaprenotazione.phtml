@@ -40,7 +40,8 @@
          {     if($servi['valore']== true)
          {
              echo '<tr><td></td><td><h4>'.$servi['tiposervizio']->tipo.'</h4></td> ';
-         echo '<td class="camere"><h3>'.$parz=$servi['tiposervizio']->prezzo_servizio*$prenotazione->giorni.' € </h3></td></tr>';
+             $parz=$servi['tiposervizio']->prezzo_servizio*$prenotazione->giorni;
+         echo '<td class="camere"><h3>'.$parz.' € </h3></td></tr>';
           $totale=$totale+$parz;
          }
          }?>

@@ -22,12 +22,15 @@ class Application_Form_Admin_Incassi_Selectanno extends App_Form_Abstract
         }
         
         
-        $this->addElemente('select','anno',array(
+        $this->addElement('select','anno',array(
             
             'label'    => 'Seleziona anno',
             'decorators' => $this->buttonDecorators,
             'filters' => array('StringTrim'),
-            'multiOptions' => $anni,
+            'multiOptions' => array(
+                '2018'  =>  2018,
+                '2017'  =>  2017
+            ),
         ));
         
         $this->addElement('submit', 'conferma', array(

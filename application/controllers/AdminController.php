@@ -37,12 +37,14 @@ class AdminController extends Zend_Controller_Action
                 $this->_formUpdatefaq = new Application_Form_Admin_Faq_Updatefaq();
                 $this->view->insertserviziForm = $this->getInsertserviziForm();
                 $this->view->insertipicamereForm = $this->getInserttipocameraForm();
+                $this->view->selectannoForm = $this->getSelectannoForm();
                 
                 $this->_formUpdateservizi = new Application_Form_Admin_Servizi_Updateservizi();
                 $this->_formInsertcamera = new Application_Form_Admin_Camere_Insertcamera();
                 $this->_formUpdatecamera = new Application_Form_Admin_Camere_Updatecamera();
                 $this->_formUpdateutente = new Application_Form_Admin_Utenti_Updateutente();
                 $this->_formUpdatetipo = new Application_Form_Admin_Camere_Updatetipo();
+                
     }
 
     public function indexAction()
@@ -947,6 +949,22 @@ class AdminController extends Zend_Controller_Action
 		return $this->_formListaprenotazioni;
     } 
    
+    public function annoincassiAction() {
+        
+    }
+    
+    private function getSelectannoform()
+    {
+    	$urlHelper = $this->_helper->getHelper('url');
+		$this->_formSelectanno = new Application_Form_Admin_Incassi_Selectanno();
+    	$this->_formSelectanno->setAction($urlHelper->url(array(
+			'controller' => 'admin',
+			'action' => 'incassi'),
+			'default'
+		));
+		return $this->_formSelectanno;
+    } 
+    
     public function incassiAction()
     {
         

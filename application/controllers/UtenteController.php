@@ -239,6 +239,8 @@ class UtenteController extends Zend_Controller_Action
         
         $costo=$prezzo->costo;
         $camera=$this->_utenteModel->getCamereByCodice($cod);
+        $giorniname = new Zend_Session_Namespace('giorni');
+        $giorni = $giorniname->giorni;
         $richiesta=$servizi->richiestaservizi;
         $info=array(
             'username'=>$user,
@@ -257,11 +259,13 @@ class UtenteController extends Zend_Controller_Action
         
         foreach ($listaservizi->listaservizi as $serv)
         {
+            $totaleserv = ($serv['tiposervizio']->prezzo_servizio)*$giorni;
             if($serv['valore']== true)
             {
                 $prenserv=array(
                     'cod_prenotazione'=>$codpren->cod_prenotazione,
-                    'tipo_servizio'=>$serv['tiposervizio']->tipo
+                    'tipo_servizio'=>$serv['tiposervizio']->tipo,
+                    'prezzo_totale'=> $totaleserv
                 );
                    $this->_utenteModel->insertPrenotazioneservizi($prenserv);
             }
