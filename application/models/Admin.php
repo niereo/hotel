@@ -101,7 +101,7 @@ class Application_Model_Admin extends App_Model_Abstract
     {    
         return $this->getResource('Camere')->deleteCamereByTipo($tipo);
     }
-    public function getIncassi(){
-        return $this->getResource('Prenotazionehotel')->getIncassi();
+    public function getIncassi($anno,$camera,$servizi){
+        return $this->getResource('Prenotazionehotel')->getIncassi($anno,$camera,$servizi);
     }
 }

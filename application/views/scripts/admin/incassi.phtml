@@ -1,4 +1,5 @@
 <h3>incassi totali</h3>
+<?php //Zend_Debug::dump($this->roba) ?>
 <table>
     <tr><td><h3>Mese</h3></td><td><h3>Incassi</h3></td></tr>
 <?php foreach($this->incassi as $mese):?>
@@ -10,4 +11,10 @@
 <?php endforeach ?>
     <tr><td><h3>Totale</h3></td><td><h3><?php echo $this->totale.' €' ?></h3></td></tr>
 </table>
-
+<a href="<?= $this->url(array(
+                        'controller' => 'admin',
+                        'action'     => 'annoincassi'
+						), 
+                        'default',true
+                    ); 
+            ?>"><button>INDIETRO</button></a>

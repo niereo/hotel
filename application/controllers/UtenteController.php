@@ -52,7 +52,7 @@ class UtenteController extends Zend_Controller_Action
     public function listacamereAction(){
         
         $tipo=$this->_getParam('tipo');
-        $camere=$this->_utenteModel->getCamereByTipo($tipo);
+        $camere=$this->_utenteModel->getCamereByTipo($tipo,array('prezzo_camera'));
         $this->view->camere=$camere;
     }
     public function disponibilitaAction(){
@@ -265,7 +265,7 @@ class UtenteController extends Zend_Controller_Action
                 $prenserv=array(
                     'cod_prenotazione'=>$codpren->cod_prenotazione,
                     'tipo_servizio'=>$serv['tiposervizio']->tipo,
-                    'prezzo_totale'=> $totaleserv
+                    'prezzo'=> $totaleserv
                 );
                    $this->_utenteModel->insertPrenotazioneservizi($prenserv);
             }

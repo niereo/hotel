@@ -63,7 +63,6 @@ class Application_Resource_Prenotazionehotel extends Zend_Db_Table_Abstract
     }	
     public function deletePrenotazioneByCod($codice)
     {
-        
         $where= $this->getAdapter()->quoteInto('cod_prenotazione = ?', $codice);
 	$this->delete($where);
     }
@@ -102,9 +101,44 @@ class Application_Resource_Prenotazionehotel extends Zend_Db_Table_Abstract
                 ->where('data_inizio_pren = ?', $datain);
         return $this->fetchRow($select);
     }
-    public function getIncassi() {
-        $select=$this->select()->order('data_inizio_pren DESC');
-        return $this->fetchAll();
+    public function getIncassi($anno,$camera,$servizi) {
+        
+        $datainizio=new Zend_Date();
+        $datainizio=$datainizio->setYear($anno);
+        $datainizio=$datainizio->setDay(1);
+        $datainizio=$datainizio->setMonth(1);
+        
+        $datafine = new Zend_Date();
+        $datafine =$datafine->setYear($anno);
+        $datafine =$datafine->setDay(31);
+        $datafine =$datafine->setMonth(12);
+        
+        $datainizio=$datainizio->toString('yyyy-MM-dd');
+        $datafine =$datafine->toString('yyyy-MM-dd');
+        
+        
+        $select=$this->select();
+        
+       
+        if($camera !== 'Qualsiasi')
+        {
+            $select=$select->where('tipo_camera = ?',$camera);
+        }
+        if($servizi == 'Qualsiasi')                      
+        {
+          }else if ($servizi == 'Nessuno')
+        {
+            $select=$select->where('richiesta_servizi = ?',false);
+            }else             {
+            $select=$select->setIntegrityCheck(false)
+                                ->from('prenotazione_hotel')
+                                ->joinLeft('prenotazione_servizi', 'prenotazione_hotel.cod_prenotazione = prenotazione_servizi.cod_prenotazione')
+                ->where('prenotazione_servizi.tipo_servizio = ?',$servizi);
+        }          
+            $select=$select->where('data_inizio_pren >= ?', $datainizio)
+                               ->where('data_fine_pren <= ?', $datafine) ;
+        
+        return $this->fetchAll($select);
     }
 }
 

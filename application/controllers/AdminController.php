@@ -833,7 +833,7 @@ class AdminController extends Zend_Controller_Action
     }
      public function disponibilitaAction()
     {
-        $camera=$this->_utenteModel->getCamere();
+        $camera=$this->_utenteModel->getCamere(array('prezzo_camera'));
         $disponibilita=new ArrayObject();
         foreach ($camera as $cam)
         {
@@ -956,7 +956,7 @@ class AdminController extends Zend_Controller_Action
     private function getSelectannoform()
     {
     	$urlHelper = $this->_helper->getHelper('url');
-		$this->_formSelectanno = new Application_Form_Admin_Incassi_Selectanno();
+    $this->_formSelectanno = new Application_Form_Admin_Incassi_Selectanno();
     	$this->_formSelectanno->setAction($urlHelper->url(array(
 			'controller' => 'admin',
 			'action' => 'incassi'),
@@ -967,8 +967,27 @@ class AdminController extends Zend_Controller_Action
     
     public function incassiAction()
     {
-        
-        $prenotazioni=$this->_adminModel->getIncassi();
+        $request = $this->getRequest();
+        if (!$request->isPost()) {
+            return $this->_helper->redirector('annoincassi');
+        }
+        $form = $this->_formSelectanno;
+        if (!$form->isValid($request->getPost())) {
+            $form->setDescription('Attenzione: alcuni dati inseriti sono errati.');
+        	return $this->render('annoincassi');
+        }
+        if (!$this->getRequest()->isPost()) {
+            $this->_helper->redirector('annoincassi');
+        }
+        $form=$this->_formSelectanno;
+        if (!$form->isValid($_POST)) { 
+            $form->setDescription('Attenzione: alcuni dati inseriti sono errati.');
+            return $this->render('annoincassi');
+        }
+        $anno = $request->getParam('anno');
+        $camera = $request->getParam('camera');
+        $servizi = $request->getParam('servizi');
+        $prenotazioni=$this->_adminModel->getIncassi($anno,$camera,$servizi);
         
         $anno = array(
             1       => array(
@@ -1035,6 +1054,7 @@ class AdminController extends Zend_Controller_Action
        
         $this->view->totale = $totale;
         $this->view->incassi =  $anno;
+         $this->view->roba= $prenotazioni;
     }
 
 
