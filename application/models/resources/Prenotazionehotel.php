@@ -9,6 +9,17 @@ class Application_Resource_Prenotazionehotel extends Zend_Db_Table_Abstract
 	public function init()
     {
     }
+    public function getManutenzioni()
+    {
+        $oggi=new Zend_Date();
+        $oggi=$oggi->toString('yyyy-MM-dd');
+        $select=$this->select()->setIntegrityCheck(false)
+                                ->from('prenotazione_hotel')
+                                ->joinLeft('utente', 'prenotazione_hotel.username = utente.username')
+                ->where('utente.ruolo = ?','admin')
+                ->where('prenotazione_hotel.data_fine_pren >?', $oggi);
+        return $this->fetchAll($select);
+    }
     public function getPrenotazioneByCodice($codice)
     {
         $select=$this->select()->where('cod_prenotazione = ?', $codice);

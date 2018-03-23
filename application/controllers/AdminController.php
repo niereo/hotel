@@ -2,6 +2,7 @@
 
 class AdminController extends Zend_Controller_Action
 {	
+    protected $_redirector = null;
     protected $_staffModel;
     protected $_utenteModel;
     protected $_publicModel;
@@ -21,11 +22,13 @@ class AdminController extends Zend_Controller_Action
     protected $_formInsertcamera;
     protected $_formUpdatecamera;
     protected $_formSelectanno;
+    protected $_formUpdatedisponibilita;
     
     public function init()
     {
 		$this->_helper->layout->setLayout('layout_admin');
 		$this->_authService = new Application_Service_Auth();
+                $this->_redirector = $this->_helper->getHelper('Redirector');
                 $this->_staffModel = new Application_Model_Staff();
                 $this->_publicModel = new Application_Model_Public();
                 $this->_utenteModel = new Application_Model_Utente();
@@ -44,6 +47,7 @@ class AdminController extends Zend_Controller_Action
                 $this->_formUpdatecamera = new Application_Form_Admin_Camere_Updatecamera();
                 $this->_formUpdateutente = new Application_Form_Admin_Utenti_Updateutente();
                 $this->_formUpdatetipo = new Application_Form_Admin_Camere_Updatetipo();
+                $this->_formUpdatedisponibilita = new Application_Form_Admin_Camere_Updatedisponibilita();
                 
     }
 
@@ -1057,7 +1061,94 @@ class AdminController extends Zend_Controller_Action
          $this->view->roba= $prenotazioni;
     }
 
-
+    public function updatedisponibilitaAction()
+    {
+         $codice=$this->_getParam('camera');
+        $info=array(
+            'codice'=>$codice,
+          
+        );
+        $this->_formUpdatedisponibilita = new Application_Form_Admin_Camere_Updatedisponibilita();
+        $this->_formUpdatedisponibilita->populate($info);
+        $urlHelper = $this->_helper->getHelper('url');
+	
+    	$this->_formUpdatedisponibilita->setAction($urlHelper->url(array(
+			'controller' => 'admin',
+			'action' => 'aggiornadisponibilita'),
+			'default'
+		));
+       
+        
+        $this->view->updatedisponibilitaForm=$this->_formUpdatedisponibilita;
+    }
+     public function aggiornadisponibilitaAction()
+	{        
+        $request = $this->getRequest();
+        $codice=$request->getParam('codice');
+        if (!$request->isPost()) {
+            return $this->_redirector->gotoSimple('updatedisponibilita',
+                                       'admin',
+                                       null,
+                                       array('camera' => $codice));
+        }
+        $form = $this->_formUpdatedisponibilita;
+        if (!$form->isValid($request->getPost())) {
+            $form->setDescription('Attenzione: alcuni dati inseriti sono errati.');
+        	return $this->_redirector->gotoSimple('updatedisponibilita',
+                                       'admin',
+                                       null,
+                                       array('camera' => $codice));
+        }
+        if (!$this->getRequest()->isPost()) {
+            $this->_redirector->gotoSimple('updatedisponibilita',
+                                       'admin',
+                                       null,
+                                       array('camera' => $codice));
+        }
+        $form=$this->_formUpdatedisponibilita;
+        if (!$form->isValid($_POST)) { 
+            $form->setDescription('Attenzione: alcuni dati inseriti sono errati.');
+            return $this->_redirector->gotoSimple('updatedisponibilita',
+                                       'admin',
+                                       null,
+                                       array('camera' => $codice));
+        }    
+        $now=new Zend_Date();
+        $codice=$request->getParam('codice');
+        $datain=$request->getParam('data_inizio');
+        $datafine=$request->getParam('data_fine');
+        $camera=$this->_utenteModel->getCamereByCodice($codice);
+        $user=$this->_authService->authInfo('username');
+        $info=array(
+            'username'=>$user,
+            'tipo_camera'=>$camera->tipo,
+            'codice_camera'=> $codice,
+            'data_prenotazione'=>$now->toString('yyyy-MM-dd'),
+            'data_inizio_pren' => $datain,
+            'data_fine_pren' => $datafine,
+            'tv'=>$camera->tv,
+            'internet'=>$camera->internet,
+            'richiesta_servizi'=>false,
+            'prezzo_totale'=>0
+                
+        );
+        $this->_utenteModel->insertPrenotazione($info);
+        return $this->_redirector->gotoSimple('updatedisponibilita',
+                                       'admin',
+                                       null,
+                                       array('camera' => $codice));       
+    }
+    public function manutenzioniAction()
+    {
+        $man=$this->_adminModel->getManutenzioni();
+        $this->view->lista=$man;
+    }
+     public function deletemanutenzioniAction()
+    {
+        $codice=$this->_getParam('codice');
+        $this->_utenteModel->deletePrenotazioneByCod($codice);
+        $this->_helper->redirector('manutenzioni');
+    }
     public function logoutAction()
 	{
 		$this->_authService->clear();

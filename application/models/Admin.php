@@ -7,7 +7,10 @@ class Application_Model_Admin extends App_Model_Abstract
     {
     }
 
-
+     public function getManutenzioni()
+    {
+    	return $this->getResource('Prenotazionehotel')->getManutenzioni();
+    }
     public function getUtenteByName($info)
     {
     	return $this->getResource('Utente')->getUtenteByName($info);

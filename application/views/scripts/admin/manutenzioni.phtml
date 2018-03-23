@@ -1,0 +1,28 @@
+<div>
+    <h3> LISTA CAMERE IN MANUTENZIONE</h3>   
+    
+           
+	<?php foreach ($this->lista as $lis) :?>
+    <table>
+        <tr><td><h4>DATA PRENOTAZIONE: </h4></td><td><?php echo' <class="title">' . $lis->data_prenotazione . '' ?></td></tr>
+        <tr><td><h4>CAMERA NUMERO: </h4></td><td><?php echo' <class="title">' . $lis->codice_camera . '' ?></td></tr>
+        <tr><td><h4>TIPO CAMERA: </h4></td><td><?php echo' <class="title">' . $lis->tipo_camera . '' ?></td></tr>
+        <tr><td><h4>DATA ARRIVO: </h4></td><td><?php echo' <class="title">' . $lis->data_inizio_pren . '' ?></td></tr>
+        <tr><td><h4>DATA PARTENZA: </h4></td><td><?php echo' <class="title">' . $lis->data_fine_pren . '' ?></td></tr>
+       
+        
+    </table>
+    
+       <?php 
+   { echo'<a href="'. $this->url(array(
+                        'controller' => 'admin',
+                        'action'     => 'deletemanutenzioni',
+                        'codice' => $lis->cod_prenotazione), 
+                        'default' ,true
+                    ) 
+                 .'" ><button>CANCELLA MANUTENZIONE CAMERA</button></a>';}
+       ?>  
+    
+    <br><br>
+	<?php endforeach ?>
+</div>

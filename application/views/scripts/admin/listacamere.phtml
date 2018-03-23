@@ -36,8 +36,15 @@
         </tr>
         <tr>
             <td></td>
-            <td>
-            
+            <td colspan="2">
+            <a href="<?= $this->url(array(
+                        'controller' => 'admin',
+                        'action'     => 'updatedisponibilita',
+                        'camera'      =>  $cam->cod_camera,
+						), 
+                        'default',true
+                    ); 
+            ?>"><button>Modifica Disponibilità</button></a>
             <a href="<?= $this->url(array(
                         'controller' => 'admin',
                         'action'     => 'updatecamera',
@@ -45,9 +52,9 @@
 						), 
                         'default',true
                     ); 
-            ?>"><button>Modifica</button></a></td>
+            ?>"><button>Modifica</button></a>
             
-            <td><a href="<?= $this->url(array(
+            <a href="<?= $this->url(array(
                         'controller' => 'admin',
                         'action'     => 'deletecamera',
                         'camera'      =>  $cam->cod_camera,
