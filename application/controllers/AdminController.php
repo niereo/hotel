@@ -38,7 +38,7 @@ class AdminController extends Zend_Controller_Action
                 $this->view->insertserviziForm = $this->getInsertserviziForm();
                 $this->view->insertipicamereForm = $this->getInserttipocameraForm();
                 $this->view->selectannoForm = $this->getSelectannoForm();
-                
+                $this->view->insertutenteForm = $this->getInsertUtenteForm();
                 $this->_formUpdateservizi = new Application_Form_Admin_Servizi_Updateservizi();
                 $this->_formInsertcamera = new Application_Form_Admin_Camere_Insertcamera();
                 $this->_formUpdatecamera = new Application_Form_Admin_Camere_Updatecamera();
