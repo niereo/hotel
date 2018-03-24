@@ -73,6 +73,9 @@ class Application_Model_Utente extends App_Model_Abstract
     {
     	return $this->getResource('Prenotazionehotel')->getDisponibilitacamera($info,$dataar,$datapa);
     }
+    public function updatePrenotazione($info,$codice){
+        return $this->getResource('Prenotazionehotel')->updatePrenotazione($info,$codice);
+    }
        public function getCodprenotazioneByDati($info,$data)
     {
     	return $this->getResource('Prenotazionehotel')->getCodprenotazioneByDati($info,$data);

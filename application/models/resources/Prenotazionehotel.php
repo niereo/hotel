@@ -151,5 +151,11 @@ class Application_Resource_Prenotazionehotel extends Zend_Db_Table_Abstract
         
         return $this->fetchAll($select);
     }
+    
+    public function updatePrenotazione($info,$codice){
+        $select='cod_prenotazione = ?'.$codice;
+        
+        $this->update($info, $select);
+    }
 }
 

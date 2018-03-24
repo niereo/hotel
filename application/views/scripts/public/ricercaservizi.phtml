@@ -3,19 +3,26 @@
 </head>   
 <body>
     <h3>SERVIZI:</h3>
-    <div>
- <?=$this->ricercaserviziForm; ?>
-</div>
+    
+    
+    <?php $counter=0; ?>
     <?php foreach ($this->servizi as $SER) :?>
 <h3> <?php echo' <class="title">' . $SER->tipo . '' ?> </h3>
 	<img src="<?php echo $this->baseUrl() . '/images/'.$SER->foto.'' ?> "  class="cat-img" >
         <h4>DESCRIZIONE:</h4>
         <?php echo' <class="title">' . $SER->descrizione . '' ?>
             	<br><br>
+                <?php $counter++ ?>
 	<?php endforeach ?>
-                         <!-- Paginazione -->	
+                <?php if($counter == 0) :?>
+                <h4>NON CI SONO RISULTATI PER LA RICERCA EFFETTUATA</h4>
+                <?php          endif ?>
+                
+                 <!-- Paginazione -->	
 	  <?php if($this->servizi instanceof Zend_Paginator) {
-	  		echo $this->paginationControl($this->servizi,'Sliding','public/_paginatorcatalogoservizi.phtml');
+	  		echo $this->paginationControl($this->servizi,'Sliding','utente/_paginatorricercaservizi.phtml');
 	  } 
           ?>
+                 
+               
 </body>

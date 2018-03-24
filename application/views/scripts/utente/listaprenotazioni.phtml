@@ -31,7 +31,14 @@
                         'codice' => $lis['prenotazione']->cod_prenotazione), 
                         'default' ,true
                     ) 
-                 .'" ><button>CANCELLA PRENOTAZIONE</button></a>';}
+                 .'" ><button>CANCELLA PRENOTAZIONE</button></a>'
+           . '<a href="'. $this->url(array(
+                        'controller' => 'utente',
+                        'action'     => 'modificaprenotazione',
+                        'codice' => $lis['prenotazione']->cod_prenotazione), 
+                        'default' ,true
+                    ) 
+                 .'" ><button>MODIFICA PRENOTAZIONE</button></a>';}
        ?>  
     <a href="<?= $this->url(array(
                         'controller' => 'utente',

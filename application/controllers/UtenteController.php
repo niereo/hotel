@@ -12,6 +12,7 @@ class UtenteController extends Zend_Controller_Action
     protected $_formDataprenotazione;
     protected $_formSelezionaservizi;
     protected $_formRicercaservizi;
+    protected $_formModificaprenotazione;
     
     public function init()
     {
@@ -23,6 +24,8 @@ class UtenteController extends Zend_Controller_Action
                 $this->_redirector = $this->_helper->getHelper('Redirector');
                 $this->_formDataprenotazione = new Application_Form_Utente_Prenotazioni_Dataprenotazione();
                 $this->_formSelezionaservizi = new Application_Form_Utente_Prenotazioni_Selezionaservizi();
+                $this->_formModificaprenotazione = new Application_Form_Utente_Prenotazioni_Modificaprenotazione();
+                
                 $this->view->modificapassForm = $this->getModificapasswordForm();
                 $this->view->modificaprofiloForm = $this->getModificaprofiloForm();
                 $this->view->ricercaserviziForm = $this->getRicercaserviziForm();
@@ -323,6 +326,62 @@ class UtenteController extends Zend_Controller_Action
         
     }
     
+    public function modificaprenotazioneAction() {
+        $codice=$this->_getParam('codice');
+        $prenotazione= $this->_staffModel->getPrenotazioneByCodice($codice);
+        $servizi=$this->_utenteModel->getPrenotazioniByCodPrenot($codice);
+        $info=array(
+            'cod_prenotazione'=>$codice,
+            'data_inizio_pren'=>$prenotazione->data_inizio_pren,
+            'data_fine_pren'=>$prenotazione->data_fine_pren
+        );
+        foreach ($servizi as $serv){
+            $info[$serv->tipo_servizio]=true;
+        }
+        $this->_formModificaprenotazione = new Application_Form_Utente_Prenotazioni_Modificaprenotazione();
+        $this->_formModificaprenotazione->populate($info);
+        $urlHelper = $this->_helper->getHelper('url');
+	
+    	$this->_formModificaprenotazione->setAction($urlHelper->url(array(
+			'controller' => 'utente',
+			'action' => 'aggiornaprenotazione'),
+			'default'
+		));
+       
+        
+        $this->view->modificaprenotazioneForm=$this->_formModificaprenotazione;
+       
+    }
+    public function aggiornaprenotazioneAction(){
+        $request = $this->getRequest();
+        if (!$request->isPost()) {
+            return $this->_helper->redirector('modificapassword');
+        }
+        $form = $this->_formModificaprenotazione;
+        if (!$form->isValid($request->getPost())) {
+            $form->setDescription('Attenzione: alcuni dati inseriti sono errati.');
+        	return $this->render('listaprenotazioni');
+        }
+        if (!$this->getRequest()->isPost()) {
+            $this->_helper->redirector('listaprenotazioni');
+        }
+        $form=$this->_formModificaprenotazione;
+        if (!$form->isValid($_POST)) { 
+            $form->setDescription('Attenzione: alcuni dati inseriti sono errati.');
+            return $this->render('listaprenotazioni');
+        }     
+        $info = array(
+                'data_inizio_pren' => $request->getParam('data_inizio_pren'),
+                'data_fine_pren' => $request->getParam('data_fine_pren')
+                );
+        $codice = $request->getParam('cod_prenotazione');
+        $this->_utenteModel->updatePrenotazione($info,$codice);
+        
+        return $this->_helper->redirector('profilo');
+               
+        
+    }
+
     //funzioni per modificare la password
     public function modificapasswordAction()
     {
@@ -340,7 +399,7 @@ class UtenteController extends Zend_Controller_Action
 		return $this->_formModificapassword;
     }   
      public function modificapassAction()
-	{        
+    {        
         $request = $this->getRequest();
         if (!$request->isPost()) {
             return $this->_helper->redirector('modificapassword');
