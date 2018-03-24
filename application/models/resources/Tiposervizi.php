@@ -21,7 +21,20 @@ class Application_Resource_Tiposervizi extends Zend_Db_Table_Abstract
 			return $paginator;
 		}
         return $this->fetchAll($paged);
-    }	
+    }
+    public function RicercaServizi($parola,$paged=null)
+    {
+        $select=$this->select();
+        $select=$select->orWhere('tipo LIKE ?',"%$parola%")->orWhere('descrizione LIKE ?',"%$parola%");
+        if (null !== $paged) {
+			$adapter = new Zend_Paginator_Adapter_DbTableSelect($select);
+			$paginator = new Zend_Paginator($adapter);
+			$paginator->setItemCountPerPage(1)
+		          	  ->setCurrentPageNumber((int) $paged);
+			return $paginator;
+		}
+        return $this->fetchAll($paged);
+    }
       public function insertServizi($info)
     {
         $this->insert($info);

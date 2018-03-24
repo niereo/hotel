@@ -7,7 +7,10 @@ class Application_Model_Utente extends App_Model_Abstract
     {
     }
 
-
+     public function RicercaServizi($parola,$paged=null)
+    {
+    	return $this->getResource('Tiposervizi')->RicercaServizi($parola,$paged);
+    }
     public function getClienteByUser($info)
     {
     	return $this->getResource('Cliente')->getClienteByUser($info);
