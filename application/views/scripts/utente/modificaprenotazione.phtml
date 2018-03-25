@@ -1,4 +1,17 @@
 <div class="static">
  <h3>MODIFICA PRENOTAZIONE</h3>
+ <h4>DISPONIBILIT&Aacute; CAMERA : <?php echo $this->Camera ?></h3>
+
+    <?php if($this->prenotazioni->count()==0)
+        {
+             echo '<tr><td colspan="2"><h4>La camera è sempre disponibile </h4></td></tr>';
+        }else{
+ 
+        foreach($this->prenotazioni as $pren) 
+        {  
+            echo '<tr><td><h4>PRENOTATA DAL: </h4></td><td>'.$pren->data_inizio_pren.'</td><td><h4>AL: </h4></td><td>'.$pren->data_fine_pren.'</td></tr>';} 
+        }
+           ?>
+        </table>
  <?=$this->modificaprenotazioneForm; ?>
 </div>

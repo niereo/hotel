@@ -348,14 +348,15 @@ class UtenteController extends Zend_Controller_Action
 			'default'
 		));
        
-        
+        $prenotazioni= $this->_utenteModel->getPrenotazioniByCamera($prenotazione->codice_camera);
+        $this->view->prenotazioni = $prenotazioni;
         $this->view->modificaprenotazioneForm=$this->_formModificaprenotazione;
        
     }
     public function aggiornaprenotazioneAction(){
         $request = $this->getRequest();
         if (!$request->isPost()) {
-            return $this->_helper->redirector('modificapassword');
+            return $this->_helper->redirector('listaprenotazioni');
         }
         $form = $this->_formModificaprenotazione;
         if (!$form->isValid($request->getPost())) {
@@ -369,15 +370,73 @@ class UtenteController extends Zend_Controller_Action
         if (!$form->isValid($_POST)) { 
             $form->setDescription('Attenzione: alcuni dati inseriti sono errati.');
             return $this->render('listaprenotazioni');
-        }     
-        $info = array(
-                'data_inizio_pren' => $request->getParam('data_inizio_pren'),
-                'data_fine_pren' => $request->getParam('data_fine_pren')
+        }  
+        $codice = $request->getParam('codice');
+        $dataarr = $request->getParam('data_inizio_pren');
+        $datapar = $request->getParam('data_fine_pren');
+        $disponibilita = $this->_utenteModel->getDisponibilitacamera($codice, $dataarr, $datapar);
+        if($disponibilitaponibilita !==0){
+            return $this->_redirector->gotoSimple('modificaprenotazione',
+                                       'utente',
+                                       null,
+                                       array('codice' => $codice));
+        }
+        
+        $daar=new Zend_Date($dataarr);
+        $dapa=new Zend_Date($datapar);
+        $secondi=$dapa->getTimestamp()-$daar->getTimestamp();
+        $giorni=(($secondi/3600)/24)+1;
+        
+        //cancello tutte le prenotazioni dei servizi
+        $this->_utenteModel->deletePrenotazioneServByCod($codice);
+        //inizializzo il prezzo totale a 0
+        $prezzototale = 0;
+        
+        $servizi = $this->_publicModel->getServizi();
+        $richiestaservizi=false;
+        //controllo le checkbox una alla volta e in caso
+        //aggiungo una prenotazione
+        foreach ($servizi as $serv) {
+            $valore = $request->getParam($serv->tipo);
+            
+            if($valore==true){
+                $prezzo = $giorni*($serv->prezzo_servizio);
+                $ser= array( 
+                    'cod_prenotazione'  =>$codice,
+                    'tipo_servizio'     =>$serv->tipo,
+                    'prezzo'            =>$prezzo
                 );
-        $codice = $request->getParam('cod_prenotazione');
+                $totale=$totale+$prezzo;
+                $this->_utenteModel->insertPrenotazioneservizi($ser);
+                $richiestaservizi=true;
+            }
+        }
+       
+        $user = $this->_authService->authInfo('username');
+        
+        $prenotazione = $this->_staffModel->getPrenotazioneByCodice($codice); 
+         $camera= $this->_utenteModel->getCamereByCodice($prenotazione->codice_camera);
+         //calcolo il nuovo costo della stanza
+         $prezzocamera=$giorni*($camera->prezzo_camera);
+         //calcolo il prezzo totale
+         $prezzototale=$prezzototale+$prezzocamera;
+        $info = array(
+                'username' => $user,
+                'codice_camera' => $prenotazione->codice_camera,
+                'tipo_camera' => $prenotazione->tipo_camera,
+                'tv' => $prenotazione->tv,
+                'internet' => $prenotazione->internet,
+                'data_prenotazione' => $prenotazione->data_prenotazione,
+                'data_inizio_pren' => $dataarr,
+                'data_fine_pren' => $datapar,
+                'richiesta_servizi' => $richiestaservizi,
+                'prezzo_totale' => $prezzototale
+                
+                );
+       
         $this->_utenteModel->updatePrenotazione($info,$codice);
         
-        return $this->_helper->redirector('profilo');
+        return $this->_helper->redirector('listaprenotazioni');
                
         
     }
