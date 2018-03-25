@@ -24,7 +24,7 @@ class UtenteController extends Zend_Controller_Action
                 $this->_redirector = $this->_helper->getHelper('Redirector');
                 $this->_formDataprenotazione = new Application_Form_Utente_Prenotazioni_Dataprenotazione();
                 $this->_formSelezionaservizi = new Application_Form_Utente_Prenotazioni_Selezionaservizi();
-                $this->_formModificaprenotazione = new Application_Form_Utente_Prenotazioni_Modificaprenotazione();
+                $this->_formModificaprenotazione = new Application_Form_Utente_Prenotazioni_Updateprenotazione();
                 
                 $this->view->modificapassForm = $this->getModificapasswordForm();
                 $this->view->modificaprofiloForm = $this->getModificaprofiloForm();
@@ -338,7 +338,7 @@ class UtenteController extends Zend_Controller_Action
         foreach ($servizi as $serv){
             $info[$serv->tipo_servizio]=true;
         }
-        $this->_formModificaprenotazione = new Application_Form_Utente_Prenotazioni_Modificaprenotazione();
+        $this->_formModificaprenotazione = new Application_Form_Utente_Prenotazioni_Updateprenotazione();
         $this->_formModificaprenotazione->populate($info);
         $urlHelper = $this->_helper->getHelper('url');
 	

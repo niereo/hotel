@@ -1,6 +1,6 @@
 <?php
 
-class Application_Form_Utente_Prenotazioni_Modificaprenotazione extends App_Form_Abstract
+class Application_Form_Utente_Prenotazioni_Updateprenotazione extends App_Form_Abstract
 {
     
     
@@ -9,7 +9,7 @@ class Application_Form_Utente_Prenotazioni_Modificaprenotazione extends App_Form
     {               
           
         $this->setMethod('post');
-        $this->setName('modificaprenotazione');
+        $this->setName('updateprenotazione');
         $this->setAction('');
         $this->_publicModel = new Application_Model_Public;
         
