@@ -1,6 +1,32 @@
 <h3>Statistiche cliente</h3>
-<?php Zend_Debug::dump($this->totali) ?>
-<?php foreach ($this->totali as $anno ) :?>
-    
+<h3>Spesa su base annuale</h3>
 
-<?php endforeach; ?>
+<table>
+    <tr><td><h4>Anno</h4></td><td><h4>Spesa</h4></td></tr>
+        <?php foreach ($this->totali as $anno ) :?>
+    
+            <tr><td><?php echo $anno['anno'] ?></td><td><?php echo $anno['spesa'].' €' ?></td></tr>
+        <?php endforeach; ?>
+    
+</table>
+
+<h3>Tipi di camere usate</h3>
+<table>
+    <tr><td><h4>Tipo camera</h4></td></tr>
+        <?php foreach ($this->camere as $camera ) :?>
+    
+            <tr><td><?php echo $camera ?></td></tr>
+        <?php endforeach; ?>
+    
+</table>
+
+<h3>Tipi di servizi usati</h3>
+
+<table>
+    <tr><td><h4>Tipo servizi</h4></td></tr>
+        <?php foreach ($this->servizi as $serv ) :?>
+    
+            <tr><td><?php echo $serv ?></td></tr>
+        <?php endforeach; ?>
+    
+</table>

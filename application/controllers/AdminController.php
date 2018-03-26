@@ -1155,16 +1155,40 @@ class AdminController extends Zend_Controller_Action
         $prenotazione=$this->_utenteModel->getPrenotazioniByUser($codcli);
         
         $totale= array();
+        $tipi = array();
+        $servizi = array();
         
         foreach($prenotazione as $pren){
             
             $data=new Zend_Date($pren->data_inizio_pren);
             $dataarray=$data->toArray();
             $anno=$dataarray['year'];
-            $totale[$anno]=$totale[$anno]+$pren->prezzo_totale;
+            $totale[$anno]=array(
+                'anno'  =>  $anno,
+                'spesa' =>  0
+            );
+            $tipo=$pren->tipo_camera;
+            $tipi[$tipo]=$tipo;
+            $listaserv = $this->_utenteModel->getPrenotazioniByCodPrenot($codcli);
+            foreach ($listaserv as $elem) {
+                $servizi[$elem->tipo_servizio]=$elem->tipo_servizio;  
+            }
+                  
             
         }
+        
+        foreach($prenotazione as $pren){
+            
+            $data=new Zend_Date($pren->data_inizio_pren);
+            $dataarray=$data->toArray();
+            $anno=$dataarray['year'];
+            $totale[$anno]['spesa']=$totale[$anno]['spesa']+$pren->prezzo_totale;
+            
+        }
+        
         $this->view->totali=$totale;
+        $this->view->camere=$tipi;
+        $this->view->servizi=$servizi;
     }
     
     public function logoutAction()
