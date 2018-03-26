@@ -1,8 +1,8 @@
-<h3>Statistiche cliente</h3>
-<h3>Spesa su base annuale</h3>
+<h3>Statistiche cliente <?php echo $this->nominativo->cognome.'  '.$this->nominativo->nome ?></h3>
+<h4>Spesa su base annuale</h4>
 
 <table>
-    <tr><td><h4>Anno</h4></td><td><h4>Spesa</h4></td></tr>
+    <tr><td><h5>Anno</h5></td><td><h5>Spesa</h5></td></tr>
         <?php foreach ($this->totali as $anno ) :?>
     
             <tr><td><?php echo $anno['anno'] ?></td><td><?php echo $anno['spesa'].' €' ?></td></tr>
@@ -10,9 +10,9 @@
     
 </table>
 
-<h3>Tipi di camere usate</h3>
+<h4>Tipi di camere usate</h4>
 <table>
-    <tr><td><h4>Tipo camera</h4></td></tr>
+    
         <?php foreach ($this->camere as $camera ) :?>
     
             <tr><td><?php echo $camera ?></td></tr>
@@ -20,10 +20,10 @@
     
 </table>
 
-<h3>Tipi di servizi usati</h3>
+<h4>Tipi di servizi usati</h4>
 
 <table>
-    <tr><td><h4>Tipo servizi</h4></td></tr>
+    
         <?php foreach ($this->servizi as $serv ) :?>
     
             <tr><td><?php echo $serv ?></td></tr>

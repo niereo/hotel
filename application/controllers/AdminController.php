@@ -1169,11 +1169,12 @@ class AdminController extends Zend_Controller_Action
             );
             $tipo=$pren->tipo_camera;
             $tipi[$tipo]=$tipo;
-            $listaserv = $this->_utenteModel->getPrenotazioniByCodPrenot($codcli);
+            $listaserv = $this->_utenteModel->getPrenotazioniByCodPrenot($pren->cod_prenotazione);
             foreach ($listaserv as $elem) {
                 $servizi[$elem->tipo_servizio]=$elem->tipo_servizio;  
             }
-                  
+        
+            
             
         }
         
@@ -1186,6 +1187,9 @@ class AdminController extends Zend_Controller_Action
             
         }
         
+        $nominativo=$this->_utenteModel->getClienteByUser($codcli);
+        
+        $this->view->nominativo=$nominativo;
         $this->view->totali=$totale;
         $this->view->camere=$tipi;
         $this->view->servizi=$servizi;
