@@ -183,24 +183,24 @@ class UtenteController extends Zend_Controller_Action
             return $this->render('catalogocamere');
         }  
        
-        $richiestaservizi=$request->getParam('servizi');
+         $serv = new Zend_Session_Namespace('richiestaservizi');
         $servizi = $this->_publicModel->getServizi();
         $servizisel=new ArrayObject();
-        if($richiestaservizi == 'SI')
-        {
-            $servsess=new Zend_Session_Namespace('richiestaservizi');
-            $servsess->richiestaservizi=true;
+        
+        $rs=false;
         foreach ($servizi as $serv)
         {
          $nospace= str_replace(' ','', $serv->tipo);
          $servizisel[$serv->tipo]=array('valore'=>$request->getParam($nospace),
                  'tiposervizio'=>$serv );
-         
+         if($request->getParam($nospace)){
+             $rs=true;
+         }
         }
-        }else{
-             $servsess=new Zend_Session_Namespace('richiestaservizi');
-             $servsess->richiestaservizi=false;
-        }
+        
+         $serv = new Zend_Session_Namespace('richiestaservizi');
+         $serv->richiestaservizi = $rs;
+        
         $codice=$request->getParam('codice');
         $dataarr=$request->getParam('datai');
         $datapar=$request->getParam('dataf');
@@ -233,20 +233,22 @@ class UtenteController extends Zend_Controller_Action
         $codice=new Zend_Session_Namespace('codicecamera');
         $prezzo=new Zend_Session_Namespace('costo');
         $listaservizi=new Zend_Session_Namespace('listaservizi');
-        $servizi=new Zend_Session_Namespace('richiestaservizi');
         $cod=$codice->codicecamera;
         
         $darrivo=$this->getRequest()->getParam('dataarrivo');
         $dpartenza=$this->getRequest()->getParam('datapartenza');
         
-        
+         $serv = new Zend_Session_Namespace('richiestaservizi');
+         $richiesta=$serv->richiestaservizi;
         
         
         $costo=$prezzo->costo;
         $camera=$this->_utenteModel->getCamereByCodice($cod);
         $giorniname = new Zend_Session_Namespace('giorni');
         $giorni = $giorniname->giorni;
-        $richiesta=$servizi->richiestaservizi;
+        
+       
+        
         $info=array(
             'username'=>$user,
             'codice_camera'=>$camera->cod_camera,
@@ -267,6 +269,8 @@ class UtenteController extends Zend_Controller_Action
             $totaleserv = ($serv['tiposervizio']->prezzo_servizio)*$giorni;
             if($serv['valore']== true)
             {
+                
+                
                 $prenserv=array(
                     'cod_prenotazione'=>$codpren->cod_prenotazione,
                     'tipo_servizio'=>$serv['tiposervizio']->tipo,
@@ -275,6 +279,10 @@ class UtenteController extends Zend_Controller_Action
                    $this->_utenteModel->insertPrenotazioneservizi($prenserv);
             }
         }
+        
+        
+        
+        
         return $this->_helper->redirector('listaprenotazioni');
     }
     

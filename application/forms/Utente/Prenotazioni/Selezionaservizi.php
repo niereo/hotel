@@ -32,17 +32,6 @@ class Application_Form_Utente_Prenotazioni_Selezionaservizi extends App_Form_Abs
         
         $servizi=$this->_publicModel->getServizi();
         
-            $this->addElement('radio', 'servizi', array(
-            'label' => 'Vuoi selezionare un servizio aggiuntivo?',
-            'filters' => array('StringTrim'),    
-            'multiOptions' => array(
-                        'SI' => 'SI',
-                        'NO' => 'NO',
-                        ),
-                'value'=>'NO',
-            
-            'decorators' => $this->elementDecorators,
-        ));
             
         foreach ($servizi as $serv)
         {
