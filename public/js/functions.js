@@ -1,3 +1,10 @@
+function swapImage()
+{
+   document.slide.src = path[i];
+   if(i < path.length - 1) i++; else i = 0;
+   setTimeout("swapImage()",3000);
+}
+
 function doValidation(id, actionUrl, formName) {
 
 	function showErrors(resp) {

@@ -35,6 +35,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $this->_view->headMeta()->appendHttpEquiv('Content-Language', 'it-IT');
         $this->_view->headLink()->appendStylesheet($this->_view->baseUrl('css/style.css'));
         $this->_view->headTitle('hotel');
+        $this->_view->headScript()->appendFile('js/functions.js');
     }
     
     protected function _initDefaultModuleAutoloader()

@@ -1,4 +1,23 @@
 <head>
    <?= $this->headScript(); ?>
-</head>   
-<img src="<?php echo $this->baseUrl() . '/images/hotel.jpg' ?> "  class="cat-img" >
+
+<script  language="JavaScript">
+var i = 0;
+var path = new Array();
+ 
+// LIST OF IMAGES
+path[0] = "images/hotel1.jpg";
+path[1] = "images/hotel2.jpg";
+path[2] = "images/hotel3.jpg";
+path[3] = "images/hotel4.jpg";
+
+window.onload=swapImage;
+</script>
+</head>
+
+<body>
+
+
+    <img width="100%"  name="slide" src="images/hotel1.jpg" />
+
+</body>
