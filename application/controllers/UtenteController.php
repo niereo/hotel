@@ -619,7 +619,9 @@ class UtenteController extends Zend_Controller_Action
 		));
 		return $this->_formRicercaservizi;
     }
-
+    
+    
+    
     public function logoutAction()
     {
 		$this->_authService->clear();

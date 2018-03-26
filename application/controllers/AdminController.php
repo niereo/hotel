@@ -1149,6 +1149,24 @@ class AdminController extends Zend_Controller_Action
         $this->_utenteModel->deletePrenotazioneByCod($codice);
         $this->_helper->redirector('manutenzioni');
     }
+    
+    public function statisticheAction() {
+        $codcli=$this->_getParam('username');
+        $prenotazione=$this->_utenteModel->getPrenotazioniByUser($codcli);
+        
+        $totale= array();
+        
+        foreach($prenotazione as $pren){
+            
+            $data=new Zend_Date($pren->data_inizio_pren);
+            $dataarray=$data->toArray();
+            $anno=$dataarray['year'];
+            $totale[$anno]=$totale[$anno]+$pren->prezzo_totale;
+            
+        }
+        $this->view->totali=$totale;
+    }
+    
     public function logoutAction()
 	{
 		$this->_authService->clear();
