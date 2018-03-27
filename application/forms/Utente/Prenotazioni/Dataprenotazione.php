@@ -20,7 +20,8 @@ class Application_Form_Utente_Prenotazioni_Dataprenotazione extends App_Form_Abs
         
         
       			
-		$date = new Zend_Validate_Date(array('format' => 'yyyy-MM-dd'));$date->setMessage("Il campo deve contenere caratteri numerici che rispettano il formato 'yyyy-MM-dd' ");
+		$date = new Zend_Validate_Date(array('format' => 'yyyy-MM-dd'));
+                $date->setMessage("Il campo deve contenere caratteri numerici che rispettano il formato 'yyyy-MM-dd' ");
 		
 		$this->addElement('text', 'data_inizio', array(
             'label' => 'Data Arrivo',
