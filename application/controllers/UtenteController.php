@@ -100,11 +100,11 @@ class UtenteController extends Zend_Controller_Action
         $request = $this->getRequest();
         $codice=$this->_getParam('codice');
         if (!$request->isPost()) {
-            /* return $this->_redirector->gotoSimple('disponibilita',
+             return $this->_redirector->gotoSimple('disponibilita',
                                        'utente',
                                        null,
-                                       array('camera' => $codice));*/
-            return $this->render('disponibilità',array('camera' => $codice));
+                                       array('camera' => $codice));
+            
         }
         $form = $this->_formDataprenotazione;
         if (!$form->isValid($request->getPost())) {
@@ -113,23 +113,21 @@ class UtenteController extends Zend_Controller_Action
                                        'utente',
                                        null,
                                        array('camera' => $codice));*/
-            return $this->render('disponibilità',array('camera' => $codice));
+            return $this->render('disponibilita',array('camera' => $codice));
         }
         if (!$this->getRequest()->isPost()) {
-           /* return $this->_redirector->gotoSimple('disponibilita',
+            return $this->_redirector->gotoSimple('disponibilita',
                                        'utente',
                                        null,
-                                       array('camera' => $codice));*/
-            return $this->render('disponibilità',array('camera' => $codice));
+                                       array('camera' => $codice));
         }
         $form=$this->_formDataprenotazione;
         if (!$form->isValid($_POST)) { 
             $form->setDescription('Attenzione: alcuni dati inseriti sono errati.');
-            /* return $this->_redirector->gotoSimple('disponibilita',
+             return $this->_redirector->gotoSimple('disponibilita',
                                        'utente',
                                        null,
-                                       array('camera' => $codice));*/
-            return $this->render('disponibilità',array('camera' => $codice));
+                                       array('camera' => $codice));
         }
        $dataarr = $this->getRequest()->getParam('data_inizio');
        $datapar = $this->getRequest()->getParam('data_fine');
