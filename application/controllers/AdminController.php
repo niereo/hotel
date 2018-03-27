@@ -98,7 +98,7 @@ class AdminController extends Zend_Controller_Action
         $form = $this->_formInserttipo;
         if (!$form->isValid($request->getPost())) {
             $form->setDescription('Attenzione: alcuni dati inseriti sono errati.');
-        	return $this->render('insertservizi');
+        	return $this->render('inserttipocamere');
         }
         if (!$this->getRequest()->isPost()) {
             $this->_helper->redirector('inserttipocamere');
@@ -222,7 +222,7 @@ class AdminController extends Zend_Controller_Action
         $form = $this->_formInsertcamera;
         if (!$form->isValid($request->getPost())) {
             $form->setDescription('Attenzione: alcuni dati inseriti sono errati.');
-        	return $this->render('insertservizi');
+        	return $this->render('insertcamera');
         }
         if (!$this->getRequest()->isPost()) {
             $this->_helper->redirector('insertcamera');
