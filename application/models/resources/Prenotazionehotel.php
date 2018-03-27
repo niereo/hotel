@@ -83,19 +83,25 @@ class Application_Resource_Prenotazionehotel extends Zend_Db_Table_Abstract
         $select=$this->select()->where('codice_camera = ?', $codice);
         return $this->fetchAll($select);
     }	
-     public function getDisponibilitaByCamera($codice)
+     public function getDisponibilitaByCamera($codice,$codpren=null)
     {
         $oggi=new Zend_Date();
         $oggi=$oggi->toString('yyyy-MM-dd');
         $select=$this->select()->where('codice_camera = ?', $codice)
                                 ->where('data_fine_pren >= ?',$oggi );
+        if($codpren !== null){
+            $select=$select->where('cod_prenotazione =! ?',$codpren);
+        }
         return $this->fetchAll($select);
     }
-     public function getDisponibilitacamera($codice,$dataarr,$datapart)
+     public function getDisponibilitacamera($codice,$dataarr,$datapart,$codpren=null)
     {
         $select=$this->select()->where('codice_camera = ?', $codice)
                 ->where('data_inizio_pren <= ?',$datapart)
                 ->where('data_fine_pren >= ?',$dataarr);
+        if($codpren !== null){
+            $select=$select->where('cod_prenotazione =! ?',$codpren);
+        }
         $righe=$this->fetchAll($select);
          return $righe->count();
          

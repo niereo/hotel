@@ -69,9 +69,9 @@ class Application_Model_Utente extends App_Model_Abstract
     {
     	return $this->getResource('Prenotazionehotel')->insertPrenotazione($info);
     }
-       public function getDisponibilitacamera($info,$dataar,$datapa)
+       public function getDisponibilitacamera($info,$dataar,$datapa,$codpren=null)
     {
-    	return $this->getResource('Prenotazionehotel')->getDisponibilitacamera($info,$dataar,$datapa);
+    	return $this->getResource('Prenotazionehotel')->getDisponibilitacamera($info,$dataar,$datapa,$codpren);
     }
     public function updatePrenotazione($info,$codice){
         return $this->getResource('Prenotazionehotel')->updatePrenotazione($info,$codice);

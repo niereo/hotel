@@ -357,7 +357,7 @@ class UtenteController extends Zend_Controller_Action
 			'default'
 		));
        
-        $prenotazioni= $this->_utenteModel->getPrenotazioniByCamera($prenotazione->codice_camera);
+        $prenotazioni= $this->_utenteModel->getPrenotazioniByCamera($prenotazione->codice_camera,$prenotazione->cod_prenotazione);
         $this->view->prenotazioni = $prenotazioni;
         $this->view->modificaprenotazioneForm=$this->_formModificaprenotazione;
        
@@ -381,10 +381,12 @@ class UtenteController extends Zend_Controller_Action
             return $this->render('listaprenotazioni');
         }  
         $codice = $request->getParam('codice');
+        $cam= $this->_staffModel->getPrenotazioneByCodice($codice);
         $dataarr = $request->getParam('data_inizio_pren');
         $datapar = $request->getParam('data_fine_pren');
-        $disponibilita = $this->_utenteModel->getDisponibilitacamera($codice, $dataarr, $datapar);
-        if($disponibilitaponibilita !==0){
+        $disponibilita = $this->_utenteModel->getDisponibilitacamera($cam->codice_camera, $dataarr, $datapar,$codice);
+        
+        if($disponibilita !== 0){
             return $this->_redirector->gotoSimple('modificaprenotazione',
                                        'utente',
                                        null,
@@ -400,7 +402,7 @@ class UtenteController extends Zend_Controller_Action
         $this->_utenteModel->deletePrenotazioneServByCod($codice);
         //inizializzo il prezzo totale a 0
         $prezzototale = 0;
-        
+        $totale =0;
         $servizi = $this->_publicModel->getServizi();
         $richiestaservizi=false;
         //controllo le checkbox una alla volta e in caso
@@ -428,7 +430,7 @@ class UtenteController extends Zend_Controller_Action
          //calcolo il nuovo costo della stanza
          $prezzocamera=$giorni*($camera->prezzo_camera);
          //calcolo il prezzo totale
-         $prezzototale=$prezzototale+$prezzocamera;
+         $prezzototale=$totale+$prezzocamera;
         $info = array(
                 'username' => $user,
                 'codice_camera' => $prenotazione->codice_camera,
