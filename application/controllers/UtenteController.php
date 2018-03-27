@@ -109,11 +109,10 @@ class UtenteController extends Zend_Controller_Action
         $form = $this->_formDataprenotazione;
         if (!$form->isValid($request->getPost())) {
             $form->setDescription('Attenzione: alcuni dati inseriti sono errati.');
-        	/* return $this->_redirector->gotoSimple('disponibilita',
+        	 return $this->_redirector->gotoSimple('disponibilita',
                                        'utente',
                                        null,
-                                       array('camera' => $codice));*/
-            return $this->render('disponibilita',array('camera' => $codice));
+                                       array('camera' => $codice));
         }
         if (!$this->getRequest()->isPost()) {
             return $this->_redirector->gotoSimple('disponibilita',
