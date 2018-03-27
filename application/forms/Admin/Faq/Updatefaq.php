@@ -6,7 +6,10 @@ class Application_Form_Admin_Faq_Updatefaq extends App_Form_Abstract
     
 	public function init()
     {        
-           
+        $this->setMethod('post');
+        $this->setName('updatefaq');
+        $this->setAction('');
+            
            $this->addElement('hidden', 'id', array(   
             'decorators' => $this->elementDecorators,
             ));
