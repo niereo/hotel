@@ -1,0 +1,27 @@
+  <body>
+    <h3>CAMERE:</h3>
+    <?php foreach ($this->catalogo as $CAT) :?>
+    
+    <table>
+        <tr>
+            <td rowspan="3" width="33%"><img src="<?php echo $this->baseUrl() . '/images/'.$CAT->foto.'' ?> "  class="foot-img" ></td>
+            <td align="left"><h3> <?php echo' <class="title">' . $CAT->tipo . '' ?> </h3></td>
+        </tr>
+        <tr>
+            <td align="left"><?php echo' <class="title">' . $CAT->descrizione . '' ?></td>
+        </tr>
+        <tr>
+            <td align="right" ><a href="<?= $this->url(array(
+                        'controller' => 'public',
+                        'action'     => 'listacamere',
+                        'tipo'      =>  $CAT->tipo,
+						), 
+                        'default',true
+                    ); 
+            ?>"><button>Vedi camere</button></a></td>
+        </tr>
+    </table>
+   
+	<br><br>
+	<?php endforeach ?>
+</body>

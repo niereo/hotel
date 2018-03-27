@@ -41,7 +41,7 @@ class AdminController extends Zend_Controller_Action
                 $this->view->insertserviziForm = $this->getInsertserviziForm();
                 $this->view->insertipicamereForm = $this->getInserttipocameraForm();
                 $this->view->selectannoForm = $this->getSelectannoForm();
-                $this->view->insertutenteForm = $this->getInsertUtenteForm();
+                $this->view->insertutenteForm = $this->getInsertutenteForm();
                 $this->_formUpdateservizi = new Application_Form_Admin_Servizi_Updateservizi();
                 $this->_formInsertcamera = new Application_Form_Admin_Camere_Insertcamera();
                 $this->_formUpdatecamera = new Application_Form_Admin_Camere_Updatecamera();
@@ -320,7 +320,7 @@ class AdminController extends Zend_Controller_Action
         
     }
     
-    	private function getInsertUtenteForm()
+    	private function getInsertutenteForm()
     {
     	$urlHelper = $this->_helper->getHelper('url');
 		$this->_formInsertutente = new Application_Form_Admin_Utenti_Insertutente();
